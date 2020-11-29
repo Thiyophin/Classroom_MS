@@ -4,9 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs=require('express-handlebars')
+var db=require('./config/connection')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var tutorRouter = require('./routes/tutor');
+var studentRouter = require('./routes/student');
 
 var app = express();
 
@@ -20,9 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+db.connect((err)=>{
+  if(err)console.log("connection error"+err);
+  else console.log("Database connected");
+})
+app.use('/', tutorRouter);
+app.use('/student', studentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
