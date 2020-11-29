@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 router.get('/tutor_login',(req,res)=>{
-  res.render('tutor/tutor_login')
+    res.render('tutor/tutor_login')
 })
 router.get('/add_tutor',(req,res)=>{
   res.render('tutor/add_tutor')
@@ -15,16 +15,24 @@ router.get('/add_tutor',(req,res)=>{
 router.post('/add_tutor',(req,res)=>{
   tutorHelpers.addTutor(req.body).then((response)=>{
     console.log(response);
+    res.redirect('/add_tutor')
   })
 })
 router.post('/tutor_login',(req,res)=>{
   tutorHelpers.doLogin(req.body).then((response)=>{
     if(response.status){
-      res.render('tutor/tutor_home')
+     req.session.loggedTutorIn=true
+     req.session.tutor=response.tutor
+      res.render('tutor/tutor_home',{response,tutor:true})
     }else{
       res.redirect('/tutor_login')
     }
   })
 })
+router.get('/logout',(req,res)=>{
+  req.session.destroy()
+  res.redirect('/')
+})
+
 
 module.exports = router;

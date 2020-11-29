@@ -20,6 +20,13 @@
          </div>
        </div>
     </header>
+
+    {{#if tutor}}
+      {{>tutor_sidenav}}
+      {{else student}}
+      {{>student_sidenav}}
+    {{/if}}
+    
 {{{body}}}
 <footer>
     <div class="contact">
