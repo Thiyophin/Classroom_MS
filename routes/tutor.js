@@ -7,7 +7,11 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 router.get('/tutor_login',(req,res)=>{
-    res.render('tutor/tutor_login')
+  let response=req.session
+  if(req.session.loggedTutorIn){
+    res.render('tutor/tutor_home',{response,tutor:true})
+  }else{
+    res.render('tutor/tutor_login')}
 })
 router.get('/add_tutor',(req,res)=>{
   res.render('tutor/add_tutor')
@@ -23,6 +27,7 @@ router.post('/tutor_login',(req,res)=>{
     if(response.status){
      req.session.loggedTutorIn=true
      req.session.tutor=response.tutor
+     //console.log(req.session);
       res.render('tutor/tutor_home',{response,tutor:true})
     }else{
       res.redirect('/tutor_login')
