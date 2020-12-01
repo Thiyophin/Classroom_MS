@@ -11,18 +11,18 @@ router.get('/tutor_login',(req,res)=>{
   if(req.session.loggedTutorIn){
     res.render('tutor/tutor_home',{response,tutor:true})
   }else{
-    res.render('tutor/tutor_login')}
+    res.render('tutor/tutor_login',{errors:req.session.errors})
+    req.session.errors=null}
 })
-router.get('/add_tutor',(req,res)=>{
-  res.render('tutor/add_tutor')
-})
-router.post('/add_tutor',(req,res)=>{
-  tutorHelpers.addTutor(req.body).then((response)=>{
-    console.log(response);
-    res.redirect('/add_tutor')
-  })
-})
+
 router.post('/tutor_login',(req,res)=>{
+  req.check('Email','Invalid Email or Password').isEmail()
+  req.check('Password','Invalid Email or Password').isLength({min:7})
+  var errors=req.validationErrors();
+  if(errors){
+    req.session.errors=errors
+    res.redirect('/tutor_login')
+  }else{
   tutorHelpers.doLogin(req.body).then((response)=>{
     if(response.status){
      req.session.loggedTutorIn=true
@@ -30,14 +30,24 @@ router.post('/tutor_login',(req,res)=>{
      //console.log(req.session);
       res.render('tutor/tutor_home',{response,tutor:true})
     }else{
-      res.redirect('/tutor_login')
+      res.redirect('/tutor_login',{errors:req.session.errors})
+      req.session.errors=null
     }
-  })
+  })}
 })
 router.get('/logout',(req,res)=>{
   req.session.destroy()
   res.redirect('/')
 })
-
+//Add tutor to database
+// router.get('/add_tutor',(req,res)=>{
+//   res.render('tutor/add_tutor')  
+// })
+// router.post('/add_tutor',(req,res)=>{
+//   tutorHelpers.addTutor(req.body).then((response)=>{
+//     console.log(response);
+//     res.redirect('/add_tutor')
+//   })
+// })
 
 module.exports = router;

@@ -2,6 +2,15 @@
   <div class="bg-cover" >
   <div class="container " style="display: grid;place-items: center;padding-top: 110px;">
     <div class="col-md-6 col-sm-6 col-xs-12 pt-5">
+      {{#if errors}}
+      <section class="errors">
+        <ul>
+          {{#each errors}}
+          <li>{{this.msg}}</li>
+          {{/each}}
+        </ul>
+      </section>
+      {{/if}}
       <form action="/tutor_login" method="post">
         <div class="form-group">
           <label for="Tutor-login" id="label" style="font-size: x-large;block-size: 2px;

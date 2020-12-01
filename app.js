@@ -6,6 +6,8 @@ var logger = require('morgan');
 var hbs=require('express-handlebars')
 var db=require('./config/connection')
 var session=require('express-session')
+var expressValidator = require('express-validator')
+
 var tutorRouter = require('./routes/tutor');
 var studentRouter = require('./routes/student');
 
@@ -20,6 +22,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret:'key',cookie:{maxAge:60000}}))
 db.connect((err)=>{

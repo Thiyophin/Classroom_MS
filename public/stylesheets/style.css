@@ -109,3 +109,15 @@
   font-size: 16px;
   color: #66615b;
 }
+/* Tutor login errors style */
+.errors{
+  background-color: rgb(255,232,232);
+  border: 1px solid red;
+  color: red;
+  display: block;
+  font-size: 20px;
+  font-weight: bolder;
+  margin-bottom: 10px;
+  padding: 10px 25px;
+  max-width: 530px;
+}
