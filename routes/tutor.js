@@ -16,8 +16,8 @@ router.get('/tutor_login',(req,res)=>{
 })
 
 router.post('/tutor_login',(req,res)=>{
-  req.check('Email','Invalid Email or Password').isEmail()
-  req.check('Password','Invalid Email or Password').isLength({min:7})
+  req.check('Email','Invalid Username ').isEmail()
+  req.check('Password','Invalid Password').isLength({min:7})
   var errors=req.validationErrors();
   if(errors){
     req.session.errors=errors
@@ -30,8 +30,7 @@ router.post('/tutor_login',(req,res)=>{
      //console.log(req.session);
       res.render('tutor/tutor_home',{response,tutor:true})
     }else{
-      res.redirect('/tutor_login',{errors:req.session.errors})
-      req.session.errors=null
+      res.redirect('/tutor_login')
     }
   })}
 })
