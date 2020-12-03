@@ -23,9 +23,20 @@
      /* intro-page */
      .bg-cover {
         height: 100vh;
-        background-image: url("../images/classroom.jpg");
-        background-size: cover;
+        position: relative;
       }
+        .bg-cover::before{
+          content: '';
+          background-image: url("../images/classroom.jpg");
+          background-size: cover;
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          right: 0px;
+          left: 0px;
+          opacity: 0.6;
+        }
+      
       
       .container-image{
           display:grid;
@@ -121,7 +132,7 @@
   padding: 0px 10px;
   max-width: 530px;
 }
-/* Tutor-profile edit page */
+/* Tutor-profile  page */
 .edit-button{
   padding-bottom: 10px;
   margin-bottom: 20px;
@@ -130,3 +141,4 @@
   font-size: x-large;
   font-weight: 200;
 }
+

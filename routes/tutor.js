@@ -33,7 +33,7 @@ router.post('/tutor_login',(req,res)=>{
      //console.log(req.session);
       res.render('tutor/tutor_home',{response,tutor:true})
     }else{
-      req.check('Password','Invalid Username or Password').isLength({min:25})
+      req.check('Password','Invalid Username or Password').isLength({min:50})
       var errors=req.validationErrors();
       req.session.errors=errors
       res.redirect('/tutor_login')
@@ -45,10 +45,28 @@ router.get('/logout',(req,res)=>{
   res.redirect('/')
 })
 router.get('/tutor_profile',verifyLogin,(req,res)=>{
-  let user=req.session.tutor
-  //console.log(user.Name);
-  res.render('tutor/tutor_profile',{tutor:true,user})
+  tutorHelpers.getProfileDetails().then((profile)=>{
+//console.log(profile);
+res.render('tutor/tutor_profile',{tutor:true,profile})
+  })
 })
+router.get('/tutor_editprofile/:id',verifyLogin,async(req,res)=>{
+  let profile=await tutorHelpers.getTutorDetails(req.params.id)
+  //console.log(profile);
+ res.render('tutor/tutor_editprofile',{tutor:true,profile})
+})
+router.post('/tutor_editprofile',(req,res)=>{
+  // console.log(req.body);
+tutorHelpers.updateProfile(req.body).then(()=>{
+  res.redirect('/tutor_profile')
+  let id=req.body.id
+  if(req.files.Image){
+    let image=req.files.Image
+    image.mv('./public/tutor-images/'+id+'.jpg')
+  }
+})
+})
+
 router.get('/tutor_home',verifyLogin,(req,res)=>{
   res.render('tutor/tutor_home',{tutor:true})
 })
