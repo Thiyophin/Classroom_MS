@@ -121,3 +121,12 @@
   padding: 0px 10px;
   max-width: 530px;
 }
+/* Tutor-profile edit page */
+.edit-button{
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: grid;
+  place-items: center;
+  font-size: x-large;
+  font-weight: 200;
+}

@@ -6,7 +6,9 @@ module.exports={
    return new Promise(async(resolve,reject)=>{
        tutorData.Password=await bcrypt.hash(tutorData.Password,10)
        db.get().collection(collection.TUTOR_COLLECTION).insertOne(tutorData).
-       resolve(data.ops[0])
+       then((data)=>{
+       resolve(data.ops[0]._id)
+    })
    })
  },doLogin:(tutorData)=>{
      return new Promise(async(resolve,reject)=>{

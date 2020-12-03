@@ -2,7 +2,7 @@
     <div class="col-md-6 m-auto">
         <div class="container mt-5 pl-5">
             <h2 class="text-center">Add Tutor</h2>
-            <form action="/add_tutor" method="POST">
+            <form action="/add_tutor" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" class="form-control" name="Name" placeholder="Enter name">
@@ -10,6 +10,14 @@
                 <div class="form-group">
                     <label>Job</label>
                     <input type="text" class="form-control" name="Job" placeholder="Enter Job">
+                </div>
+                <div class="form-group">
+                    <label>Class</label>
+                    <input type="number" class="form-control" name="Class" placeholder="Enter class">
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" class="form-control" name="Subject" placeholder="Enter subject">
                 </div>
                 <div class="form-group">
                     <label>Address</label>
@@ -31,7 +39,10 @@
                     <label>Password</label>
                     <input type="password" class="form-control" name="Password" placeholder="Password">
                 </div>
-                
+                <div class="form-group">
+                     <label  style=" color: #1724d3d5;"><strong> Image </strong></label>
+          <input type="file" class="form-control" name="Image">
+                </div>
                 <button type="submit" class="btn btn-primary float-right">Add Tutor</button>
             </form>
         </div>
