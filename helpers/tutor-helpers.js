@@ -41,7 +41,7 @@ module.exports={
        })
    })
  },updateProfile:(tutorDetails)=>{
-     console.log(tutorDetails);
+     //console.log(tutorDetails);
      return new Promise((resolve,reject)=>{
          db.get().collection(collection.TUTOR_COLLECTION).
          updateOne({_id:ObjectId(tutorDetails.id)},{

@@ -38,8 +38,8 @@
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong>Change image: </strong> </label>
                             <img src="/tutor-images/{{profile._id}}.jpg" alt="" style="width: 70px;height:70px;" id="imgView">
                             <input type="file" class="form-control" name="Image" onchange="viewImage(event)">
-                            <div class="buttons mt-10px">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure')"><strong> Save changes</strong></button>
+                            <div class="buttons mt-3">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure ?')"><strong> Save changes</strong></button>
                                  <a href="/tutor_profile" class="btn btn-danger" style="float: right;" ><strong> Cancel</strong></a>
                             </div>
                         </div>
@@ -50,6 +50,7 @@
     </div>
 </section>
 <script>
+   
     function viewImage(event){
         document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
     }
