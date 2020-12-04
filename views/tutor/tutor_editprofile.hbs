@@ -4,7 +4,7 @@
             <div class="col-md-8 m-auto">
                 <div class="container mt-5 pl-5">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Edit Profile</strong></h2>
-                    <form action="/tutor_editprofile" method="POST" enctype="multipart/form-data">
+                    <form action="/tutor_editprofile" id="edit-form" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Name:</strong></label>
                             <input type="text" class="form-control" name="Name" value="{{profile.Name}}">
@@ -39,7 +39,7 @@
                             <img src="/tutor-images/{{profile._id}}.jpg" alt="" style="width: 70px;height:70px;" id="imgView">
                             <input type="file" class="form-control" name="Image" onchange="viewImage(event)">
                             <div class="buttons mt-3">
-                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure ?')"><strong> Save changes</strong></button>
+                                <button type="submit" class="btn btn-success" ><strong> Save changes</strong></button>
                                  <a href="/tutor_profile" class="btn btn-danger" style="float: right;" ><strong> Cancel</strong></a>
                             </div>
                         </div>
@@ -50,7 +50,30 @@
     </div>
 </section>
 <script>
-   
+    const form =  document.querySelector('#edit-form');
+    var delayInMilliseconds=2000
+   form.addEventListener('submit',event=>{
+       event.preventDefault();
+       swal({
+           title:'Confirmation',
+           text:'Are you sure?',
+           buttons:{
+               cancel:true,
+               Confirm:'Submit'
+           }
+       }).then(val =>{
+           if(val){
+               swal({
+                   title:'Profile updated',
+                   icon:'success',
+                   buttons:{ok:false}
+               })
+               setTimeout(function(){
+             form.submit()
+               },delayInMilliseconds)     
+           }
+       })
+   })
     function viewImage(event){
         document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
     }
