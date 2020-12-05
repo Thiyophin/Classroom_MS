@@ -141,4 +141,10 @@
   font-size: x-large;
   font-weight: 200;
 }
+/* style to buttons in tutor add student */
+.btn-xl{
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 10px;
+}
 

@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const tutorHelpers = require('../helpers/tutor-helpers')
+var tutorHelpers = require('../helpers/tutor-helpers')
+var studentHelpers = require('../helpers/student-helpers');
+const { response } = require('express');
+
 const verifyLogin=(req,res,next)=>{
   if(req.session.loggedTutorIn){next()}
   else{res.redirect('/tutor_login')}
@@ -65,6 +68,40 @@ tutorHelpers.updateProfile(req.body).then(()=>{
     image.mv('./public/tutor-images/'+id+'.jpg')
   }
 })
+})
+router.get('/tutor_students',verifyLogin,(req,res)=>{
+  studentHelpers.getAllStudents().then((students)=>{
+    //console.log(students);
+    res.render('tutor/tutor_students',{tutor:true,students})
+  })
+})
+
+router.get('/tutor_addstudent',verifyLogin,(req,res)=>{
+  res.render('tutor/tutor_addstudent',{tutor:true})
+})
+router.post('/tutor_addstudent',(req,res)=>{
+ studentHelpers.addStudent(req.body).then(()=>{
+   res.redirect('/tutor_students')
+ })
+})
+
+router.get('/delete_student/:id',verifyLogin,(req,res)=>{
+  let studentId=req.params.id
+  //console.log(studentId);
+studentHelpers.deleteStudent(studentId).then((response)=>{
+  res.redirect('/tutor_students')
+})
+})
+
+router.get('/tutor_editstudent/:id',verifyLogin,async(req,res)=>{
+  let student=await studentHelpers.getStudentDetails(req.params.id)
+  //console.log(student);
+res.render('tutor/tutor_editstudent',{tutor:true,student})
+})
+router.post('/tutor_editstudent/:id',(req,res)=>{
+  studentHelpers.updateStudentDetails(req.params.id,req.body).then(()=>{
+    res.redirect('/tutor_students')
+  })
 })
 
 router.get('/tutor_home',verifyLogin,(req,res)=>{
