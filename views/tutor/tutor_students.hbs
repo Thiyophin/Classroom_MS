@@ -6,7 +6,7 @@
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Students Details </strong></h2>
                    <a href="/tutor_addstudent" class="btn btn-danger rounded-pill" style="float: right;"><strong> Add Student </strong> </a>
                 <table class="table" style="border-top: 5px;">
-                    <thead style="color: rgb(11, 2, 134);background-color: rgb(16, 236, 236);">
+                    <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);">
                         <tr>
                             <th scope="col">Roll No</th>
                             <th scope="col">Name</th>
@@ -19,7 +19,7 @@
                             <td >{{this.RollNo}}</td>
                             <td >{{this.Name}}</td>
                             <td ><a href="/tutor_editstudent/{{this._id}}" style="color: black;">
-                            <i class="fas fa-edit"></i></a>  <a href="/delete_student/{{this._id}}"   style="color: black;"><i class="fas fa-trash-alt" style="margin-left: 20px;"></i></a></td>
+                            <i class="fas fa-edit"></i></a>  <a href="/delete_student/{{this._id}}" onclick="confirmation(event)"  style="color: black;"><i class="fas fa-trash-alt" style="margin-left: 20px;"></i></a></td>
                         </tr>
                         {{/each}}
                     </tbody>
@@ -31,5 +31,28 @@
 </section>
 
 <script>
-   
+    function confirmation(ev){
+        ev.preventDefault();
+         var delayInMilliseconds=1000
+        var link = ev.currentTarget.getAttribute('href')
+       // console.log(link)
+        swal({
+            title:'Confirmation',
+            text:'Are you sure?',
+            icon:'warning',
+            buttons:true,
+            dangerMode:true
+        }).then((val)=>{
+            if(val){
+               swal({
+                   title:'Student removed',
+                   icon:'success',
+                   buttons:{ok:false}
+               })
+               setTimeout(function(){
+               window.location.href= link
+               },delayInMilliseconds)     
+           }
+        })
+    }
 </script>

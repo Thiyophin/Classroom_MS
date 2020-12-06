@@ -41,7 +41,7 @@
 </section>
 <script>
     const form =  document.querySelector('#edit-studentform');
-    var delayInMilliseconds=2000
+    var delayInMilliseconds=1000
    form.addEventListener('submit',event=>{
        event.preventDefault();
        swal({
@@ -60,6 +60,7 @@
                })
                setTimeout(function(){
              form.submit()
+             console.log(form)
                },delayInMilliseconds)     
            }
        })

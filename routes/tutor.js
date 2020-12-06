@@ -87,7 +87,7 @@ router.post('/tutor_addstudent',(req,res)=>{
 
 router.get('/delete_student/:id',verifyLogin,(req,res)=>{
   let studentId=req.params.id
-  //console.log(studentId);
+  console.log(studentId);
 studentHelpers.deleteStudent(studentId).then((response)=>{
   res.redirect('/tutor_students')
 })
