@@ -29,30 +29,29 @@
         </div>
     </div>
 </section>
-
 <script>
-    function confirmation(ev){
-        ev.preventDefault();
-         var delayInMilliseconds=1000
-        var link = ev.currentTarget.getAttribute('href')
-       // console.log(link)
-        swal({
-            title:'Confirmation',
-            text:'Are you sure?',
-            icon:'warning',
-            buttons:true,
-            dangerMode:true
-        }).then((val)=>{
-            if(val){
-               swal({
-                   title:'Student removed',
-                   icon:'success',
-                   buttons:{ok:false}
-               })
-               setTimeout(function(){
-               window.location.href= link
-               },delayInMilliseconds)     
-           }
-        })
-    }
+     function confirmation(ev){
+    ev.preventDefault();
+     var delayInMilliseconds=1000
+    var link = ev.currentTarget.getAttribute('href')
+   // console.log(link)
+    swal({
+        title:'Confirmation',
+        text:'Are you sure?',
+        icon:'warning',
+        buttons:true,
+        dangerMode:true
+    }).then((val)=>{
+        if(val){
+           swal({
+               title:'Student removed',
+               icon:'success',
+               buttons:{ok:false}
+           })
+           setTimeout(function(){
+           window.location.href= link
+           },delayInMilliseconds)     
+       }
+    })
+}
 </script>

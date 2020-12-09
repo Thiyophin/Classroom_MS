@@ -19,14 +19,14 @@ module.exports={
          .findOne({Email:tutorData.Email})
          if(tutor){
              bcrypt.compare(tutorData.Password,tutor.Password).then((status)=>{
-                 if(status){console.log('Login success');
+                 if(status){//console.log('Login success');
                 response.tutor=tutor
                 response.status=true
                  resolve(response)}
-                 else{console.log('Login failed incorrect password');
+                 else{//console.log('Login failed incorrect password');
                  resolve({status:false})}
              })
-         }else{console.log('Login failed incorrect email');
+         }else{//console.log('Login failed incorrect email');
          resolve({status:false})}
      })
  },getProfileDetails:()=>{

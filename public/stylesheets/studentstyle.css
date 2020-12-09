@@ -1,0 +1,12 @@
+/* Student sent otp page */
+ .error{
+    background-color: rgb(255,232,232);
+    border: 1px solid red;
+    color: red;
+    display: block;
+    font-size: 20px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    padding: 0px 10px;
+    max-width: 530px;
+  } 

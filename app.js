@@ -11,6 +11,10 @@ var fileUpload=require('express-fileupload')
 var tutorRouter = require('./routes/tutor');
 var studentRouter = require('./routes/student');
 var app = express();
+require('dotenv').config();
+const { default: swal } = require("sweetalert")
+//console.log(process.env);
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

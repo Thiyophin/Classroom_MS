@@ -40,29 +40,30 @@
     </div>
 </section>
 <script>
-    const form =  document.querySelector('#edit-studentform');
-    var delayInMilliseconds=1000
-   form.addEventListener('submit',event=>{
-       event.preventDefault();
-       swal({
-           title:'Confirmation',
-           text:'Are you sure?',
-           buttons:{
-               cancel:true,
-               Confirm:'Submit'
-           }
-       }).then(val =>{
-           if(val){
-               swal({
-                   title:'Student profile updated',
-                   icon:'success',
-                   buttons:{ok:false}
-               })
-               setTimeout(function(){
-             form.submit()
-             console.log(form)
-               },delayInMilliseconds)     
-           }
-       })
-   })
-   </script>
+     const form =  document.querySelector('#edit-studentform');
+   var delayInMilliseconds=1000
+  form.addEventListener('submit',event=>{
+      event.preventDefault();
+      swal({
+          title:'Confirmation',
+          text:'Are you sure?',
+          buttons:{
+              cancel:true,
+              Confirm:'Submit'
+          }
+      }).then(val =>{
+          if(val){
+              swal({
+                  title:'Student profile updated',
+                  icon:'success',
+                  buttons:{ok:false}
+              })
+              setTimeout(function(){
+            form.submit()
+            console.log(form)
+              },delayInMilliseconds)     
+          }
+      })
+  })
+
+</script>
