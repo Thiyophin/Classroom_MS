@@ -13,9 +13,6 @@ $('#sentOtp-form').submit((e)=>{
           swal({
             title:'Mobile number not found',
             icon:"warning",
-            dangerMode:true,
-            buttons:true,
-            cancel:false
           }).then((val)=>{
             if(val)location.href='/student/student_sentotp'
           })        
@@ -34,9 +31,12 @@ $('#sentOtp-form').submit((e)=>{
        console.log(response)
         if(response.status){
          location.href='/student/student_login'
-       }else{
-         alert('Incorrect OTP number')
-             window.location.reload(true)
+       }else{ swal({
+        title:'Incorrect OTP number',
+        icon:"warning",
+      }).then((val)=>{
+        if(val)  window.location.reload(true)
+      })     
        }
       }
     })

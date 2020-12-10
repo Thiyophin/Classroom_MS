@@ -105,5 +105,25 @@ module.exports = {
                 });
 
         })
+    },doLogin:(studentData)=>{
+        return new Promise(async(resolve,reject)=>{
+           // console.log(studentData);
+            let response={}
+            let student=await db.get().collection(collection.STUDENT_COLLECTION)
+            .findOne({Email:studentData.Email})
+            if (student){
+                bcrypt.compare(studentData.Password,student.Password).then((status)=>{
+                    if(status){
+                        response.student=student
+                        response.status=true
+                        resolve(response)
+                    }else{
+                        resolve({status:false})
+                    }   
+                })  
+            }else{
+                resolve({status:false})
+            }
+        })
     }
 }
