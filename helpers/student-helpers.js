@@ -107,11 +107,11 @@ module.exports = {
         })
     },doLogin:(studentData,Number)=>{
         return new Promise(async(resolve,reject)=>{
-           // console.log(studentData);
+           console.log(studentData);
             let response={}
             let student=await db.get().collection(collection.STUDENT_COLLECTION)
-            .findOne({Mob:Number})
-           // console.log(Number);
+            .findOne({Mob:Number,Name:studentData.Name})
+           console.log(Number);
             if (student){
                 bcrypt.compare(studentData.Password,student.Password).then((status)=>{
                     if(status){
