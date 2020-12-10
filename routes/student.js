@@ -22,6 +22,7 @@ router.post('/student_sentotp',(req,res)=>{
  studentHelpers.checkMobNum(req.body).then((response)=>{
   // console.log(req.body.Number);
    if(response.status){
+     req.session.Number=req.body.Number
       res.json(response)
    }else{
    res.json({status:false})
@@ -53,10 +54,10 @@ router.post('/student_verifyOtp',(req,res)=>{
 })
 
 router.get('/student_resentOtp/:otpId',(req,res)=>{
-  let otpId=req.params.otpId
-  studentHelpers.resentOtp(otpId).then((response)=>{
-    res.redirect('/student/student_verifyOtp/'+otpId)
-  })
+    let otpId=req.params.otpId
+    studentHelpers.resentOtp(otpId).then((response)=>{
+      res.redirect('/student/student_verifyOtp/'+otpId)
+    })
 })
 
 router.get('/student_login',(req,res)=>{
@@ -70,7 +71,7 @@ router.get('/student_login',(req,res)=>{
 })
 
 router.post('/student_login',(req,res)=>{
-  studentHelpers.doLogin(req.body).then((response)=>{
+  studentHelpers.doLogin(req.body,req.session.Number).then((response)=>{
     if(response.status){
       req.session.student=response.student
       req.session.loggedStudentIn=true

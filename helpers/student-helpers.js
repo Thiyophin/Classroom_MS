@@ -105,12 +105,13 @@ module.exports = {
                 });
 
         })
-    },doLogin:(studentData)=>{
+    },doLogin:(studentData,Number)=>{
         return new Promise(async(resolve,reject)=>{
            // console.log(studentData);
             let response={}
             let student=await db.get().collection(collection.STUDENT_COLLECTION)
-            .findOne({Email:studentData.Email})
+            .findOne({Mob:Number})
+           // console.log(Number);
             if (student){
                 bcrypt.compare(studentData.Password,student.Password).then((status)=>{
                     if(status){
