@@ -88,7 +88,7 @@ router.post('/tutor_addstudent',(req,res)=>{
 
 router.get('/delete_student/:id',verifyLogin,(req,res)=>{
   let studentId=req.params.id
-  console.log(studentId);
+ // console.log(studentId);
 studentHelpers.deleteStudent(studentId).then((response)=>{
   res.redirect('/tutor_students')
 })
@@ -103,6 +103,28 @@ router.post('/tutor_editstudent/:id',(req,res)=>{
   studentHelpers.updateStudentDetails(req.params.id,req.body).then(()=>{
     res.redirect('/tutor_students')
   })
+})
+
+router.get('/tutor_assignments',verifyLogin,async(req,res)=>{
+  let assignments=await tutorHelpers.getAllAssignments()
+  res.render('tutor/tutor_assignments',{tutor:true,assignments})
+})
+
+router.post('/tutor_assignments',(req,res)=>{
+  tutorHelpers.addAssignment(req.body).then((id)=>{
+    let assignment=req.files.Assignment
+    console.log(id);
+    assignment.mv('./public/assignments/'+id+'.pdf')
+res.redirect('/tutor_assignments')
+  })
+})
+
+router.get('/delete_assignment/:id',verifyLogin,(req,res)=>{
+  let assignmentId=req.params.id
+  console.log(assignmentId);
+tutorHelpers.deleteAssignment(assignmentId).then((response)=>{
+  res.redirect('/tutor_assignments')
+})
 })
 
 router.get('/tutor_home',verifyLogin,(req,res)=>{

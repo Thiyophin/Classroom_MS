@@ -1,0 +1,73 @@
+<section>
+    <div class="main">
+        <div class="row">
+            <div class="col-md-8 m-auto">
+                <div class="container mt-5 pl-5">
+                    <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Assignments</strong></h2>
+                    <form action="/tutor_assignments" id="" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Topic:</strong></label>
+                            <input type="text" class="form-control" name="Topic" >
+                        </div>
+                        <div class="form-group">
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> File: </strong></label>
+                            <input type="file" class="form-control" name="Assignment">
+                        </div>
+                        <div class="buttons mt-3">
+                                <button type="submit" class="btn btn-success " ><strong> Save </strong></button>
+                            </div>
+                            </div>
+                        </div>
+                    </form >
+                    <div class="table" style="padding-top: 20px;padding-left: 10px;">
+                    <table class="table" style="border-top: 5px;">
+                    <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);text-align: center;">
+                        <tr>
+                            <th scope="col">Topic</th>
+                            <th scope="col">File</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color: rgb(131, 224, 131);text-align: center;">
+                      {{#each assignments}}
+                        <tr>
+                            <td >{{this.Topic}}</td>
+                       <td > <a href='/assignments/{{this._id}}.pdf' type='application/pdf'> {{this.Topic}}.pdf</a></td> 
+                            <td >
+                            <a href="/delete_assignment/{{this._id}}" onclick="confirmation(event)"  style="color: black;"><i class="fas fa-trash-alt" style="margin-left: 20px;"></i></a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table> 
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+     function confirmation(ev){
+    ev.preventDefault();
+     var delayInMilliseconds=1000
+    var link = ev.currentTarget.getAttribute('href')
+   // console.log(link)
+    swal({
+        title:'Confirmation',
+        text:'Are you sure?',
+        icon:'warning',
+        buttons:true,
+        dangerMode:true
+    }).then((val)=>{
+        if(val){
+           swal({
+               title:'Assignment deleted',
+               icon:'success',
+               buttons:{ok:false}
+           })
+           setTimeout(function(){
+           window.location.href= link
+           },delayInMilliseconds)     
+       }
+    })
+}
+</script>

@@ -58,5 +58,27 @@ module.exports={
              resolve()
          })
      })
- }
+ },addAssignment:(assignment)=>{
+     return new Promise((resolve,reject)=>{
+        db.get().collection(collection.ASSIGNMENT_COLLECTION).insertOne(assignment).then((response)=>{
+           // console.log(response); 
+            resolve(response.ops[0]._id)
+         })
+     })
+ },getAllAssignments:()=>{
+     return new Promise((resolve,reject)=>{
+         db.get().collection(collection.ASSIGNMENT_COLLECTION).find().toArray().then((response)=>{
+              //console.log(response);
+             resolve(response)
+         })
+         
+     })
+ }, deleteAssignment: (assignmentId) => {
+    return new Promise((resolve, reject) => {
+        db.get().collection(collection.ASSIGNMENT_COLLECTION).removeOne({ _id: ObjectId(assignmentId) })
+            .then((response) => {
+                resolve(response)
+            })
+    })
+}
 }
