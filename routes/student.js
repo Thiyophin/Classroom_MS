@@ -62,7 +62,7 @@ router.get('/student_login',(req,res)=>{
     res.redirect('/student/student_home')
   }else{
     res.render('student/student_login',{error:req.session.loginErr}) 
-    req.session.loginErr=false
+    req.session.loginErr=null
   } 
 })
 
@@ -77,6 +77,28 @@ router.post('/student_login',(req,res)=>{
       res.redirect('/student/student_login')
     }
   })
+})
+
+router.get('/student_changepassword',(req,res)=>{
+  if(req.session.loggedStudentIn){
+    res.redirect('/student/student_home')
+  }else{
+    res.render('student/student_changepassword',{error:req.session.loginErr})
+    req.session.loginErr=null
+  }
+})
+
+router.post('/student_changepassword',(req,res)=>{
+ req.check('newPass','Password is invalid').isLength({min:8}).equals(req.body.Password)
+ var error=req.validationErrors()
+ if(error){
+req.session.loginErr=error
+res.redirect('/student/student_changepassword')
+ }else{
+   studentHelpers.changePassword(req.body,req.session.Number).then(()=>{
+    res.redirect('/student/student_login')
+   })
+ }
 })
 
 router.get('/student_home',(req,res)=>{

@@ -105,13 +105,25 @@ module.exports = {
                 });
 
         })
-    },doLogin:(studentData,Number)=>{
+    },changePassword:(newPass,Mobnum)=>{
         return new Promise(async(resolve,reject)=>{
-           console.log(studentData);
+            newPass.Password = await bcrypt.hash(newPass.Password, 10)
+            db.get().collection(collection.STUDENT_COLLECTION).updateOne({Mob:Mobnum},{
+                $set:{
+                    Password:newPass.Password
+                }
+            }).then((response)=>{
+                resolve(response)
+            })
+        })
+    }
+    ,doLogin:(studentData,Number)=>{
+        return new Promise(async(resolve,reject)=>{
+           //console.log(studentData);
             let response={}
             let student=await db.get().collection(collection.STUDENT_COLLECTION)
             .findOne({Mob:Number,Name:studentData.Name})
-           console.log(Number);
+          // console.log(Number);
             if (student){
                 bcrypt.compare(studentData.Password,student.Password).then((status)=>{
                     if(status){
