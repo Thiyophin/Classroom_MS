@@ -39,9 +39,6 @@ router.get('/student_verifyOtp/:otpId',(req,res)=>{
   }
 })
 router.post('/student_verifyOtp',(req,res)=>{
-  if(req.session.loggedStudentIn){
-    res.redirect('/student/student_home')
-  }else{
     studentHelpers.verifyOtp(req.body).then((response)=>{
       //console.log(response);
       if(response.status){
@@ -50,7 +47,6 @@ router.post('/student_verifyOtp',(req,res)=>{
         res.json({})
       }
     })
-  }
 })
 
 router.get('/student_resentOtp/:otpId',(req,res)=>{
@@ -88,7 +84,9 @@ router.get('/student_home',(req,res)=>{
 })
 
 router.get('/student_logout',(req,res)=>{
-  req.session.destroy()
+  req.session.student=null
+  req.session.loggedStudentIn=false
+  req.session.Number=null
   res.redirect('/')
 })
 

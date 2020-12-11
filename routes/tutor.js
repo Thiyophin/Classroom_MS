@@ -44,7 +44,8 @@ router.post('/tutor_login',(req,res)=>{
   })}
 })
 router.get('/logout',(req,res)=>{
-  req.session.destroy()
+  req.session.tutor=null
+  req.session.loggedTutorIn=false
   res.redirect('/')
 })
 router.get('/tutor_profile',verifyLogin,(req,res)=>{
