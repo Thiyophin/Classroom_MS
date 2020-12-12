@@ -70,6 +70,7 @@ module.exports = {
                     .end(function (res) {
                         //console.log(res.raw_body);
                         response.otp_id = res.body.otp_id
+                        response.student=res.body.student
                         response.status = true
                         resolve(response)
                     })
@@ -105,25 +106,31 @@ module.exports = {
                 });
 
         })
-    },changePassword:(newPass,Mobnum)=>{
+    },changePassword:(newPass)=>{
         return new Promise(async(resolve,reject)=>{
+            let student=await db.get().collection(collection.STUDENT_COLLECTION).findOne({Name:newPass.Name})
+           if(student){
             newPass.Password = await bcrypt.hash(newPass.Password, 10)
-            db.get().collection(collection.STUDENT_COLLECTION).updateOne({Mob:Mobnum},{
-                $set:{
-                    Password:newPass.Password
-                }
-            }).then((response)=>{
-                resolve(response)
-            })
+               db.get().collection(collection.STUDENT_COLLECTION).updateOne({Name:newPass.Name},
+                {
+                    $set:{
+                        Password:newPass.Password
+                    }
+                }).then((status)=>{
+                    response.status=true
+                    resolve(response)
+                })
+           }else{
+               resolve({status:false})
+           }
         })
     }
-    ,doLogin:(studentData,Number)=>{
+    ,doLogin:(studentData)=>{
         return new Promise(async(resolve,reject)=>{
-           //console.log(studentData);
+           console.log(studentData);
             let response={}
             let student=await db.get().collection(collection.STUDENT_COLLECTION)
-            .findOne({Mob:Number,Name:studentData.Name})
-          // console.log(Number);
+            .findOne({Name:studentData.Name})
             if (student){
                 bcrypt.compare(studentData.Password,student.Password).then((status)=>{
                     if(status){
@@ -140,3 +147,12 @@ module.exports = {
         })
     }
 }
+
+
+
+
+
+
+
+
+

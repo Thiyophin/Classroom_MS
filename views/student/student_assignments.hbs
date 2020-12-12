@@ -1,0 +1,32 @@
+<section>
+    <div class="main">
+        <div class="row">
+            <div class="col-md-8 m-auto">
+                <div class="container  mt-3">
+                    <h2 class="text-center" style="color: rgb(18, 14, 238);padding-bottom: 15px;"><strong> Assignments </strong></h2>
+                <table class="table" style="border-top: 5px;text-align: center;">
+                    <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);">
+                        <tr>
+                            <th scope="col">Topic</th>
+                            <th scope="col">File</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color: rgb(131, 224, 131);">
+                      {{#each assignments}}
+                        <tr>
+                            <td >{{this.Topic}}</td>
+                            <td > <a href='/assignments/{{this._id}}.pdf' type='application/pdf'> {{this.Topic}}.pdf</a></td>
+                            <td >
+                            <a href="" class="btn btn-info rounded-pill" style="color: rgb(240, 236, 236);">Open</a> 
+                            <a href=""   style="color: black;"><i class="fa fa-upload" aria-hidden="true" style="margin-left: 20px;"></i></a>
+                            </td>
+                        </tr>
+                     {{/each}}
+                    </tbody>
+                </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

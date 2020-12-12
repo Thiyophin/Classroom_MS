@@ -22,7 +22,7 @@ router.post('/student_sentotp',(req,res)=>{
  studentHelpers.checkMobNum(req.body).then((response)=>{
   // console.log(req.body.Number);
    if(response.status){
-     req.session.Number=req.body.Number
+     req.session.student=response.student
       res.json(response)
    }else{
    res.json({status:false})
@@ -42,6 +42,7 @@ router.post('/student_verifyOtp',(req,res)=>{
     studentHelpers.verifyOtp(req.body).then((response)=>{
       //console.log(response);
       if(response.status){
+        req.session.loggedStudentIn=true
         res.json(response)
       }else{
         res.json({})
@@ -67,36 +68,47 @@ router.get('/student_login',(req,res)=>{
 })
 
 router.post('/student_login',(req,res)=>{
-  studentHelpers.doLogin(req.body,req.session.Number).then((response)=>{
-    if(response.status){
-      req.session.student=response.student
-      req.session.loggedStudentIn=true
-      res.redirect('/student/student_home')
-    }else{
-      req.session.loginErr="Invalid username or password"
-      res.redirect('/student/student_login')
-    }
-  })
+  if(req.session.loggedStudentIn){
+    res.redirect('/student/student_home')
+  }else{
+    studentHelpers.doLogin(req.body).then((response)=>{
+      if(response.status){
+        req.session.student=response.student
+        req.session.loggedStudentIn=true
+        res.redirect('/student/student_home')
+      }else{
+        req.session.loginErr="Invalid username or password"
+        res.redirect('/student/student_login')
+      }
+    })
+  }
 })
 
 router.get('/student_changepassword',(req,res)=>{
   if(req.session.loggedStudentIn){
     res.redirect('/student/student_home')
   }else{
-    res.render('student/student_changepassword',{error:req.session.loginErr})
+    res.render('student/student_changepassword',{error:req.session.loginErr,errors:req.session.loginErrs})
     req.session.loginErr=null
+    req.session.loginErrs=null
   }
 })
 
 router.post('/student_changepassword',(req,res)=>{
- req.check('newPass','Password is invalid').isLength({min:8}).equals(req.body.Password)
+ req.check('newPass','Passwords do not match').isLength({min:8}).equals(req.body.Password)
  var error=req.validationErrors()
  if(error){
 req.session.loginErr=error
 res.redirect('/student/student_changepassword')
  }else{
-   studentHelpers.changePassword(req.body,req.session.Number).then(()=>{
-    res.redirect('/student/student_login')
+   studentHelpers.changePassword(req.body).then((response)=>{
+     if(response.status){
+      res.redirect('/student/student_login')
+     }
+   else{
+     req.session.loginErrs='Invalid Username'
+     res.redirect('/student/student_changepassword')
+   }
    })
  }
 })
@@ -108,7 +120,6 @@ router.get('/student_home',(req,res)=>{
 router.get('/student_logout',(req,res)=>{
   req.session.student=null
   req.session.loggedStudentIn=false
-  req.session.Number=null
   res.redirect('/')
 })
 
