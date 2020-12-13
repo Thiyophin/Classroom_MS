@@ -7,11 +7,16 @@
                     <form action="/tutor_assignments" id="" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Topic:</strong></label>
-                            <input type="text" class="form-control" name="Topic" >
+                            <input type="text" class="form-control" name="Topic" required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> File: </strong></label>
-                            <input type="file" class="form-control" name="Assignment">
+                            {{#if pdfError}}
+                            <div class="bar pdferror">
+                                <div class="close" onclick="this.parentElement.remove()">X</div> <i class="ico">&#9747;</i> {{pdfError}}
+                               </div>
+                            {{/if}}   
+                            <input type="file" class="form-control" name="Assignment" required>
                         </div>
                         <div class="buttons mt-3">
                                 <button type="submit" class="btn btn-success " ><strong> Save </strong></button>

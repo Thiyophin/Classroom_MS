@@ -68,9 +68,6 @@ router.get('/student_login',(req,res)=>{
 })
 
 router.post('/student_login',(req,res)=>{
-  if(req.session.loggedStudentIn){
-    res.redirect('/student/student_home')
-  }else{
     studentHelpers.doLogin(req.body).then((response)=>{
       if(response.status){
         req.session.student=response.student
@@ -81,7 +78,6 @@ router.post('/student_login',(req,res)=>{
         res.redirect('/student/student_login')
       }
     })
-  }
 })
 
 router.get('/student_changepassword',(req,res)=>{

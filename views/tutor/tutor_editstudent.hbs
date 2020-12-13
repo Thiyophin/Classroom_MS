@@ -7,27 +7,27 @@
                     <form action="/tutor_editstudent/{{student._id}}" id="edit-studentform" method="POST" >
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Name:</strong></label>
-                            <input type="text" class="form-control" name="Name" value="{{student.Name}}" >
+                            <input type="text" class="form-control" name="Name" value="{{student.Name}}" required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Gender: </strong></label>
-                            <input type="text" class="form-control" name="Gender" value="{{student.Gender}}" >
+                            <input type="text" class="form-control" name="Gender" value="{{student.Gender}}" required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Roll no: </strong></label>
-                            <input type="number" class="form-control" name="RollNo" value="{{student.RollNo}}" >
+                            <input type="number" class="form-control" name="RollNo" value="{{student.RollNo}}" required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Mob: </strong></label>
-                            <input type="number" class="form-control" name="Mob"value="{{student.Mob}}"  >
+                            <input type="number" class="form-control" name="Mob"value="{{student.Mob}}"  required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Email:</strong></label>
-                            <input type="email" class="form-control" name="Email" value="{{student.Email}}" >
+                            <input type="email" class="form-control" name="Email" value="{{student.Email}}" required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Address: </strong></label>
-                            <input type="text" class="form-control" name="Address"value="{{student.Address}}"  >
+                            <input type="text" class="form-control" name="Address"value="{{student.Address}}"  required>
                         </div>
                         <div class="buttons  mt-3 " style="padding-bottom: 20px;">
                         <button type="submit" class="btn btn-success rounded-pill btn-xl" ><strong> Save changes </strong></button>

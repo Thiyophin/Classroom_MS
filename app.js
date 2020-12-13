@@ -11,11 +11,19 @@ var fileUpload=require('express-fileupload')
 var tutorRouter = require('./routes/tutor');
 var studentRouter = require('./routes/student');
 var app = express();
+var MongoDBStore = require('connect-mongodb-session')(session);
+const nocache = require('nocache')
 require('dotenv').config();
 const { default: swal } = require("sweetalert")
 //console.log(process.env);
 
-
+var store = new MongoDBStore({
+  uri: 'mongodb://localhost:27017/classroom',
+  collection: 'mySessions'
+});
+store.on('error', function(error) {
+  console.log(error);
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -27,12 +35,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret:'key',cookie:{maxAge:600000}}))
+app.use(session({secret:'key',cookie:{maxAge:	86400000},
+store: store,
+resave: true,
+saveUninitialized: false}))
 app.use(fileUpload());
+app.use(nocache())
 db.connect((err)=>{
   if(err)console.log("connection error"+err);
   else console.log("Database connected");
 })
+
 app.use('/', tutorRouter);
 app.use('/student', studentRouter);
 
