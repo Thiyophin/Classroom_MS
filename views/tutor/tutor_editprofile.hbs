@@ -5,6 +5,11 @@
                 <div class="container mt-5 pl-5">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Edit Profile</strong></h2>
                     <form action="/tutor_editprofile" id="edit-form" method="POST" enctype="multipart/form-data">
+                        {{#if photoError}}
+                            <div class="bar pdferror">
+                               <i class="ico">&#9747;</i> {{photoError}}
+                               </div>
+                            {{/if}}  
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Name:</strong></label>
                             <input type="text" class="form-control" name="Name" value="{{profile.Name}}" required>
@@ -37,7 +42,7 @@
                         <div class="form-group" style="padding-bottom: 20px;">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong>Change image: </strong> </label>
                             <img src="/tutor-images/{{profile._id}}.jpg" alt="" style="width: 70px;height:70px;" id="imgView">
-                            <input type="file" class="form-control" name="Image" onchange="viewImage(event)" required>
+                            <input type="file" class="form-control" name="Image" onchange="viewImage(event)" >
                             <div class="buttons mt-3">
                                 <button type="submit" class="btn btn-success btn-xl" ><strong> Save changes</strong></button>
                                  <a href="/tutor_profile"  class="btn btn-danger btn-xl" style="float: right;" ><strong> Cancel</strong></a>

@@ -5,6 +5,10 @@ const { response } = require('express');
 const { default: swal } = require('sweetalert');
 const { HTTPVersionNotSupported } = require('http-errors');
 
+const  verifyStudentIn= (req, res, next) => {
+  if (req.session.loggedStudentIn) { next() }
+  else { res.redirect('/student/student_login') }
+}
 /* GET student listing. */
 router.get('/', function(req, res, next) {
   res.render('index');
@@ -108,8 +112,16 @@ res.redirect('/student/student_changepassword')
    })
  }
 })
+router.get('/student_profile', verifyStudentIn, (req, res) => {
+  id=req.session.student._id
+  studentHelpers.getStudentProfileDetails(id).then((profile) => {
+    res.render('student/student_profile', { student: true, profile })
+    console.log(profile);
+  })
+})
 
-router.get('/student_home',(req,res)=>{
+
+router.get('/student_home',verifyStudentIn,(req,res)=>{
   res.render('student/student_home',{student:true})
 })
 

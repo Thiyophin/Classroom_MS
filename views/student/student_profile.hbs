@@ -1,0 +1,23 @@
+<section>
+    <div class="main">
+<div class="row">
+    <div class="col-md-8 m-auto">
+        <div class="container mt-5 pl-5">
+            {{#if profile}}
+            <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong>Profile</strong>  </h2>    
+             <img src="/students-images/{{profile._id}}.jpg" alt="" style=" border-radius: 50%;
+          width: 100px;height:100px;float: right;">
+            <div class="tutor-profile" style=" color: rgba(23, 36, 211, 0.836);">
+                 <label><strong>Name:</strong> {{profile.Name}}</label> <br>             
+                  <label><strong>Roll no:</strong> {{profile.RollNo}} </label>   <br>            
+                  <label><strong>Mobile no:</strong> {{profile.Mob}} </label> <br>   
+                  <label><strong>Email address:</strong> {{profile.Email}} </label> <br>             
+                  <label><strong>Address:</strong> {{profile.Address}} </label>  <br>                              
+            </div>
+                  {{/if}}
+        </div>
+    </div>
+</div>
+</div>
+</section>
+

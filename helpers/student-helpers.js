@@ -12,7 +12,7 @@ module.exports = {
             student.Password = await bcrypt.hash(student.Password, 10)
             db.get().collection(collection.STUDENT_COLLECTION).insertOne(student).then((data) => {
                 //console.log(data);
-                resolve();
+                resolve(data.ops[0]._id);
             })
         })
     },
@@ -145,14 +145,10 @@ module.exports = {
                 resolve({status:false})
             }
         })
-    }
+    },getStudentProfileDetails:(id)=>{
+        return new Promise(async(resolve,reject)=>{
+            let profile=await db.get().collection(collection.STUDENT_COLLECTION).findOne({ _id: ObjectId(id) })
+            resolve(profile)
+        })
 }
-
-
-
-
-
-
-
-
-
+}

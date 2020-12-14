@@ -3,7 +3,7 @@ var router = express.Router();
 var tutorHelpers = require('../helpers/tutor-helpers')
 var studentHelpers = require('../helpers/student-helpers');
 const { response } = require('express');
-var path = require('path')
+var path = require('path');
 
 const verifyLogin = (req, res, next) => {
   if (req.session.loggedTutorIn) { next() }
@@ -56,24 +56,28 @@ router.get('/tutor_profile', verifyLogin, (req, res) => {
     res.render('tutor/tutor_profile', { tutor: true, profile })
   })
 })
-router.get('/tutor_editprofile/:id', verifyLogin, async (req, res) => {
-  let profile = await tutorHelpers.getTutorDetails(req.params.id)
+router.get('/tutor_editprofile', verifyLogin, async (req, res) => {
+  let profile = await tutorHelpers.getTutorDetails(req.query.id)
   //console.log(profile);
-  res.render('tutor/tutor_editprofile', { tutor: true, profile })
+  res.render('tutor/tutor_editprofile', { tutor: true, profile,photoError:req.session.photoError})
+req.session.photoError=null
 })
 router.post('/tutor_editprofile', (req, res) => {
   // console.log(req.body);
   tutorHelpers.updateProfile(req.body).then(() => {
-    res.redirect('/tutor_profile')
     let id = req.body.id
-    if (req.files.Image) {
+    if (req.files) {
       let image = req.files.Image
       let extName = path.extname(image.name)
       let imgList = ['.png', '.jpg', '.jpeg', '.gif'];
-      if (imgList.includes(extName)) {
-        image.mv('./public/tutor-images/' + id + '.jpg')
+         if (imgList.includes(extName)) {
+           image.mv('./public/tutor-images/' + id + '.jpg')
+           res.redirect('/tutor_profile')
+          }else{
+        req.session.photoError="FAILED!!! Image format not recongnized"
+        res.redirect('/tutor_editprofile')
       }
-    }
+    }else{ res.redirect('/tutor_profile')}
   })
 })
 router.get('/tutor_students', verifyLogin, (req, res) => {
@@ -84,12 +88,24 @@ router.get('/tutor_students', verifyLogin, (req, res) => {
 })
 
 router.get('/tutor_addstudent', verifyLogin, (req, res) => {
-  res.render('tutor/tutor_addstudent', { tutor: true })
+  res.render('tutor/tutor_addstudent', { tutor: true ,photoError:req.session.photoError})
+  req.session.photoError=null
 })
 router.post('/tutor_addstudent', (req, res) => {
-  studentHelpers.addStudent(req.body).then(() => {
+  if (req.files.Image) {
+    let image = req.files.Image
+    let extName = path.extname(image.name)
+    let imgList = ['.png', '.jpg', '.jpeg'];
+    if (imgList.includes(extName)){
+  studentHelpers.addStudent(req.body).then((id) => {
     res.redirect('/tutor_students')
-  })
+    let image=req.files.Image
+    image.mv('./public/students-images/'+id+'.jpg')
+  })}else{
+    req.session.photoError="FAILED!!! Image format not recongnized"
+    res.redirect('/tutor_addstudent')
+  }
+  }
 })
 
 router.get('/delete_student/:id', verifyLogin, (req, res) => {
@@ -100,14 +116,28 @@ router.get('/delete_student/:id', verifyLogin, (req, res) => {
   })
 })
 
-router.get('/tutor_editstudent/:id', verifyLogin, async (req, res) => {
-  let student = await studentHelpers.getStudentDetails(req.params.id)
+router.get('/tutor_editstudent', verifyLogin, async (req, res) => {
+  let student = await studentHelpers.getStudentDetails(req.query.id)
   //console.log(student);
-  res.render('tutor/tutor_editstudent', { tutor: true, student })
+  res.render('tutor/tutor_editstudent', { tutor: true, student ,photoError:req.session.photoError})
+req.session.photoError=null
 })
 router.post('/tutor_editstudent/:id', (req, res) => {
   studentHelpers.updateStudentDetails(req.params.id, req.body).then(() => {
+    if (req.files) {
+    let image = req.files.Image
+    let extName = path.extname(image.name)
+    let imgList = ['.png', '.jpg', '.jpeg'];
+        if (imgList.includes(extName)) {
+         let id = req.body.id
+           image.mv('./public/students-images/' + id + '.jpg')
+           res.redirect('/tutor_students')}
+        else{
+          req.session.photoError="FAILED!!! Image format not recongnized"
+          res.redirect('/tutor_editstudent')
+    }}else{
     res.redirect('/tutor_students')
+     }
   })
 })
 
