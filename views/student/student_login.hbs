@@ -10,15 +10,17 @@
       </section>
       {{/if}}
       <form action="/student/student_login" method="post">
-        <div class="form-group">
+        <div class="form-group fontuser">
           <label for="Student-login" id="label" style="font-size: x-large;block-size: 2px;
           color:darkblue"><strong> Username </strong></label>
-          <input type="text" name="Name" class="form-control" placeholder="Username">
+          <input type="text" name="Name"style=" padding: 8px 40px;  
+            margin: 8px 0;" class="form-control" placeholder="Username" required>  <i class="fa fa-user fa-lg"></i>
         </div>
-        <div class="form-group">
+        <div class="form-group fontpassword">
           <label for="passWord" id="label" style="font-size: x-large;block-size: 2px;
           color:darkblue;"><strong> Password </strong></label>
-          <input type="password" name="Password" class="form-control" placeholder="Password">
+          <input type="password" name="Password" style=" padding: 8px 40px;  
+            margin: 8px 0;" class="form-control" placeholder="Password" minlength="8" required> <i class="fa fa-key fa-lg"></i> 
         </div>
         <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
         <a href="/student/student_changepassword" style="color: rgb(20, 34, 223);"><strong>Forgot Password </strong> </a>

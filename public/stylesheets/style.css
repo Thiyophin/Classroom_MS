@@ -175,3 +175,43 @@ div.close {
   color: #888;
   cursor: pointer;
 }
+
+/* style for input fields have font awesome icons inside */
+.fontuser { 
+  position: relative; 
+} 
+
+.fontuser i{ 
+  position: absolute; 
+  left: 15px; 
+  top: 50px; 
+  color: gray; 
+} 
+
+.fontpassword { 
+  position: relative; 
+} 
+
+.fontpassword i{ 
+  position: absolute; 
+  left: 15px; 
+  top: 50px; 
+  color: gray; 
+} 
+/* student assignment upload button css */
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}

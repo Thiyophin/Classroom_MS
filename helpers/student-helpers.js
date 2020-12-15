@@ -150,5 +150,11 @@ module.exports = {
             let profile=await db.get().collection(collection.STUDENT_COLLECTION).findOne({ _id: ObjectId(id) })
             resolve(profile)
         })
+},getAllAssignments:()=>{
+    return new Promise(async(resolve,reject)=>{
+        let assignments=await db.get().collection(collection.ASSIGNMENT_COLLECTION).find().toArray()
+       //console.log(assignments);
+       resolve(assignments)
+    })
 }
 }

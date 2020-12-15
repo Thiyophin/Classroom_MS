@@ -120,6 +120,11 @@ router.get('/student_profile', verifyStudentIn, (req, res) => {
   })
 })
 
+router.get('/student_assignment',verifyStudentIn,(req,res)=>{
+  studentHelpers.getAllAssignments().then((assignments)=>{
+    res.render('student/student_assignment',{student:true,assignments})
+  })
+})
 
 router.get('/student_home',verifyStudentIn,(req,res)=>{
   res.render('student/student_home',{student:true})

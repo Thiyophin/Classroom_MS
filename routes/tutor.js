@@ -4,6 +4,7 @@ var tutorHelpers = require('../helpers/tutor-helpers')
 var studentHelpers = require('../helpers/student-helpers');
 const { response } = require('express');
 var path = require('path');
+var fs = require('fs');
 
 const verifyLogin = (req, res, next) => {
   if (req.session.loggedTutorIn) { next() }
@@ -112,6 +113,10 @@ router.get('/delete_student/:id', verifyLogin, (req, res) => {
   let studentId = req.params.id
   // console.log(studentId);
   studentHelpers.deleteStudent(studentId).then((response) => {
+    fs.unlink('./public/students-images/'+studentId+'.jpg', function (err) {
+      if (err) throw err;
+      console.log('File deleted!');
+    });
     res.redirect('/tutor_students')
   })
 })
@@ -167,6 +172,10 @@ router.get('/delete_assignment/:id', verifyLogin, (req, res) => {
   let assignmentId = req.params.id
   console.log(assignmentId);
   tutorHelpers.deleteAssignment(assignmentId).then((response) => {
+    fs.unlink('./public/assignments/'+assignmentId+'.pdf', function (err) {
+      if (err) throw err;
+      console.log('File deleted!');
+    });
     res.redirect('/tutor_assignments')
   })
 })
