@@ -30,7 +30,7 @@ $('#sentOtp-form').submit((e)=>{
       success:(response)=>{
        console.log(response)
         if(response.status){
-         location.href='/student/student_home'
+         location.href='/student/student_changepassword'
        }else{ swal({
         title:'Incorrect OTP number',
         icon:"warning",

@@ -180,6 +180,14 @@ router.get('/delete_assignment/:id', verifyLogin, (req, res) => {
   })
 })
 
+router.get('/tutor_validateStudAssignments',verifyLogin,async(req,res)=>{
+  let assignments = await tutorHelpers.assignmentsSubmitted(req.query.id)
+ console.log(assignments);
+ let profile = req.query
+ //console.log(profile);
+  res.render('tutor/tutor_validateStudAssignments',{tutor:true,assignments,profile})
+})
+
 router.get('/tutor_home', verifyLogin, (req, res) => {
   res.render('tutor/tutor_home', { tutor: true })
 })

@@ -17,7 +17,7 @@
                         {{#each students}}
                         <tr>
                             <td >{{this.RollNo}}</td>
-                            <td >{{this.Name}}</td>
+                        <td ><a href="/tutor_validateStudAssignments?id={{this._id}}&Name={{this.Name}}&RollNo={{this.RollNo}}&Mob={{this.Mob}}&Email={{this.Email}}" style="text-decoration: none;">{{this.Name}} </a></td>  
                             <td ><a href="/tutor_editstudent?id={{this._id}}" style="color: black;">
                             <i class="fas fa-edit"></i></a>  <a href="/delete_student/{{this._id}}" onclick="confirmation(event)"  style="color: black;"><i class="fas fa-trash-alt" style="margin-left: 20px;"></i></a></td>
                         </tr>

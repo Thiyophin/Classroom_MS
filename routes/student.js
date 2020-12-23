@@ -4,6 +4,7 @@ var studentHelpers = require('../helpers/student-helpers');
 const { response } = require('express');
 const { default: swal } = require('sweetalert');
 const { HTTPVersionNotSupported } = require('http-errors');
+var path = require('path');
 
 const  verifyStudentIn= (req, res, next) => {
   if (req.session.loggedStudentIn) { next() }
@@ -24,9 +25,9 @@ router.get('/student_sentotp',(req,res)=>{
 
 router.post('/student_sentotp',(req,res)=>{
  studentHelpers.checkMobNum(req.body).then((response)=>{
-  // console.log(req.body.Number);
    if(response.status){
-     req.session.student=response.student
+    req.session.Number=response.student.Mob
+   // console.log(req.session.Number);
       res.json(response)
    }else{
    res.json({status:false})
@@ -46,7 +47,6 @@ router.post('/student_verifyOtp',(req,res)=>{
     studentHelpers.verifyOtp(req.body).then((response)=>{
       //console.log(response);
       if(response.status){
-        req.session.loggedStudentIn=true
         res.json(response)
       }else{
         res.json({})
@@ -76,6 +76,7 @@ router.post('/student_login',(req,res)=>{
       if(response.status){
         req.session.student=response.student
         req.session.loggedStudentIn=true
+        req.session.Number=null
         res.redirect('/student/student_home')
       }else{
         req.session.loginErr="Invalid username or password"
@@ -88,27 +89,22 @@ router.get('/student_changepassword',(req,res)=>{
   if(req.session.loggedStudentIn){
     res.redirect('/student/student_home')
   }else{
-    res.render('student/student_changepassword',{error:req.session.loginErr,errors:req.session.loginErrs})
+    res.render('student/student_changepassword',{error:req.session.loginErr})
     req.session.loginErr=null
-    req.session.loginErrs=null
   }
 })
 
 router.post('/student_changepassword',(req,res)=>{
+  //console.log(req.body);
  req.check('newPass','Passwords do not match').isLength({min:8}).equals(req.body.Password)
  var error=req.validationErrors()
  if(error){
 req.session.loginErr=error
+//console.log(req.session.Number);
 res.redirect('/student/student_changepassword')
  }else{
-   studentHelpers.changePassword(req.body).then((response)=>{
-     if(response.status){
+   studentHelpers.changePassword(req.session.Number,req.body).then((response)=>{
       res.redirect('/student/student_login')
-     }
-   else{
-     req.session.loginErrs='Invalid Username'
-     res.redirect('/student/student_changepassword')
-   }
    })
  }
 })
@@ -122,8 +118,30 @@ router.get('/student_profile', verifyStudentIn, (req, res) => {
 
 router.get('/student_assignment',verifyStudentIn,(req,res)=>{
   studentHelpers.getAllAssignments().then((assignments)=>{
-    res.render('student/student_assignment',{student:true,assignments})
+    res.render('student/student_assignment',{student:true,assignments,pdfError:req.session.pdfError})
+    req.session.pdfError=null
   })
+})
+
+router.post('/student_submitAssignment/:assignmentsId',verifyStudentIn,(req,res)=>{
+  if (req.files) {
+    let studentId=req.session.student._id
+    let assignmentsId=req.params.assignmentsId
+    let assignment = req.files.Assignment
+    let assignmentList = ['.pdf', 'DOC', 'DOCX', 'TXT'];
+    let extName = path.extname(assignment.name)
+    if (assignmentList.includes(extName)){
+      studentHelpers.addStudentAssignment(assignmentsId,studentId).then(() => {
+        assignment.mv('./public/studentAssignments/'+assignmentsId+'.pdf')
+        res.redirect('/student/student_assignment')
+   })}else{
+     req.session.pdfError="Document file cannot be recongnized"
+    res.redirect('/student/student_assignment')
+   }
+  }else{
+    req.session.pdfError="Document field is empty"
+   res.redirect('/student/student_assignment')
+  }
 })
 
 router.get('/student_home',verifyStudentIn,(req,res)=>{

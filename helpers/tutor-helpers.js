@@ -80,5 +80,32 @@ module.exports={
                 resolve(response)
             })
     })
+},assignmentsSubmitted:(studentId)=>{
+    return new Promise(async(resolve,reject)=>{
+       try{ let assignmentsSubmitted = await db.get().collection(collection.STUDENT_ASSIGNMENTS_COLLECTION)
+        .aggregate([
+            {
+                $match:{student:ObjectId(studentId)}
+            },{
+                $lookup:{
+                    from:collection.ASSIGNMENT_COLLECTION,
+                    let :{assignmentList:'$assignments'},
+                    pipeline:[
+                        {
+                            $match:{
+                                $expr:{
+                                    $in:['$_id',"$$assignmentList"]
+                                }
+                            }
+                        }
+                    ],as:'assignmentsSubmitted'
+                }
+            }
+        ]).toArray()
+        resolve(assignmentsSubmitted[0].assignmentsSubmitted)}
+        catch(err){
+            resolve()
+        }
+    })
 }
 }

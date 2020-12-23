@@ -70,7 +70,7 @@ module.exports = {
                     .end(function (res) {
                         //console.log(res.raw_body);
                         response.otp_id = res.body.otp_id
-                        response.student=res.body.student
+                        response.student=student
                         response.status = true
                         resolve(response)
                     })
@@ -106,12 +106,13 @@ module.exports = {
                 });
 
         })
-    },changePassword:(newPass)=>{
+    },changePassword:(Number,newPass)=>{
         return new Promise(async(resolve,reject)=>{
-            let student=await db.get().collection(collection.STUDENT_COLLECTION).findOne({Name:newPass.Name})
+            console.log(Number);
+            let student=await db.get().collection(collection.STUDENT_COLLECTION).findOne({Mob:Number})
            if(student){
             newPass.Password = await bcrypt.hash(newPass.Password, 10)
-               db.get().collection(collection.STUDENT_COLLECTION).updateOne({Name:newPass.Name},
+               db.get().collection(collection.STUDENT_COLLECTION).updateOne({Mob:Number},
                 {
                     $set:{
                         Password:newPass.Password
@@ -153,8 +154,31 @@ module.exports = {
 },getAllAssignments:()=>{
     return new Promise(async(resolve,reject)=>{
         let assignments=await db.get().collection(collection.ASSIGNMENT_COLLECTION).find().toArray()
-       //console.log(assignments);
        resolve(assignments)
+    })
+},addStudentAssignment:(assignmentsID,studentId)=>{
+    return new Promise(async(resolve,reject)=>{
+        let studentAssignments=await db.get().collection(collection.STUDENT_ASSIGNMENTS_COLLECTION).
+        findOne({student:ObjectId(studentId)})
+        if(studentAssignments){
+            db.get().collection(collection.STUDENT_ASSIGNMENTS_COLLECTION).updateOne({student:ObjectId(studentId)},
+            {
+                $push:{ assignments:ObjectId(assignmentsID) }
+            }).then((response)=>{
+               resolve()
+              // console.log(response);
+            })
+        }else{
+            let assignmentsObject={
+                student:ObjectId(studentId),
+                assignments:[ObjectId(assignmentsID)]
+            }
+            db.get().collection(collection.STUDENT_ASSIGNMENTS_COLLECTION).insertOne(assignmentsObject)
+            .then((response)=>{
+                resolve()
+               // console.log(response);
+            })
+        }
     })
 }
 }

@@ -4,6 +4,12 @@
             <div class="col-md-8 m-auto">
                 <div class="container  mt-3">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);padding-bottom: 15px;"><strong> Assignments </strong></h2>
+                    {{#if pdfError}}
+                            <div class="bar pdferror">
+                                <i class="ico">&#9747;</i> {{pdfError}}
+                            </div>
+                    {{/if}} 
+                    <h1>{{assignments.studentId}}</h1>
                 <table class="table" width="100%" style="border-top: 5px;text-align: center;">
                     <col style="width:35%">
 	                <col style="width:35%">
@@ -14,7 +20,6 @@
                             <th scope="col">Topic</th>
                             <th scope="col">File</th>
                             <th scope="col">Action</th>
-                            <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody style="background-color: rgb(131, 224, 131);">
@@ -22,18 +27,18 @@
                         <tr>
                             <td >{{this.Topic}}</td>
                             <td > <a href='/assignments/{{this._id}}.pdf' type='application/pdf'> {{this.Topic}}.pdf</a></td>
-                            <td >
-                            <a href="" class="btn btn-info rounded-pill" style="color: rgb(240, 236, 236);">Open</a> 
-                               <form action="">
-                               <div class="fileUpload btn btn-primary">
-                               <span>Upload</span>
-                               <input type="file" class="upload" />
+                            <td > 
+                                
+                            <a href="/studentAssignments/{{this._id}}.pdf"   type='application/pdf'
+                             class="btn btn-info rounded-pill" style="color: rgb(240, 236, 236);">Open</a> 
+                    
+                               <form id="studentSubmit-assignment" action="/student/student_submitAssignment/{{this._id}}" method="post" enctype="multipart/form-data"> 
+                               <div class="fileUpload btn btn-danger">
+                               <span>Find</span>
+                               <input type="file"  name="Assignment" id="Assignment" class="upload" />
                               </div>
-                              </form type="submit">
-                            </td>
-                            <td >
-                                {{!-- <i class="fa fa-check" aria-hidden="true"></i> --}}
-                                <i class="fa fa-times" aria-hidden="true"></i>
+                              <button class="btn btn-success">Upload</button>
+                              </form>
                             </td>
                         </tr>
                      {{/each}}
@@ -44,3 +49,20 @@
         </div>
     </div>
 </section>
+
+<script>
+const form =  document.querySelector('#studentSubmit-assignment');
+    var delayTime=1000
+   form.addEventListener('submit',event=>{
+       event.preventDefault();
+               swal({
+                   title:'Assignment Submitted',
+                   icon:'success',
+                   buttons:{ok:false}
+               })
+               setTimeout(function(){
+             form.submit()
+               },delayTime)     
+           }
+   )
+   </script>
