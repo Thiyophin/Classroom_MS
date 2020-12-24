@@ -107,5 +107,27 @@ module.exports={
             resolve()
         }
     })
+},addNotes:(notes)=>{
+    return new Promise((resolve,reject)=>{
+       db.get().collection(collection.NOTES_COLLECTION).insertOne(notes).then((response)=>{
+          // console.log(response); 
+           resolve(response.ops[0]._id)
+        })
+    })
+},getAllNotes:()=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.NOTES_COLLECTION).find().toArray().then((response)=>{
+             //console.log(response);
+            resolve(response)
+        })
+        
+    })
+},deleteNotes: (notesId) => {
+    return new Promise((resolve, reject) => {
+        db.get().collection(collection.NOTES_COLLECTION).removeOne({ _id: ObjectId(notesId) })
+            .then((response) => {
+                resolve(response)
+            })
+    })
 }
 }

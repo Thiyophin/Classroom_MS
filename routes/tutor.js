@@ -188,6 +188,38 @@ router.get('/tutor_validateStudAssignments',verifyLogin,async(req,res)=>{
   res.render('tutor/tutor_validateStudAssignments',{tutor:true,assignments,profile})
 })
 
+router.get('/tutor_notes',verifyLogin,async(req,res)=>{
+  let notes = await tutorHelpers.getAllNotes()
+  console.log(notes);
+  res.render('tutor/tutor_notes',{tutor:true,notes})
+})
+
+router.post('/tutor_notes',(req,res)=>{
+  tutorHelpers.addNotes(req.body).then((id)=>{
+  let Document = req.files.Document
+  let Video = req.files.Video
+  Document.mv('./public/documents/' + id + '.pdf')
+  Video.mv('./public/videos/' + id + '.mp4')
+  res.redirect('/tutor_notes')
+  })
+})
+
+router.get('/tutor_deleteNotes/:id', verifyLogin, (req, res) => {
+  let notesId = req.params.id
+  console.log(notesId);
+  tutorHelpers.deleteNotes(notesId).then((response) => {
+    fs.unlink('./public/documents/'+notesId+'.pdf', function (err) {
+      if (err) throw err;
+     // console.log('document deleted!');
+    });
+    fs.unlink('./public/videos/'+notesId+'.mp4',function (err) {
+      if (err) throw err;
+     // console.log('videos deleted!');
+    });
+    res.redirect('/tutor_notes')
+  })
+})
+
 router.get('/tutor_home', verifyLogin, (req, res) => {
   res.render('tutor/tutor_home', { tutor: true })
 })

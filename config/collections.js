@@ -2,5 +2,6 @@ module.exports={
     TUTOR_COLLECTION:'tutor',
     STUDENT_COLLECTION:'student',
     ASSIGNMENT_COLLECTION:'assignment',
-    STUDENT_ASSIGNMENTS_COLLECTION:'studentAssignments'
+    STUDENT_ASSIGNMENTS_COLLECTION:'studentAssignments',
+    NOTES_COLLECTION:'notes'
 }

@@ -117,7 +117,8 @@ router.get('/student_profile', verifyStudentIn, (req, res) => {
 })
 
 router.get('/student_assignment',verifyStudentIn,(req,res)=>{
-  studentHelpers.getAllAssignments().then((assignments)=>{
+  studentHelpers.getAllAssignments(req.session.student._id).then((assignments)=>{
+    console.log(assignments);
     res.render('student/student_assignment',{student:true,assignments,pdfError:req.session.pdfError})
     req.session.pdfError=null
   })
@@ -132,7 +133,7 @@ router.post('/student_submitAssignment/:assignmentsId',verifyStudentIn,(req,res)
     let extName = path.extname(assignment.name)
     if (assignmentList.includes(extName)){
       studentHelpers.addStudentAssignment(assignmentsId,studentId).then(() => {
-        assignment.mv('./public/studentAssignments/'+assignmentsId+'.pdf')
+        assignment.mv('./public/studentAssignments/'+assignmentsId+'.'+studentId+'.pdf')
         res.redirect('/student/student_assignment')
    })}else{
      req.session.pdfError="Document file cannot be recongnized"
@@ -142,6 +143,13 @@ router.post('/student_submitAssignment/:assignmentsId',verifyStudentIn,(req,res)
     req.session.pdfError="Document field is empty"
    res.redirect('/student/student_assignment')
   }
+})
+
+router.get('/student_notes',verifyStudentIn,(req,res)=>{
+  studentHelpers.getAllNotes().then((notes)=>{
+    console.log(notes);
+  res.render('student/student_notes',{student:true,notes})
+})
 })
 
 router.get('/student_home',verifyStudentIn,(req,res)=>{
