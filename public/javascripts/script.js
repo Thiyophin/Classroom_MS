@@ -41,3 +41,45 @@ $('#sentOtp-form').submit((e)=>{
       }
     })
   })
+
+  $('#sentOtp-form-login').submit((e)=>{
+    e.preventDefault()
+    $.ajax({
+      url:'/student/student_loginUseOtp',
+      method:'post',
+      data:$('#sentOtp-form-login').serialize(),
+      success:(response)=>{
+        if(response.status){
+          location.href='/student/student_verifyOtpLogin/'+response.otp_id
+        }else{
+          swal({
+            title:'Mobile number not found',
+            icon:"warning",
+          }).then((val)=>{
+            if(val)location.href='/student/student_loginUseOtp'
+          })        
+        }
+      }
+    })
+  })
+
+  $('#verify-Otp-login').submit((e)=>{
+    e.preventDefault()
+    $.ajax({
+      url:'/student/student_verifyOtpLogin',
+      method:'post',
+      data:$('#verify-Otp-login').serialize(),
+      success:(response)=>{
+       console.log(response)
+        if(response.status){
+         location.href='/student/student_home'
+       }else{ swal({
+        title:'Incorrect OTP number',
+        icon:"warning",
+      }).then((val)=>{
+        if(val)  window.location.reload(true)
+      })     
+       }
+      }
+    })
+  })

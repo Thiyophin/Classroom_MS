@@ -9,9 +9,6 @@
                                 <i class="ico">&#9747;</i> {{pdfError}}
                             </div>
                     {{/if}} 
-                    {{#each assignments}}
-                    <h1>{{studentId}}</h1>
-                    {{/each}}
                 <table class="table" width="100%" style="border-top: 5px;text-align: center;">
                     <col style="width:35%">
 	                <col style="width:35%">
@@ -24,14 +21,14 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
+                    <h1>{{assignments.id}}</h1>
                     <tbody style="background-color: rgb(131, 224, 131);">
                       {{#each assignments}}
                         <tr>
                             <td >{{this.Topic}}</td>
                             <td > <a href='/assignments/{{this._id}}.pdf' type='application/pdf'> {{this.Topic}}.pdf</a></td>
                             <td > 
-                                
-                            <a href="/studentAssignments/{{this._id}}.{{this.studentId}}.pdf"   type='application/pdf'
+                            <a href="/studentAssignments/{{this._id}}.{{this.id}}.pdf"   type='application/pdf'
                              class="btn btn-info rounded-pill" style="color: rgb(240, 236, 236);">Open</a> 
                     
                                <form id="studentSubmit-assignment" action="/student/student_submitAssignment/{{this._id}}" method="post" enctype="multipart/form-data"> 

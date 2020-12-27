@@ -206,7 +206,7 @@ router.post('/tutor_notes',(req,res)=>{
 
 router.get('/tutor_deleteNotes/:id', verifyLogin, (req, res) => {
   let notesId = req.params.id
-  console.log(notesId);
+  //console.log(notesId);
   tutorHelpers.deleteNotes(notesId).then((response) => {
     fs.unlink('./public/documents/'+notesId+'.pdf', function (err) {
       if (err) throw err;

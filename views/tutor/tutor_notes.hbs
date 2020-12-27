@@ -47,11 +47,11 @@
                     <tbody style="background-color: rgb(131, 187, 224);">
                         {{#each notes}}
                      <tr>
-                         <td style="color: rgb(236, 6, 6);">22/09/2022</td>
-                         <td style="color: rgb(236, 6, 6);">{{this.Topic}}</td>
-                         <td><a href='/documents/{{this._id}}.pdf' type='application/pdf' style="color: red;"><i class="fa fa-file-pdf-o fa-lg"  aria-hidden="true"></i></a></td>
+                         <td style="color: rgb(236, 6, 6);">{{this.date}}</td>
+                         <td style="color: rgb(236, 6, 6);">{{notes.Topic}}</td>
+                         <td><a href='/documents/{{this._id}}.pdf' type='application/pdf'  style="color: red;" ><i class="fa fa-file-pdf-o fa-lg"  aria-hidden="true"></i></a></td>
                          <td><video  width="170" height="95" controls><source src="/videos/{{this._id}}.mp4"></video></td>
-                         <td><a href="{{this.Link}}" style="color: rgb(236, 6, 6);">To learn more click here</a></td>
+                         <td><a href="{{notes.Link}}" style="color: rgb(236, 6, 6);">To learn more click here</a></td>
                         <td><a href="/tutor_deleteNotes/{{this._id}}" onclick="confirmation(event)" style="color: rgb(20, 110, 32);"><i class="fas fa-trash-alt" style="margin-left: 20px;"></i></a></td>
                      </tr>
                      {{/each}}

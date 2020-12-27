@@ -15,6 +15,54 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/student_loginUseOtp',(req,res)=>{
+  if(req.session.loggedStudentIn){
+    res.redirect('/student/student_home')
+  }else{
+    res.render('student/student_loginUseOtp')
+  }
+})
+
+router.post('/student_loginUseOtp',(req,res)=>{
+  studentHelpers.checkMobNum(req.body).then((response)=>{
+    if(response.status){
+    // console.log(req.session.Number);
+       res.json(response)
+    }else{
+    res.json({status:false})
+    }
+  })
+ })
+
+ router.get('/student_verifyOtpLogin/:otpId',(req,res)=>{
+  if(req.session.loggedStudentIn){
+    res.redirect('/student/student_home')
+  }else{
+    let otpId=req.params.otpId
+    res.render('student/student_verifyOtpLogin',{otpId})
+  }
+})
+
+router.post('/student_verifyOtpLogin',(req,res)=>{
+  studentHelpers.verifyOtp(req.body).then((response)=>{
+    console.log(response);
+    if(response.status){
+      req.session.student=response.student
+      req.session.loggedStudentIn=true
+      res.json(response)
+    }else{
+      res.json({})
+    }
+  })
+})
+
+router.get('/student_resentOtpLogin/:otpId',(req,res)=>{
+  let otpId=req.params.otpId
+  studentHelpers.resentOtp(otpId).then((response)=>{
+    res.redirect('/student/student_verifyOtpLogin/'+otpId)
+  })
+})
+
 router.get('/student_sentotp',(req,res)=>{
   if(req.session.loggedStudentIn){
     res.redirect('/student/student_home')

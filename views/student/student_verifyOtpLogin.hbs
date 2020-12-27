@@ -1,0 +1,19 @@
+<section>
+  <div class="bg-cover" >
+  <div class="container " style="display: grid;place-items: center;padding-top: 110px;">
+    <div class="col-md-6 col-sm-6 col-xs-12 pt-5">
+     <form action="" id="verify-Otp-login" method="post">
+        <div class="form-group fontuser">
+          <label for="Tutor-login" id="label" style="font-size: x-large;block-size: 2px;
+          color:rgb(233, 27, 13)"><strong> Verify OTP No: </strong></label>
+          <input type="number" style=" padding: 8px 40px;  
+            margin: 8px 0;" name="OTP" class="form-control" placeholder="Enter your OTP number"><i class="fa fa-mobile fa-lg"></i> 
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <input type="hidden" name="otp_id" value="{{otpId}}">
+         <a href="/student/student_resentOtpLogin/{{otpId}}" class="btn btn-primary"  > Resent OTP</a>
+      </form>
+    </div>
+  </div>
+  </div>
+</section>
