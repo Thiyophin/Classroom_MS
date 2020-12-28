@@ -30,7 +30,7 @@
                       {{#each assignments}}
                         <tr>
                             <td >{{this.Topic}}</td>      
-                            <td > <a href="/studentAssignments/{{this._id}}.pdf"   type='application/pdf'
+                            <td > <a href="/studentAssignments/{{this._id}}.{{../profile.id}}.pdf"   type='application/pdf'
                              class="btn btn-info rounded-pill" style="color: rgb(240, 236, 236);">Open</a> 
                             </td>
                         </tr>

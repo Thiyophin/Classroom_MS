@@ -21,14 +21,13 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <h1>{{assignments.id}}</h1>
                     <tbody style="background-color: rgb(131, 224, 131);">
                       {{#each assignments}}
                         <tr>
                             <td >{{this.Topic}}</td>
                             <td > <a href='/assignments/{{this._id}}.pdf' type='application/pdf'> {{this.Topic}}.pdf</a></td>
                             <td > 
-                            <a href="/studentAssignments/{{this._id}}.{{this.id}}.pdf"   type='application/pdf'
+                            <a href="/studentAssignments/{{this._id}}.{{../studentId}}.pdf"   type='application/pdf'
                              class="btn btn-info rounded-pill" style="color: rgb(240, 236, 236);">Open</a> 
                     
                                <form id="studentSubmit-assignment" action="/student/student_submitAssignment/{{this._id}}" method="post" enctype="multipart/form-data"> 
@@ -36,7 +35,7 @@
                                <span>Find</span>
                                <input type="file"  name="Assignment" id="Assignment" class="upload" />
                               </div>
-                              <button class="btn btn-success">Upload</button>
+                              <button class="btn btn-success" type="submit">Upload</button>
                               </form>
                             </td>
                         </tr>
@@ -50,10 +49,10 @@
 </section>
 
 <script>
-const form =  document.querySelector('#studentSubmit-assignment');
-    var delayTime=1000
+var form =  document.querySelector('#studentSubmit-assignment');
    form.addEventListener('submit',event=>{
-       event.preventDefault();
+         event.preventDefault();
+        var delayTime=1000
                swal({
                    title:'Assignment Submitted',
                    icon:'success',

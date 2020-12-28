@@ -151,10 +151,10 @@ module.exports = {
             let profile=await db.get().collection(collection.STUDENT_COLLECTION).findOne({ _id: ObjectId(id) })
             resolve(profile)
         })
-},getAllAssignments:(id)=>{
+},getAllAssignments:()=>{
     return new Promise(async(resolve,reject)=>{
-        let assignments=await db.get().collection(collection.ASSIGNMENT_COLLECTION).find().toArray()
-       assignments.id=idg
+        let assignments=await db.get().collection(collection.ASSIGNMENT_COLLECTION)
+        .find().toArray()
         resolve(assignments)
     })
 },addStudentAssignment:(assignmentsID,studentId)=>{
@@ -166,8 +166,8 @@ module.exports = {
             {
                 $push:{ assignments:ObjectId(assignmentsID) }
             }).then((response)=>{
+               // console.log(response);
                resolve()
-              // console.log(response);
             })
         }else{
             let assignmentsObject={
@@ -176,8 +176,8 @@ module.exports = {
             }
             db.get().collection(collection.STUDENT_ASSIGNMENTS_COLLECTION).insertOne(assignmentsObject)
             .then((response)=>{
-                resolve()
                // console.log(response);
+                resolve()
             })
         }
     })
@@ -185,6 +185,20 @@ module.exports = {
     return new Promise(async(resolve,reject)=>{
         let notes=await db.get().collection(collection.NOTES_COLLECTION).find().toArray()
         resolve(notes)
+    })
+},getLastAssignment:()=>{
+    return new Promise(async(resolve,reject)=>{
+        let assignment=await db.get().collection(collection.ASSIGNMENT_COLLECTION)
+        .find().sort({$natural:-1}).limit(1).toArray()
+       // console.log(assignment);
+        resolve(assignment)
+    })
+},getLastNote:()=>{
+    return new Promise(async(resolve,reject)=>{
+        let note=await db.get().collection(collection.NOTES_COLLECTION)
+        .find().sort({$natural:-1}).limit(1).toArray()
+        //console.log(note);
+        resolve(note)
     })
 }
 }

@@ -26,7 +26,7 @@ router.get('/student_loginUseOtp',(req,res)=>{
 router.post('/student_loginUseOtp',(req,res)=>{
   studentHelpers.checkMobNum(req.body).then((response)=>{
     if(response.status){
-    // console.log(req.session.Number);
+      req.session.student=response.student
        res.json(response)
     }else{
     res.json({status:false})
@@ -47,7 +47,6 @@ router.post('/student_verifyOtpLogin',(req,res)=>{
   studentHelpers.verifyOtp(req.body).then((response)=>{
     console.log(response);
     if(response.status){
-      req.session.student=response.student
       req.session.loggedStudentIn=true
       res.json(response)
     }else{
@@ -165,9 +164,9 @@ router.get('/student_profile', verifyStudentIn, (req, res) => {
 })
 
 router.get('/student_assignment',verifyStudentIn,(req,res)=>{
-  studentHelpers.getAllAssignments(req.session.student._id).then((assignments)=>{
+  studentHelpers.getAllAssignments().then((assignments)=>{
     console.log(assignments);
-    res.render('student/student_assignment',{student:true,assignments,pdfError:req.session.pdfError})
+    res.render('student/student_assignment',{student:true,studentId:req.session.student._id,assignments,pdfError:req.session.pdfError})
     req.session.pdfError=null
   })
 })
@@ -198,6 +197,12 @@ router.get('/student_notes',verifyStudentIn,(req,res)=>{
     console.log(notes);
   res.render('student/student_notes',{student:true,notes})
 })
+})
+
+router.get('/student_task',verifyStudentIn,async(req,res)=>{
+  let assignment = await studentHelpers.getLastAssignment()
+  let note = await studentHelpers.getLastNote()
+  res.render('student/student_task',{student:true,studentId:req.session.student._id,assignment,note})
 })
 
 router.get('/student_home',verifyStudentIn,(req,res)=>{
