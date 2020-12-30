@@ -200,5 +200,14 @@ module.exports = {
         //console.log(note);
         resolve(note)
     })
+},registerAttendance:(date,studentId)=>{
+    const currentDate = new Date().toLocaleDateString()
+    console.log("currentdate"+currentDate);
+    console.log("passeddate"+date);
+    if(currentDate===date){
+        console.log("present");
+    }else{
+        console.log("absent");
+    }
 }
 }

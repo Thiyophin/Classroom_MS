@@ -194,9 +194,17 @@ router.post('/student_submitAssignment/:assignmentsId',verifyStudentIn,(req,res)
 
 router.get('/student_notes',verifyStudentIn,(req,res)=>{
   studentHelpers.getAllNotes().then((notes)=>{
-    console.log(notes);
-  res.render('student/student_notes',{student:true,notes})
+    //console.log(notes);
+  res.render('student/student_notes',{student:true,notes,student:req.session.student})
 })
+})
+
+router.get('/student_registerAttendance/:mm/:dd/:yyyy',verifyStudentIn,(req,res)=>{
+ let date = +req.params.mm+'/'+req.params.dd+'/'+req.params.yyyy
+ console.log(date)
+ studentHelpers.registerAttendance(date,req.session.student._id).then(()=>{
+
+ })
 })
 
 router.get('/student_task',verifyStudentIn,async(req,res)=>{
