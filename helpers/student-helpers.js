@@ -201,13 +201,63 @@ module.exports = {
         resolve(note)
     })
 },registerAttendance:(date,studentId)=>{
+    return new Promise(async(resolve,reject)=>{
+        let response={}
     const currentDate = new Date().toLocaleDateString()
-    console.log("currentdate"+currentDate);
-    console.log("passeddate"+date);
-    if(currentDate===date){
-        console.log("present");
-    }else{
-        console.log("absent");
+   try{ let presentDates=await db.get().collection(collection.STUDENT_COLLECTION)
+        .find({_id:ObjectId(studentId)},{projection:{ _id: 0,attendance:1}}).toArray()
+       // console.log(presentDates[0].attendance);
+    if(currentDate===date){  
+        if(presentDates[0].attendance.includes(currentDate)) {
+            resolve()
+         console.log('Already present today');
+        }
+         else{
+            db.get().collection(collection.STUDENT_COLLECTION).updateOne({_id:ObjectId(studentId)},
+            {
+                $push:{
+                    attendance:currentDate
+                }
+            }).then(()=>{
+                console.log('Did not present today');
+                resolve({response:true})
+            })
+        }
+    } else{
+        resolve()
+         console.log("absent");
+     }
+    }catch(err){
+        db.get().collection(collection.STUDENT_COLLECTION).updateOne({_id:ObjectId(studentId)},
+        {
+            $push:{
+                attendance:currentDate
+            }
+        }).then(()=>{
+            resolve({response:true})
+            console.log(response);
+            console.log('Did not present till now');
+        })
     }
+})
+},checkTodayStatus:(studentId)=>{
+    return new Promise(async(resolve,reject)=>{
+        //console.log("called");
+        const currentDate = new Date().toLocaleDateString()
+        try{
+            let presentDates=await db.get().collection(collection.STUDENT_COLLECTION)
+            .find({_id:ObjectId(studentId)},{projection:{ _id: 0,attendance:1}}).toArray()
+            if(presentDates[0].attendance.includes(currentDate)){
+               // console.log(presentDates[0].attendance);
+                resolve({response:true})
+                //console.log("still no err found");
+            }else{
+                resolve()
+            }
+        }catch(err){
+            //console.log("err called");
+           resolve()
+        }
+    })
 }
 }

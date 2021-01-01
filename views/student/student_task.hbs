@@ -25,7 +25,7 @@
                 </table> 
                 {{#each note}}
            <h2 class="text-center" style="color: rgb(14, 66, 238);padding-top: 20px;"> Note</h2>
-           <video style="padding-bottom: 20px;" width="658px" height="220px" controls><source src="/videos/{{this._id}}.mp4" ></video>
+           <video style="padding-bottom: 20px;" width="658px" height="220px" controls onended="registerAttendance('{{this.date}}')"><source src="/videos/{{this._id}}.mp4" ></video>
                {{/each}}
                 </div>
             </div>

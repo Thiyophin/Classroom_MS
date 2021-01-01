@@ -83,3 +83,18 @@ $('#sentOtp-form').submit((e)=>{
       }
     })
   })
+
+  function registerAttendance(date) {
+    $.ajax({
+        url:'/student/student_registerAttendance/'+date,
+        method:'get',
+        success:(response)=>{
+         swal({
+                     title:'Attendance Marked',
+                     icon:'success',
+                     buttons:{ok:false}
+                 })   
+        }
+    })
+    
+  }

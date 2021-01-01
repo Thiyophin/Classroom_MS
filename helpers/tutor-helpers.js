@@ -109,11 +109,7 @@ module.exports={
     })
 },addNotes:(notes)=>{
     return new Promise((resolve,reject)=>{
-        const date = new Date().toLocaleDateString(undefined,{
-            day:'2-digit',
-            month:'2-digit',
-            year:'numeric'
-        })
+        const date = new Date().toLocaleDateString()
        db.get().collection(collection.NOTES_COLLECTION).insertOne({notes,date}).then((response)=>{
           // console.log(response); 
            resolve(response.ops[0]._id)

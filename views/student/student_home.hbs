@@ -1,6 +1,19 @@
 <section>
     <div class="main">
-  <img src="../images/background.jpg"  style="width:100%">
+        {{#if status}}
+        <div class="card bg-success mt-3">
+    <div class="card-body text-center ">
+      <p class="card-text" style="color:white;font-weight: bold">Attendance Today  :  Present</p>
+    </div>
+  </div>
+  {{else}}
+  <div class="card bg-danger mt-3">
+    <div class="card-body text-center">
+      <p class="card-text" style="color: white;font-weight: bold;">Attendance Today  :  Absent</p>
+    </div>
+  </div>
+  {{/if}}
+  <img src="../images/background.jpg" draggable="false" style="width:100%">
   <div class="row">  
     <div class="col-md-10 col-sm-10 col-xs-10 content-card">
             <div class="notice-card card-information">

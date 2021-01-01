@@ -5,6 +5,7 @@ const { response } = require('express');
 const { default: swal } = require('sweetalert');
 const { HTTPVersionNotSupported } = require('http-errors');
 var path = require('path');
+const { log } = require('console');
 
 const  verifyStudentIn= (req, res, next) => {
   if (req.session.loggedStudentIn) { next() }
@@ -201,9 +202,15 @@ router.get('/student_notes',verifyStudentIn,(req,res)=>{
 
 router.get('/student_registerAttendance/:mm/:dd/:yyyy',verifyStudentIn,(req,res)=>{
  let date = +req.params.mm+'/'+req.params.dd+'/'+req.params.yyyy
- console.log(date)
- studentHelpers.registerAttendance(date,req.session.student._id).then(()=>{
-
+ //console.log(date)
+ studentHelpers.registerAttendance(date,req.session.student._id).then((response)=>{
+  if(response){
+    res.json({status:true})
+    console.log("Present marked")
+  }else{
+    res.json({})
+    console.log("absent marked")
+  }
  })
 })
 
@@ -213,8 +220,10 @@ router.get('/student_task',verifyStudentIn,async(req,res)=>{
   res.render('student/student_task',{student:true,studentId:req.session.student._id,assignment,note})
 })
 
-router.get('/student_home',verifyStudentIn,(req,res)=>{
-  res.render('student/student_home',{student:true})
+router.get('/student_home',verifyStudentIn,async(req,res)=>{
+  let studentStatus= await  studentHelpers.checkTodayStatus(req.session.student._id)
+  console.log(studentStatus);
+  res.render('student/student_home',{student:true,status:studentStatus})
 })
 
 router.get('/student_logout',(req,res)=>{

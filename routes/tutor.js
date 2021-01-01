@@ -36,7 +36,7 @@ router.post('/tutor_login', (req, res) => {
         req.session.loggedTutorIn = true
         req.session.tutor = response.tutor
         //console.log(req.session);
-        res.render('tutor/tutor_home', { response, tutor: true })
+        res.redirect('/tutor_home')
       } else {
         req.check('Password', 'Invalid Username or Password').isLength({ min: 50 })
         var errors = req.validationErrors();
@@ -190,7 +190,7 @@ router.get('/tutor_validateStudAssignments',verifyLogin,async(req,res)=>{
 
 router.get('/tutor_notes',verifyLogin,async(req,res)=>{
   let notes = await tutorHelpers.getAllNotes()
-  console.log(notes);
+ // console.log(notes);
   res.render('tutor/tutor_notes',{tutor:true,notes})
 })
 

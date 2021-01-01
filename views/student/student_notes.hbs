@@ -38,16 +38,3 @@
         </div>
     </div>
 </section>
-<script>
- 
- function registerAttendance(date) {
-  $.ajax({
-      url:'/student/student_registerAttendance/'+date,
-      method:'get',
-      success:(response)=>{
-          alert(response)
-      }
-  })
-  
-}
-</script>
