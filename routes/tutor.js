@@ -182,7 +182,7 @@ router.get('/delete_assignment/:id', verifyLogin, (req, res) => {
 
 router.get('/tutor_validateStudAssignments',verifyLogin,async(req,res)=>{
   let assignments = await tutorHelpers.assignmentsSubmitted(req.query.id)
- console.log(assignments);
+ // console.log(assignments);
  let profile = req.query
  //console.log(profile);
   res.render('tutor/tutor_validateStudAssignments',{tutor:true,assignments,profile})
@@ -218,6 +218,21 @@ router.get('/tutor_deleteNotes/:id', verifyLogin, (req, res) => {
     });
     res.redirect('/tutor_notes')
   })
+})
+
+router.get('/tutor_attendance',verifyLogin,(req,res)=>{
+  let todayDate= (new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear()
+  tutorHelpers.getTodayAttendance().then((response)=>{
+    //console.log(response);
+    res.render('tutor/tutor_attendance',{tutor:true,todayDate,details:response})
+  })
+})
+
+router.post('/tutor_attendance',verifyLogin,(req,res)=>{
+  let date=req.body.date
+ tutorHelpers.getThisAttendance(date).then((response)=>{
+   res.render('tutor/tutor_specificAttend',{tutor:true,date,details:response})
+ })
 })
 
 router.get('/tutor_home', verifyLogin, (req, res) => {

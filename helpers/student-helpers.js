@@ -3,7 +3,6 @@ var collection = require('../config/collections')
 const bcrypt = require('bcrypt')
 const { response } = require('express')
 var ObjectId = require('mongodb').ObjectID
-var unirest = require('unirest');
 import('dotenv')
 module.exports = {
     addStudent: (student) => {
@@ -184,7 +183,7 @@ module.exports = {
 },getAllNotes:()=>{
     return new Promise(async(resolve,reject)=>{
         let notes=await db.get().collection(collection.NOTES_COLLECTION).find().toArray()
-        resolve(notes)
+        resolve(notes.reverse())
     })
 },getLastAssignment:()=>{
     return new Promise(async(resolve,reject)=>{
@@ -203,8 +202,9 @@ module.exports = {
 },registerAttendance:(date,studentId)=>{
     return new Promise(async(resolve,reject)=>{
         let response={}
-    const currentDate = new Date().toLocaleDateString()
-   try{ let presentDates=await db.get().collection(collection.STUDENT_COLLECTION)
+    const currentDate =  (new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear()
+  console.log(currentDate+'created registerAttent Helpers');
+    try{ let presentDates=await db.get().collection(collection.STUDENT_COLLECTION)
         .find({_id:ObjectId(studentId)},{projection:{ _id: 0,attendance:1}}).toArray()
        // console.log(presentDates[0].attendance);
     if(currentDate===date){  
@@ -243,7 +243,7 @@ module.exports = {
 },checkTodayStatus:(studentId)=>{
     return new Promise(async(resolve,reject)=>{
         //console.log("called");
-        const currentDate = new Date().toLocaleDateString()
+        const currentDate =  (new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear()
         try{
             let presentDates=await db.get().collection(collection.STUDENT_COLLECTION)
             .find({_id:ObjectId(studentId)},{projection:{ _id: 0,attendance:1}}).toArray()

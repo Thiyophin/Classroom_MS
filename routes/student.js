@@ -195,14 +195,13 @@ router.post('/student_submitAssignment/:assignmentsId',verifyStudentIn,(req,res)
 
 router.get('/student_notes',verifyStudentIn,(req,res)=>{
   studentHelpers.getAllNotes().then((notes)=>{
-    //console.log(notes);
   res.render('student/student_notes',{student:true,notes,student:req.session.student})
 })
 })
 
-router.get('/student_registerAttendance/:mm/:dd/:yyyy',verifyStudentIn,(req,res)=>{
- let date = +req.params.mm+'/'+req.params.dd+'/'+req.params.yyyy
- //console.log(date)
+router.get('/student_registerAttendance/:dd/:mm/:yyyy',verifyStudentIn,(req,res)=>{
+ let date = +req.params.dd+'/'+req.params.mm+'/'+req.params.yyyy
+ console.log(date+"date after video end")
  studentHelpers.registerAttendance(date,req.session.student._id).then((response)=>{
   if(response){
     res.json({status:true})
@@ -222,7 +221,7 @@ router.get('/student_task',verifyStudentIn,async(req,res)=>{
 
 router.get('/student_home',verifyStudentIn,async(req,res)=>{
   let studentStatus= await  studentHelpers.checkTodayStatus(req.session.student._id)
-  console.log(studentStatus);
+  //console.log(studentStatus);
   res.render('student/student_home',{student:true,status:studentStatus})
 })
 

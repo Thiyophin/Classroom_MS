@@ -98,3 +98,7 @@ $('#sentOtp-form').submit((e)=>{
     })
     
   }
+
+$('#datepicker').on('changeDate', function(ev){
+    $(this).datepicker('hide');
+});

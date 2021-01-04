@@ -50,7 +50,6 @@ module.exports={
                  Class:tutorDetails.Class,
                  Subject:tutorDetails.Subject,
                  Address:tutorDetails.Address,
-                 Pincode:tutorDetails.Pincode,
                  MobileNo:tutorDetails.MobileNo,
                  Email:tutorDetails.Email
              }
@@ -109,7 +108,7 @@ module.exports={
     })
 },addNotes:(notes)=>{
     return new Promise((resolve,reject)=>{
-        const date = new Date().toLocaleDateString()
+        const date =   (new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear()
        db.get().collection(collection.NOTES_COLLECTION).insertOne({notes,date}).then((response)=>{
           // console.log(response); 
            resolve(response.ops[0]._id)
@@ -119,7 +118,7 @@ module.exports={
     return new Promise((resolve,reject)=>{
         db.get().collection(collection.NOTES_COLLECTION).find().toArray().then((response)=>{
              //console.log(response);
-            resolve(response)
+            resolve(response.reverse())
         })
         
     })
@@ -130,5 +129,28 @@ module.exports={
                 resolve(response)
             })
     })
+},getTodayAttendance:()=>{
+    return new Promise(async(resolve,reject)=>{
+    let todayDate=(new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear()
+    let todayAttendance= await db.get().collection(collection.STUDENT_COLLECTION)
+    .aggregate([
+        { $addFields: { lastPresent: { $last: "$attendance" } } },
+        {$project:{_id:0,Name:1,RollNo:1,lastPresent:1
+            ,status:{$eq:["$lastPresent",todayDate]}}}
+        ]).toArray()
+    resolve(todayAttendance)
+})
+},getThisAttendance:(date)=>{
+return new Promise(async(resolve,reject)=>{
+    let todayAttendance= await db.get().collection(collection.STUDENT_COLLECTION)
+    .aggregate([
+        {$addFields:{status:{
+            $cond:[{$in: [ date, "$attendance" ] }, true, false ]
+            }}},
+        {$project:{_id:0,Name:1,RollNo:1,status:1}}
+        ]).toArray()
+        //console.log(todayAttendance);
+        resolve(todayAttendance)
+})
 }
 }
