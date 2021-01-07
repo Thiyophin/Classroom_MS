@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var studentHelpers = require('../helpers/student-helpers');
+var tutorHelpers = require('../helpers/tutor-helpers')
 const { response } = require('express');
 const { default: swal } = require('sweetalert');
 const { HTTPVersionNotSupported } = require('http-errors');
 var path = require('path');
 const { log } = require('console');
+var fs = require('fs');
 
 const  verifyStudentIn= (req, res, next) => {
   if (req.session.loggedStudentIn) { next() }
@@ -227,10 +229,45 @@ router.get('/student_attendance',verifyStudentIn,async(req,res)=>{
   res.render('student/student_attendance',{student:true,totalDays,presentDays,absentDays,percentage})
 })
 
+router.get('/student_announceDetails/:id',verifyStudentIn,async(req,res)=>{
+  let announcement=await tutorHelpers.getThisAnnounce(req.params.id)
+ //console.log(announcement);
+ let id=announcement._id
+ let image='./public/announcements/images' + id + '.jpg'
+ let pdf='./public/announcements/pdfs'+ id + '.pdf'
+ let video='./public/announcements/videos'+ id + '.mp4'
+ if(fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+  res.render('student/student_announceDetails',{student:true,image,pdf,video,announcement})
+ // console.log("all present");
+ }else if(!fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+  res.render('student/student_announceDetails',{student:true,pdf,video,announcement})
+  // console.log("pdf and video ");
+ }else if(fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+  res.render('student/student_announceDetails',{student:true,image,video,announcement})
+ // console.log("image and video ");
+}else if(fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+  res.render('student/student_announceDetails',{student:true,image,pdf,announcement})
+  //console.log("image and pdf ");
+}else if(!fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+  res.render('student/student_announceDetails',{student:true,video,announcement})
+ // console.log(" video ");
+}else if(!fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+  res.render('student/student_announceDetails',{student:true,pdf,announcement})
+ // console.log("pdf");
+}else if(fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+ res.render('student/student_announceDetails',{student:true,image,announcement})
+ // console.log("image");
+}else if(!fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+  res.render('student/student_announceDetails',{student:true,announcement})
+ // console.log("all absent");
+}
+})
+
 router.get('/student_home',verifyStudentIn,async(req,res)=>{
   let studentStatus= await  studentHelpers.checkTodayStatus(req.session.student._id)
+  let announcements=await tutorHelpers.getAllAnnouncements()
   //console.log(studentStatus);
-  res.render('student/student_home',{student:true,status:studentStatus})
+  res.render('student/student_home',{student:true,status:studentStatus,announcements})
 })
 
 router.get('/student_logout',(req,res)=>{

@@ -170,7 +170,7 @@ router.post('/tutor_assignments', (req, res) => {
 
 router.get('/delete_assignment/:id', verifyLogin, (req, res) => {
   let assignmentId = req.params.id
-  console.log(assignmentId);
+  //console.log(assignmentId);
   tutorHelpers.deleteAssignment(assignmentId).then((response) => {
     fs.unlink('./public/assignments/'+assignmentId+'.pdf', function (err) {
       if (err) throw err;
@@ -301,36 +301,105 @@ router.post('/tutor_announcement',verifyLogin,(req,res)=>{
 
 router.get('/tutor_announceDetails/:id',verifyLogin,async(req,res)=>{
  let announcement=await tutorHelpers.getThisAnnounce(req.params.id)
- console.log(announcement);
+ //console.log(announcement);
  let id=announcement._id
  let image='./public/announcements/images' + id + '.jpg'
  let pdf='./public/announcements/pdfs'+ id + '.pdf'
  let video='./public/announcements/videos'+ id + '.mp4'
  if(fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
   res.render('tutor/tutor_announceDetails',{tutor:true,image,pdf,video,announcement})
-  console.log("all present");
+ // console.log("all present");
  }else if(!fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
   res.render('tutor/tutor_announceDetails',{tutor:true,pdf,video,announcement})
-   console.log("pdf and video ");
+ //  console.log("pdf and video ");
  }else if(fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
   res.render('tutor/tutor_announceDetails',{tutor:true,image,video,announcement})
-  console.log("image and video ");
+ // console.log("image and video ");
 }else if(fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
   res.render('tutor/tutor_announceDetails',{tutor:true,image,pdf,announcement})
-  console.log("image and video ");
+//  console.log("image and pdf ");
 }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
   res.render('tutor/tutor_announceDetails',{tutor:true,video,announcement})
-  console.log(" video ");
+ // console.log(" video ");
 }else if(!fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
   res.render('tutor/tutor_announceDetails',{tutor:true,pdf,announcement})
-  console.log("pdf");
+ // console.log("pdf");
 }else if(fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
  res.render('tutor/tutor_announceDetails',{tutor:true,image,announcement})
-  console.log("image");
+ // console.log("image");
 }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
   res.render('tutor/tutor_announceDetails',{tutor:true,announcement})
-  console.log("all absent");
+ // console.log("all absent");
 }
+})
+
+router.get('/delete_announcement/:id',verifyLogin,(req,res)=>{
+  let id=req.params.id
+ let image='./public/announcements/images' + id + '.jpg'
+ let pdf='./public/announcements/pdfs'+ id + '.pdf'
+ let video='./public/announcements/videos'+ id + '.mp4'
+tutorHelpers.deleteAnnouncement(id).then((response)=>{
+  if(fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+    res.redirect('/tutor_home')
+    fs.unlink('./public/announcements/images' + id + '.jpg', function (err) {
+      if (err) throw err;
+    });
+    fs.unlink('./public/announcements/pdfs'+ id + '.pdf', function (err) {
+      if (err) throw err;
+    });
+    fs.unlink('./public/announcements/videos'+ id + '.mp4', function (err) {
+      if (err) throw err;
+    });
+   }else if(!fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+    res.redirect('/tutor_home')
+    fs.unlink('./public/announcements/pdfs'+ id + '.pdf', function (err) {
+      if (err) throw err;
+    });
+    fs.unlink('./public/announcements/videos'+ id + '.mp4', function (err) {
+      if (err) throw err;
+    });
+    // console.log("pdf and video ");
+   }else if(fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+    res.redirect('/tutor_home')
+    fs.unlink('./public/announcements/images' + id + '.jpg', function (err) {
+      if (err) throw err;
+    });
+    fs.unlink('./public/announcements/videos'+ id + '.mp4', function (err) {
+      if (err) throw err;
+    });
+    //console.log("image and video ");
+  }else if(fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+    res.redirect('/tutor_home')
+    fs.unlink('./public/announcements/images' + id + '.jpg', function (err) {
+      if (err) throw err;
+    });
+    fs.unlink('./public/announcements/pdfs'+ id + '.pdf', function (err) {
+      if (err) throw err;
+    });
+    console.log("image and pdf ");
+  }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+    res.redirect('/tutor_home')
+    fs.unlink('./public/announcements/videos'+ id + '.mp4', function (err) {
+      if (err) throw err;
+    });
+   // console.log(" video ");
+  }else if(!fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+    res.redirect('/tutor_home')
+    fs.unlink('./public/announcements/pdfs'+ id + '.pdf', function (err) {
+      if (err) throw err;
+    });
+  //  console.log("pdf");
+  }else if(fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+    res.redirect('/tutor_home')
+    fs.unlink('./public/announcements/images' + id + '.jpg', function (err) {
+      if (err) throw err;
+    });
+   // console.log("image");
+  }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+    res.redirect('/tutor_home')
+   // console.log("all absent");
+  }
+})
 })
 
 router.get('/tutor_home', verifyLogin, async(req, res) => {

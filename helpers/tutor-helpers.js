@@ -171,5 +171,12 @@ return new Promise(async(resolve,reject)=>{
             resolve(response)
         })
     })
+},deleteAnnouncement:(id)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.ANNOUNCEMENT_COLLECTION).removeOne({_id:ObjectId(id)})
+        .then((response)=>{
+            resolve()
+        })
+    })
 }
 }
