@@ -201,7 +201,7 @@ router.get('/student_notes',verifyStudentIn,(req,res)=>{
 
 router.get('/student_registerAttendance/:dd/:mm/:yyyy',verifyStudentIn,(req,res)=>{
  let date = +req.params.dd+'/'+req.params.mm+'/'+req.params.yyyy
- console.log(date+"date after video end")
+ //console.log(date+"date after video end")
  studentHelpers.registerAttendance(date,req.session.student._id).then((response)=>{
   if(response){
     res.json({status:true})
@@ -217,6 +217,14 @@ router.get('/student_task',verifyStudentIn,async(req,res)=>{
   let assignment = await studentHelpers.getLastAssignment()
   let note = await studentHelpers.getLastNote()
   res.render('student/student_task',{student:true,studentId:req.session.student._id,assignment,note})
+})
+
+router.get('/student_attendance',verifyStudentIn,async(req,res)=>{
+  let totalDays=await studentHelpers.getTotalDays()
+   let presentDays=await studentHelpers.getPresentDays(req.session.student._id)
+   let absentDays=totalDays-presentDays
+   let percentage=(presentDays/totalDays)*100
+  res.render('student/student_attendance',{student:true,totalDays,presentDays,absentDays,percentage})
 })
 
 router.get('/student_home',verifyStudentIn,async(req,res)=>{

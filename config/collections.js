@@ -3,5 +3,6 @@ module.exports={
     STUDENT_COLLECTION:'student',
     ASSIGNMENT_COLLECTION:'assignment',
     STUDENT_ASSIGNMENTS_COLLECTION:'studentAssignments',
-    NOTES_COLLECTION:'notes'
+    NOTES_COLLECTION:'notes',
+    ANNOUNCEMENT_COLLECTION:'announcement'
 }

@@ -152,5 +152,24 @@ return new Promise(async(resolve,reject)=>{
         //console.log(todayAttendance);
         resolve(todayAttendance)
 })
+},addAnnouncement:(announcement)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.ANNOUNCEMENT_COLLECTION).insertOne(announcement).then((response)=>{
+            resolve(response.ops[0]._id)   
+        })
+    })
+},getAllAnnouncements:()=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.ANNOUNCEMENT_COLLECTION).find().toArray().then((response)=>{
+            resolve(response.reverse())
+        })
+    })
+},getThisAnnounce:(id)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.ANNOUNCEMENT_COLLECTION).findOne({_id:ObjectId(id)})
+        .then((response)=>{
+            resolve(response)
+        })
+    })
 }
 }

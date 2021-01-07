@@ -5,9 +5,14 @@
     <div class="col-md-10 col-sm-10 col-xs-10 content-card">
             <div class="notice-card card-information">
                 <div class="content" >
-                    <div class="main-cat">Announcements</div>                  
-                    <p class="description">*Exam Dates Published.
-                         *All important question are given in whatsapp group.</p>
+                    <div class="main-cat">Announcements</div>    
+                     {{#each announcements}}             
+                    <p class="description">
+                   *Post date : {{this.Date}}
+                   *{{this.Message}}.<a href="/tutor_announceDetails/{{this._id}}">Know more</a>
+                    <br>
+                    </p>
+                    {{/each}}
                 </div>
             </div>    
     </div>

@@ -98,7 +98,7 @@
   margin-bottom: 20px;
   position: relative;
   z-index: 1;
-  background: #a6effc;
+  background: #aca6fc;
 }
 
 .notice-card.card-information .content {
@@ -110,16 +110,17 @@
 }
 
 .notice-card .main-cat, .card .label {
-  font-size: 21px;
+  font-size: 25px;
   font-weight:800;
   margin-bottom: 0px;
-  color: #7a9e9f;
+  color: #330aeb;
 }
 
 
 .notice-card .description {
-  font-size: 16px;
-  color: #66615b;
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #610707;
 }
 /* Tutor login errors style */
 .errors{

@@ -259,5 +259,25 @@ module.exports = {
            resolve()
         }
     })
+},getTotalDays:()=>{
+    return new Promise(async(resolve,reject)=>{
+   let days = await db.get().collection(collection.NOTES_COLLECTION).aggregate([
+       {$count:"dates"}
+   ]).toArray()
+   resolve(days[0].dates)
+}) } , 
+getPresentDays:(id)=>{
+    return new Promise(async(resolve,reject)=>{
+     var days=await db.get().collection(collection.STUDENT_COLLECTION).aggregate([
+            {
+                $match:{_id:ObjectId(id)}
+            },{
+                $unwind:"$attendance"
+            },{
+                $count:"attendance"
+            }
+        ]).toArray()
+        resolve(days[0].attendance)   
+    })
 }
 }

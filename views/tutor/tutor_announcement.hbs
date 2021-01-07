@@ -1,0 +1,70 @@
+<section>
+    <div class="main">
+        <div class="row">
+            <div class="container mt-4 pl-4">
+                <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Announcement</strong></h2>
+                <form class="form" action="/tutor_announcement" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" style="padding-top: 15px;">
+                                <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Message</strong></label>
+                                <input type="text" class="form-control" name="Message" id="topic" required
+                                    placeholder="Message">
+                                <input type="text" name="Date" value="{{date}}" hidden id="">
+                            </div>
+                            <div class="form-group">
+                                <label style="color:rgba(23, 36, 211, 0.836);">
+                                    <strong> Description</strong> </label>
+                                <textarea class="form-control" name="Description" placeholder="Description"
+                                    rows="4"></textarea>
+                            </div>
+                            <div class="form-group mt-3 ">
+                                <div class="row pt-3">
+                                    <div class="column  ml-5 mt-2">
+                                        <div class="card" style="background-color: cornflowerblue;width: 300px;height:340px">
+                                            <h3 style="color: white;">Image</h3>
+                                             <input type="file" accept="image/*" name="image"
+                                              style="width:298px;" class="form-control" onchange="viewImage(event)">
+                          <img src="/tutor-images/add-button.jpg" class="img-thumbnail" draggable="false"
+                          alt="" style="width: 298px;height:260px" id="imgView">                            
+                                        </div>
+                                    </div>
+                                     <div class="column ml-5 mt-2">
+                                    <div class="card" style="background-color: cornflowerblue;width: 300px;height:340px">
+                                       <h3 style="color: white;">Video</h3>
+                                       <input type="file" accept="video/*" name="video" onchange="viewVideo(event)"
+                                       style="width:298px;" class="form-control"> 
+                                       <video style="298;height:200px"  id="videoField" controls>
+                                    </div>
+                                </div>
+                                 <div class="column ml-5 mt-2">
+                                    <div class="card" style="background-color: cornflowerblue;width: 300px;height:340px">
+                                       <h3 style="color: white;">PDF</h3>
+                                       <input type="file"accept="application/pdf" name="pdf"  onchange="viewPdf(event)"
+                                       style="width:298px;" class="form-control">
+                                          <embed src="/tutor-images/pdf-add.jpg" id="pdfField" type="application/pdf"style="width: 298px;height:258px"> 
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit" style="text-align: center;margin:auto;display: grid;padding-bottom: 20px;">
+                        <button class="btn btn-success "   type="submit"><strong>Submit</strong> </button>
+                      </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+     function viewImage(event){
+       document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
+   }
+      function viewVideo(event){
+       document.getElementById('videoField').src=URL.createObjectURL(event.target.files[0])
+   }
+      function viewPdf(event){
+       document.getElementById('pdfField').src=URL.createObjectURL(event.target.files[0])
+   }
+</script>
+

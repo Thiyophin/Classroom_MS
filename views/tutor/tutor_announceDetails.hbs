@@ -1,0 +1,40 @@
+<section>
+    <div class="main">
+        <div class="row">
+            <div class="col-md-10 col-sm-10 col-xs-10 content-card" style="margin-bottom: 250px;">
+                <div class="notice-card card-information">
+                    <div class="content">
+                        <div class="main-cat">Announcement</div>
+                        <br>
+                        {{#if announcement}}
+                        <p class="description">
+                            *Post date : {{announcement.Date}}
+                            *{{announcement.Message}}
+                            <br>
+                            {{announcement.Description}}
+                        </p>
+                        {{/if}}
+                        {{#if image}}
+                        <img src="/announcements/images{{announcement._id}}.jpg" draggable="false" alt=""
+                            style="width: 398px;height:360px;" class="img-thumbnail">
+                        {{/if}}
+                        {{#if video}}
+                        <div class="embed-responsive embed-responsive-16by9 mt-4">
+                            <video class="embed-responsive-item" controls>
+                                <source src="/announcements/videos{{announcement._id}}.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        {{/if}}
+                        {{#if pdf}}
+                        <div class="embed-responsive embed-responsive-16by9 mt-4">
+                            <embed class="embed-responsive-item" >
+                                <source  src="/announcements/pdfs{{announcement._id}}.pdf"  type='application/pdf'>
+                            </embed>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
