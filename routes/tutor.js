@@ -403,7 +403,27 @@ tutorHelpers.deleteAnnouncement(id).then((response)=>{
 })
 
 router.get('/tutor_photos',verifyLogin,(req,res)=>{
-  res.render('tutor,tutor_photos',{tutor:true})
+  tutorHelpers.getPhotos().then((photos)=>{
+    res.render('tutor/tutor_photos',{tutor:true,photos})
+  })
+})
+
+router.post('/tutor_photos',verifyLogin,(req,res)=>{
+  let image=req.files.Image
+  tutorHelpers.addPhotos(req.body).then((id)=>{
+    res.redirect('/tutor_photos')
+    image.mv('./public/photos/' + id + '.jpg') 
+  })
+})
+
+router.get('/delete_photos/:id',verifyLogin,(req,res)=>{
+  let id =req.params.id
+  tutorHelpers.deletePhoto(id).then((response)=>{
+    res.redirect('/tutor_photos')
+    fs.unlink('./public/Photos/' + id + '.jpg', function (err) {
+      if (err) throw err;
+    });
+  })
 })
 
 router.get('/tutor_home', verifyLogin, async(req, res) => {

@@ -1,0 +1,88 @@
+<section>
+    <div class="main">
+        <div class="row">
+            <div class="col-md-10 col-sm-10 col-xs-10 content-card" style="margin-bottom: 250px;">
+                <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Photos</strong></h2>
+                <form action="/tutor_photos" enctype="multipart/form-data" method="POST">
+                  <div class="row">
+                      <div class="col-md-12">
+                       <div class="form-group">
+                           <label style=" color: rgba(23, 36, 211, 0.836);"><strong>Name:</strong> </label>
+                           <input type="text" class="form-control"
+                           placeholder="Name" name="Name" id="name" required>
+                       </div>
+                       <div class="form-group">
+                           <label style=" color: rgba(23, 36, 211, 0.836);"><strong> File:</strong></label>
+                           <input type="file" name="Image" id="image" onchange="viewImage(event)" class="form-control" required accept="image/*">
+                           <center>
+                            <img src="/tutor-images/add-button.jpg" class="img-thumbnail mt-3" draggable="false"
+                          alt="" style="width: 2oopx;height:200px" id="imgView">    
+                          </center>
+                       </div>
+                        <button class="btn btn-success"  type="submit">Save Image</button>
+                      </div>
+                  </div>
+                </form>
+                  <div class="table-responsive mt-4">
+                   <table class="table" width="100%" style="border-top: 5px;text-align: center;">
+                    <col style="width:20%">
+	                <col style="width:60%">
+                     <col style="width:20%">
+                    <thead style="color: rgb(67, 30, 201);background-color: rgb(230, 69, 77);">
+                        {{#if photos}}
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                        {{/if}}
+                    </thead>
+                    <tbody style="background-color: rgb(131, 187, 224);">
+                        {{#each photos}}
+                     <tr>
+                         <td style="color: rgb(236, 33, 6);">{{this.Name}}</td>
+                         <td style="color: rgb(236, 33, 6);">
+                        <img src="/photos/{{this._id}}.jpg" class="img-thumbnail " draggable="false"
+                          alt="" style="width: 2oopx;height:200px" >  
+                         </td>
+                        <td><a href="/delete_photos/{{this._id}}" onclick="confirmation(event)" style="color: rgb(153, 43, 24);"><i class="fas fa-trash-alt" style="margin-left: 20px;"></i></a></td>
+                     </tr>
+                         {{/each}}
+                    </tbody>
+                </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+        function viewImage(event){
+       document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
+   }
+
+     function confirmation(ev){
+    ev.preventDefault();
+     var delayInMilliseconds=1000
+    var link = ev.currentTarget.getAttribute('href')
+   // console.log(link)
+    swal({
+        title:'Confirmation',
+        text:'Are you sure?',
+        icon:'warning',
+        buttons:true,
+        dangerMode:true
+    }).then((val)=>{
+        if(val){
+           swal({
+               title:'Photo deleted',
+               icon:'success',
+               buttons:{ok:false}
+           })
+           setTimeout(function(){
+           window.location.href= link
+           },delayInMilliseconds)     
+       }
+    })
+}
+
+</script>

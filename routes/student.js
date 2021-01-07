@@ -268,6 +268,12 @@ router.get('/student_announceDetails/:id',verifyStudentIn,async(req,res)=>{
 }
 })
 
+router.get('/student_photos',verifyStudentIn,async(req,res)=>{
+  let photos=await tutorHelpers.getPhotos()
+  //console.log(photos);
+  res.render('student/student_photos',{student:true,photos})
+})
+
 router.get('/student_home',verifyStudentIn,async(req,res)=>{
   let studentStatus= await  studentHelpers.checkTodayStatus(req.session.student._id)
   let announcements=await tutorHelpers.getAllAnnouncements()

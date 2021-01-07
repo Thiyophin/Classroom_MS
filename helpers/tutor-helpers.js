@@ -178,5 +178,23 @@ return new Promise(async(resolve,reject)=>{
             resolve()
         })
     })
+},addPhotos:(photo)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.PHOTO_COLLECTION).insertOne(photo).then((response)=>{
+         resolve(response.ops[0]._id)    
+        })
+    })
+},getPhotos:()=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.PHOTO_COLLECTION).find().toArray().then((response)=>{
+            resolve(response.reverse())
+        })
+    })
+},deletePhoto:(id)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.PHOTO_COLLECTION).removeOne({_id:ObjectId(id)}).then((response)=>{
+       resolve()
+        })
+    })
 }
 }
