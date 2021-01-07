@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
 });
 router.get('/tutor_login', (req, res) => {
   if (req.session.loggedTutorIn) {
-    res.render('tutor/tutor_home', { tutor: true })
+    res.redirect('/tutor_home')
   } else {
     res.render('tutor/tutor_login', { errors: req.session.errors })
     req.session.errors = null
@@ -400,6 +400,10 @@ tutorHelpers.deleteAnnouncement(id).then((response)=>{
    // console.log("all absent");
   }
 })
+})
+
+router.get('/tutor_photos',verifyLogin,(req,res)=>{
+  res.render('tutor,tutor_photos',{tutor:true})
 })
 
 router.get('/tutor_home', verifyLogin, async(req, res) => {

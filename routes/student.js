@@ -229,6 +229,11 @@ router.get('/student_attendance',verifyStudentIn,async(req,res)=>{
   res.render('student/student_attendance',{student:true,totalDays,presentDays,absentDays,percentage})
 })
 
+router.get('/student_announcement',verifyStudentIn,async(req,res)=>{
+  let announcements=await tutorHelpers.getAllAnnouncements()
+  res.render('student/student_announcement',{student:true,announcements})
+})
+
 router.get('/student_announceDetails/:id',verifyStudentIn,async(req,res)=>{
   let announcement=await tutorHelpers.getThisAnnounce(req.params.id)
  //console.log(announcement);

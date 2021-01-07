@@ -21,8 +21,13 @@
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Youtube link: </strong></label> 
                             <input type="text" class="form-control" name="Link" required>
                         </div>
+                       <div id="progress" style="display: none; height:18px; width: 310px;"
+					   class="progress progress-bar-striped active">
+						<progress id="progressBar" value="0" max="100"
+						style="margin-top: -7.5px;  width: 310px;  height: 30px;"></progress>
+						</div>
                         <div class="buttons mt-3">
-                                <button type="submit" class="btn btn-success " ><strong> Save </strong></button>
+                                <button type="submit" onclick="uploadFile();showProgress()" class="btn btn-success " ><strong> Save </strong></button>
                             </div>
                             </div>
                         </div>
@@ -64,6 +69,7 @@
         </div>
     </div>
 </section>
+
 <script>
      function confirmation(ev){
     ev.preventDefault();
