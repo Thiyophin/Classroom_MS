@@ -1,0 +1,72 @@
+<section>
+    <div class="main">
+        <div class="row">
+            <div class="col-md-10 col-sm-10 col-xs-10 content-card" style="margin-bottom: 250px;">
+                <div class="notice-card card-information">
+                    <div class="content">
+                        <div class="main-cat">Event</div>
+        <a href="/delete_event/{{event._id}}" onclick="confirmation(event)" 
+     style="color: black;"><i class="fas fa-faw fa-trash-alt" style="float: right;"></i></a>                   
+                        <br>
+                        {{#if event}}
+                   <p class="description">
+                        * {{event.Event}} on {{event.Date}} conducted by {{event.Coordinator}}
+                        <br>
+                        {{#if amount}}
+                        * Amount for Participating : {{amount}}
+                        {{else}}
+                        * Everyone can participate
+                        {{/if}}
+                    </p>              
+                        {{/if}}
+                      
+                        {{#if image}}
+                        <img src="/events/images{{event._id}}.jpg" draggable="false" alt=""
+                            style="width: 398px;height:360px;" class="img-thumbnail">
+                        {{/if}}
+                        {{#if video}}
+                        <div class="embed-responsive embed-responsive-16by9 mt-4">
+                            <video class="embed-responsive-item" controls>
+                                <source src="/events/videos{{event._id}}.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        {{/if}}
+                        {{#if pdf}}
+                        <div class="embed-responsive embed-responsive-16by9 mt-4">
+                            <object class="embed-responsive-item"  data="/events/pdfs{{event._id}}.pdf"
+                             type='application/pdf'>
+                            </object>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+     function confirmation(ev){
+    ev.preventDefault();
+     var delayInMilliseconds=1000
+    var link = ev.currentTarget.getAttribute('href')
+   // console.log(link)
+    swal({
+        title:'Confirmation',
+        text:'Do you want to delete?',
+        icon:'warning',
+        buttons:true,
+        dangerMode:true
+    }).then((val)=>{
+        if(val){
+           swal({
+               title:'Event deleted',
+               icon:'success',
+               buttons:{ok:false}
+           })
+           setTimeout(function(){
+           window.location.href= link
+           },delayInMilliseconds)     
+       }
+    })
+}
+</script>

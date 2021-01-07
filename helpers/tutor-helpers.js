@@ -196,5 +196,31 @@ return new Promise(async(resolve,reject)=>{
        resolve()
         })
     })
+},addEvent:(program)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.EVENT_COLLECTION).insertOne(program).then((response)=>{
+            resolve(response.ops[0]._id)   
+        })
+    })
+},getAllEvents:()=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.EVENT_COLLECTION).find().toArray().then((response)=>{
+            resolve(response.reverse())
+        })
+    })
+},getThisEvent:(id)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.EVENT_COLLECTION).findOne({_id:ObjectId(id)})
+        .then((response)=>{
+            resolve(response)
+        })
+    })
+},deleteEvent:(id)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.EVENT_COLLECTION).removeOne({_id:ObjectId(id)})
+        .then((response)=>{
+            resolve()
+        })
+    })
 }
 }

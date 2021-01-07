@@ -1,0 +1,94 @@
+<section>
+    <div class="main">
+        <div class="row">
+            <div class="container mt-4 pl-4">
+                <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Event</strong></h2>
+                <form class="form" action="/tutor_events" method="POST" enctype="multipart/form-data">
+                    <div class="form-group" style="padding-top: 15px;">
+                        <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Event Name</strong></label>
+                        <input type="text" class="form-control" name="Event" id="Event" required
+                            placeholder="Name of Event">
+                    </div>
+                    <div class="form-group">
+                        <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Co-ordinator Name</strong></label>
+                        <input type="text" class="form-control" name="Coordinator" id="Co-ordinator"
+                            placeholder="Name of Co-ordinator" required>
+                    </div>
+                    <div class="form-group">
+                        <label style=" color: rgba(23, 36, 211, 0.836);"><strong>Conduction Date</strong> </label>
+                        <input type="text" id="datepicker" class="form-control " data-date-format="d/m/yyyy" name="Date"
+                            data-provide="datepicker" placeholder="Select Date" style="width:250p;padding-left: 15px;"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label style=" color: rgba(23, 36, 211, 0.836);"><strong>Type of Event:</strong> </label>
+                        <div class="form-check form-check-inline ">    
+                            <input class="form-check-input" type="radio" name="Type" id="inlineRadio1"
+                                onclick="eventType()" value="Free" checked>
+                            <label class="form-check-label" for="inlineRadio1" style="color: rgb(46, 5, 228);font-weight: bold;">Free</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Type" id="inlineRadio2"
+                                onclick="eventType()" value="Paid">
+                            <label class="form-check-label" for="inlineRadio2" style="color: rgb(46, 5, 228);font-weight: bold;">Paid</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="Amount" style="display: none;">
+                        <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Amount</strong></label>
+                        <input type="number" class="form-control" name="Amount" placeholder="Amount">
+                    </div>
+                     <div class="form-group mt-3 ">
+                                <div class="row pt-3">
+                                    <div class="column  ml-5 mt-2">
+                                        <div class="card" style="background-color: cornflowerblue;width: 300px;height:340px">
+                                            <h3 style="color: white;">Image</h3>
+                                             <input type="file" accept="image/*" name="image"
+                                              style="width:298px;" class="form-control" onchange="viewImage(event)">
+                          <img src="/tutor-images/add-button.jpg" class="img-thumbnail" draggable="false"
+                          alt="" style="width: 298px;height:260px" id="imgView">                            
+                                        </div>
+                                    </div>
+                                     <div class="column ml-5 mt-2">
+                                    <div class="card" style="background-color: cornflowerblue;width: 300px;height:340px">
+                                       <h3 style="color: white;">Video</h3>
+                                       <input type="file" accept="video/*" name="video" onchange="viewVideo(event)"
+                                       style="width:298px;" class="form-control"> 
+                                       <video style="298;height:200px"  id="videoField" controls>
+                                    </div>
+                                </div>
+                                 <div class="column ml-5 mt-2">
+                                    <div class="card" style="background-color: cornflowerblue;width: 300px;height:340px">
+                                       <h3 style="color: white;">PDF</h3>
+                                       <input type="file"accept="application/pdf" name="pdf"  onchange="viewPdf(event)"
+                                       style="width:298px;" class="form-control">
+                                          <embed src="/tutor-images/pdf-add.jpg" id="pdfField" type="application/pdf"style="width: 298px;height:258px"> 
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="submit" style="text-align: center;margin:auto;display: grid;padding-bottom: 20px;width: 30px;">
+                        <button class="btn btn-success "   type="submit"><strong>Submit</strong> </button>
+                      </div>  
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function eventType() {
+		if (document.getElementById('inlineRadio2').checked) {
+			document.getElementById('Amount').style.display = 'block';
+		} else {
+			document.getElementById('Amount').style.display = 'none';
+		}
+	}
+        function viewImage(event){
+       document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
+   }
+      function viewVideo(event){
+       document.getElementById('videoField').src=URL.createObjectURL(event.target.files[0])
+   }
+      function viewPdf(event){
+       document.getElementById('pdfField').src=URL.createObjectURL(event.target.files[0])
+   }
+</script>

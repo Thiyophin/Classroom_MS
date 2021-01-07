@@ -22,7 +22,7 @@
                      {{#each announcements}}             
                     <p class="description">
                    *Post date : {{this.Date}}
-                   *{{this.Message}}.<a href="/student/student_announceDetails/{{this._id}}">Know more</a>
+                   *{{this.Message}}.<a href="/student/student_announceDetails/{{this._id}}" style="color: blue;">Know more</a>
                     <br>
                     </p>
                     {{/each}}
@@ -34,10 +34,14 @@
     <div class="col-md-10 col-sm-10 col-xs-10 content-card">     
             <div class="notice-card card-information">
                 <div class="content">
-                    <div class="main-cat">Events</div>          
-                    <p class="description">*Seminar on 11-01-2021 at school auditorium.</p>
+                    <div class="main-cat">Events</div>
+                    {{#each events}}
+                    <p class="description">
+                        * {{this.Event}} on {{this.Date}} conducted by {{this.Coordinator}}.<a href="/student/student_eventDetails/{{this._id}}" style="color: blue;">Know more</a>
+                    </p>
+                    {{/each}}
                 </div>
-            </div>   
+            </div> 
     </div>
     </div>
 </div>

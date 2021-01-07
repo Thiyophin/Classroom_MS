@@ -426,10 +426,179 @@ router.get('/delete_photos/:id',verifyLogin,(req,res)=>{
   })
 })
 
+router.get('/tutor_events',verifyLogin,(req,res)=>{
+  res.render('tutor/tutor_events',{tutor:true})
+})
+
+router.post('/tutor_events',verifyLogin,(req,res)=>{
+ // console.log("post method worked");
+  tutorHelpers.addEvent(req.body).then((id)=>{
+    if(req.files){
+     // console.log("file received");
+    if (req.files.image && !req.files.pdf && !req.files.video) {
+      res.redirect('/tutor_home')
+      let image=req.files.image
+      image.mv('./public/events/images' + id + '.jpg')
+  //   console.log("image");
+    }else if(req.files.pdf && !req.files.image && !req.files.video){
+      res.redirect('/tutor_home')
+      let pdf=req.files.pdf
+      pdf.mv('./public/events/pdfs'+ id + '.pdf')
+   //  console.log("pdf");
+    }else if(req.files.video && !req.files.image && !req.files.pdf){
+      res.redirect('/tutor_home')
+      let video=req.files.video
+      video.mv('./public/events/videos'+ id + '.mp4')
+    //  console.log("video");
+    }else if (req.files.image && req.files.pdf && !req.files.video){
+      res.redirect('/tutor_home')
+      let pdf=req.files.pdf
+      pdf.mv('./public/events/pdfs'+ id + '.pdf')
+      let image=req.files.image
+      image.mv('./public/events/images' + id + '.jpg') 
+   // console.log("image and pdf ");
+    }else if(req.files.image && !req.files.pdf && req.files.video){
+      res.redirect('/tutor_home')
+      let image=req.files.image
+      image.mv('./public/events/images' + id + '.jpg')
+      let video=req.files.video
+      video.mv('./public/events/videos'+ id + '.mp4')
+   // console.log("image and video");
+    }else if(!req.files.image && req.files.pdf && req.files.video){
+      res.redirect('/tutor_home')
+      let pdf=req.files.pdf
+      pdf.mv('./public/events/pdfs'+ id + '.pdf')
+      let video=req.files.video
+      video.mv('./public/events/videos'+ id + '.mp4')
+ // console.log("pdf and video ");
+    }else {
+      res.redirect('/tutor_home')
+      let image=req.files.image
+      image.mv('./public/events/images' + id + '.jpg')
+      let pdf=req.files.pdf
+      pdf.mv('./public/events/pdfs'+ id + '.pdf')
+      let video=req.files.video
+      video.mv('./public/events/videos'+ id + '.mp4')
+  // console.log("all present");
+    }}
+     else{
+      res.redirect('/tutor_home')
+       //console.log("nothing");
+     }
+  })
+})
+
+router.get('/tutor_eventDetails/:id',verifyLogin,async(req,res)=>{
+  let event=await tutorHelpers.getThisEvent(req.params.id)
+ //console.log(event);
+ let id=event._id
+ let amount=event.Amount
+ //console.log(amount);
+ let image='./public/events/images' + id + '.jpg'
+ let pdf='./public/events/pdfs'+ id + '.pdf'
+ let video='./public/events/videos'+ id + '.mp4'
+ if(fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+  res.render('tutor/tutor_eventDetails',{tutor:true,image,pdf,video,event,amount})
+ // console.log("all present");
+ }else if(!fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+  res.render('tutor/tutor_eventDetails',{tutor:true,pdf,video,event,amount})
+ //  console.log("pdf and video ");
+ }else if(fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+  res.render('tutor/tutor_eventDetails',{tutor:true,image,video,event,amount})
+ // console.log("image and video ");
+}else if(fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+  res.render('tutor/tutor_eventDetails',{tutor:true,image,pdf,event,amount})
+//  console.log("image and pdf ");
+}else if(!fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+  res.render('tutor/tutor_eventDetails',{tutor:true,video,event,amount})
+ // console.log(" video ");
+}else if(!fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+  res.render('tutor/tutor_eventDetails',{tutor:true,pdf,event,amount})
+ // console.log("pdf");
+}else if(fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+ res.render('tutor/tutor_eventDetails',{tutor:true,image,event,amount})
+ // console.log("image");
+}else if(!fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+  res.render('tutor/tutor_eventDetails',{tutor:true,event,amount})
+ // console.log("all absent");
+}
+})
+
+router.get('/delete_event/:id',verifyLogin,(req,res)=>{
+  let id=req.params.id
+  let image='./public/events/images' + id + '.jpg'
+  let pdf='./public/events/pdfs'+ id + '.pdf'
+  let video='./public/events/videos'+ id + '.mp4'
+ tutorHelpers.deleteEvent(id).then((response)=>{
+   if(fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+     res.redirect('/tutor_home')
+     fs.unlink('./public/events/images' + id + '.jpg', function (err) {
+       if (err) throw err;
+     });
+     fs.unlink('./public/events/pdfs'+ id + '.pdf', function (err) {
+       if (err) throw err;
+     });
+     fs.unlink('./public/events/videos'+ id + '.mp4', function (err) {
+       if (err) throw err;
+     });
+    }else if(!fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+     res.redirect('/tutor_home')
+     fs.unlink('./public/events/pdfs'+ id + '.pdf', function (err) {
+       if (err) throw err;
+     });
+     fs.unlink('./public/events/videos'+ id + '.mp4', function (err) {
+       if (err) throw err;
+     });
+     // console.log("pdf and video ");
+    }else if(fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+     res.redirect('/tutor_home')
+     fs.unlink('./public/events/images' + id + '.jpg', function (err) {
+       if (err) throw err;
+     });
+     fs.unlink('./public/events/videos'+ id + '.mp4', function (err) {
+       if (err) throw err;
+     });
+     //console.log("image and video ");
+   }else if(fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+     res.redirect('/tutor_home')
+     fs.unlink('./public/events/images' + id + '.jpg', function (err) {
+       if (err) throw err;
+     });
+     fs.unlink('./public/events/pdfs'+ id + '.pdf', function (err) {
+       if (err) throw err;
+     });
+     console.log("image and pdf ");
+   }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+     res.redirect('/tutor_home')
+     fs.unlink('./public/events/videos'+ id + '.mp4', function (err) {
+       if (err) throw err;
+     });
+    // console.log(" video ");
+   }else if(!fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+     res.redirect('/tutor_home')
+     fs.unlink('./public/events/pdfs'+ id + '.pdf', function (err) {
+       if (err) throw err;
+     });
+   //  console.log("pdf");
+   }else if(fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+     res.redirect('/tutor_home')
+     fs.unlink('./public/events/images' + id + '.jpg', function (err) {
+       if (err) throw err;
+     });
+    // console.log("image");
+   }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+     res.redirect('/tutor_home')
+    // console.log("all absent");
+   }
+ }) 
+})
+
 router.get('/tutor_home', verifyLogin, async(req, res) => {
   let announcements=await tutorHelpers.getAllAnnouncements()
+  let events=await tutorHelpers.getAllEvents()
   //console.log(announcements);
-  res.render('tutor/tutor_home', { tutor: true ,announcements})
+ // console.log(events);
+  res.render('tutor/tutor_home', { tutor: true ,announcements,events})
 })
 
 

@@ -1,0 +1,44 @@
+<section>
+    <div class="main">
+        <div class="row">
+            <div class="col-md-10 col-sm-10 col-xs-10 content-card" style="margin-bottom: 250px;">
+                <div class="notice-card card-information">
+                    <div class="content">
+                        <div class="main-cat">Event</div>               
+                        <br>
+                        {{#if event}}
+                   <p class="description">
+                        * {{event.Event}} on {{event.Date}} conducted by {{event.Coordinator}}
+                        <br>
+                        {{#if amount}}
+                        * Amount for Participating : {{amount}}
+                        {{else}}
+                        * Everyone can participate
+                        {{/if}}
+                    </p>              
+                        {{/if}}
+                      
+                        {{#if image}}
+                        <img src="/events/images{{event._id}}.jpg" draggable="false" alt=""
+                            style="width: 398px;height:360px;" class="img-thumbnail">
+                        {{/if}}
+                        {{#if video}}
+                        <div class="embed-responsive embed-responsive-16by9 mt-4">
+                            <video class="embed-responsive-item" controls>
+                                <source src="/events/videos{{event._id}}.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        {{/if}}
+                        {{#if pdf}}
+                        <div class="embed-responsive embed-responsive-16by9 mt-4">
+                            <object class="embed-responsive-item"  data="/events/pdfs{{event._id}}.pdf"
+                             type='application/pdf'>
+                            </object>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

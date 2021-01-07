@@ -274,11 +274,46 @@ router.get('/student_photos',verifyStudentIn,async(req,res)=>{
   res.render('student/student_photos',{student:true,photos})
 })
 
+router.get('/student_eventDetails/:id',verifyStudentIn,async(req,res)=>{
+  let event=await tutorHelpers.getThisEvent(req.params.id)
+  //console.log(announcement);
+  let id=event._id
+  let image='./public/events/images' + id + '.jpg'
+  let pdf='./public/events/pdfs'+ id + '.pdf'
+  let video='./public/events/videos'+ id + '.mp4'
+  if(fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+   res.render('student/student_eventDetails',{student:true,image,pdf,video,event})
+  // console.log("all present");
+  }else if(!fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
+   res.render('student/student_eventDetails',{student:true,pdf,video,event})
+   // console.log("pdf and video ");
+  }else if(fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+   res.render('student/student_eventDetails',{student:true,image,video,event})
+  // console.log("image and video ");
+ }else if(fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+   res.render('student/student_eventDetails',{student:true,image,pdf,event})
+   //console.log("image and pdf ");
+ }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
+   res.render('student/student_eventDetails',{student:true,video,event})
+  // console.log(" video ");
+ }else if(!fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
+   res.render('student/student_eventDetails',{student:true,pdf,event})
+  // console.log("pdf");
+ }else if(fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+  res.render('student/student_eventDetails',{student:true,image,event})
+  // console.log("image");
+ }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
+   res.render('student/student_eventDetails',{student:true,event})
+  // console.log("all absent");
+ }
+})
+
 router.get('/student_home',verifyStudentIn,async(req,res)=>{
   let studentStatus= await  studentHelpers.checkTodayStatus(req.session.student._id)
   let announcements=await tutorHelpers.getAllAnnouncements()
+  let events=await tutorHelpers.getAllEvents()
   //console.log(studentStatus);
-  res.render('student/student_home',{student:true,status:studentStatus,announcements})
+  res.render('student/student_home',{student:true,status:studentStatus,announcements,events})
 })
 
 router.get('/student_logout',(req,res)=>{
