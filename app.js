@@ -14,7 +14,7 @@ var app = express();
 var MongoDBStore = require('connect-mongodb-session')(session);
 const nocache = require('nocache')
 require('dotenv').config();
-const { default: swal } = require("sweetalert")
+const  swal  = require("sweetalert")
 //console.log(process.env);
 
 var store = new MongoDBStore({

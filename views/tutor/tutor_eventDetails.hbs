@@ -11,18 +11,11 @@
                         {{#if event}}
                    <p class="description">
                         * {{event.Event}} on {{event.Date}} conducted by {{event.Coordinator}}
+                        {{/if}}
                         <br>
-                        {{#if amount}}
-                        * Amount for Participating : {{amount}}
-                        {{else}}
-                        * Everyone can participate
-                        {{/if}}
-                    </p>              
-                        {{/if}}
-                      
                         {{#if image}}
                         <img src="/events/images{{event._id}}.jpg" draggable="false" alt=""
-                            style="width: 398px;height:360px;" class="img-thumbnail">
+                            style="width: 398px;height:360px;" class="img-thumbnail mt-3">
                         {{/if}}
                         {{#if video}}
                         <div class="embed-responsive embed-responsive-16by9 mt-4">
@@ -38,6 +31,17 @@
                             </object>
                         </div>
                         {{/if}}
+                           <div class="event-status mt-3">
+                         {{#if amount}}
+                        <p class="description" style="font-weight: bold;">
+                        * Amount for Participating : {{amount}}Rs
+                         </p> 
+                        {{else}}
+                        <p class="description" style="font-weight: bold;">
+                        * Everyone should participate
+                        </p>
+                          {{/if}}
+                        </div>
                     </div>
                 </div>
             </div>

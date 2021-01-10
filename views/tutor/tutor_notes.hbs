@@ -4,7 +4,7 @@
             <div class="col-md-8 m-auto">
                 <div class="container mt-5 pl-5">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong>Notes</strong></h2>
-                    <form action="/tutor_notes" id="" method="POST" enctype="multipart/form-data" style="margin-bottom: 10px;">
+                    <form action="/tutor_notes" id="note_form" method="POST" enctype="multipart/form-data" style="margin-bottom: 10px;">
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Topic:</strong></label>
                             <input type="text" class="form-control" name="Topic" required>
@@ -21,13 +21,9 @@
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Youtube link: </strong></label> 
                             <input type="text" class="form-control" name="Link" required>
                         </div>
-                       <div id="progress" style="display: none; height:18px; width: 310px;"
-					   class="progress progress-bar-striped active">
-						<progress id="progressBar" value="0" max="100"
-						style="margin-top: -7.5px;  width: 310px;  height: 30px;"></progress>
-						</div>
+                     <div id="upload-progress" style="display: none;"><div class="progress-bar" aria-valuenow="0" aria-valuemax="100"></div></div> 
                         <div class="buttons mt-3">
-                                <button type="submit" onclick="uploadFile();showProgress()" class="btn btn-success " ><strong> Save </strong></button>
+                                <button type="submit"  onclick="showDiv();"  class="btn btn-success " value="Submit Form" ><strong> Save </strong></button>
                             </div>
                             </div>
                         </div>
@@ -69,7 +65,19 @@
         </div>
     </div>
 </section>
-
+<style>
+    /*Progress Bar*/
+#upload-progress{
+    height: 20px;
+    border: 1px solid #ddd;
+    width: 100%;
+}
+#upload-progress .progress-bar{
+	background: #bde1ff;
+    width: 0;
+    height: 20px;
+}
+</style>
 <script>
      function confirmation(ev){
     ev.preventDefault();
@@ -95,4 +103,11 @@
        }
     })
 }
+
+function showDiv() {
+		document.getElementById('upload-progress').style.display = "block";
+	}
+	function _(el) {
+		return document.getElementById(el);
+	}
 </script>

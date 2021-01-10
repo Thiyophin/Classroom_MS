@@ -103,10 +103,7 @@ dist
 # TernJS port file
 .tern-port
 
-images
-tutor-images
 assignments
-students-images
 documents
 videos
 announcements

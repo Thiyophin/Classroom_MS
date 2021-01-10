@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-10 col-sm-10 col-xs-10 content-card" style="margin-bottom: 250px;">
                 <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Photos</strong></h2>
-                <form action="/tutor_photos" enctype="multipart/form-data" method="POST">
+                <form action="/tutor_photos" id="image_form" enctype="multipart/form-data" method="POST">
                   <div class="row">
                       <div class="col-md-12">
                        <div class="form-group">
@@ -19,7 +19,8 @@
                           alt="" style="width: 2oopx;height:200px" id="imgView">    
                           </center>
                        </div>
-                        <button class="btn btn-success"  type="submit">Save Image</button>
+                        <div id="upload-progress" style="display: none;"><div class="progress-bar" aria-valuenow="0" aria-valuemax="100"></div></div> 
+                        <button class="btn btn-success"  type="submit" onclick="showDiv()" >Save Image</button>
                       </div>
                   </div>
                 </form>
@@ -55,6 +56,19 @@
         </div>
     </div>
 </section>
+<style>
+       /*Progress Bar*/
+#upload-progress{
+    height: 20px;
+    border: 1px solid #ddd;
+    width: 100%;
+}
+#upload-progress .progress-bar{
+	background: #bde1ff;
+    width: 0;
+    height: 20px;
+}
+</style>
 <script>
         function viewImage(event){
        document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
@@ -84,5 +98,10 @@
        }
     })
 }
-
+function showDiv() {
+		document.getElementById('upload-progress').style.display = "block";
+	}
+	function _(el) {
+		return document.getElementById(el);
+	}
 </script>

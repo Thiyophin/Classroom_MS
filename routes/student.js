@@ -8,6 +8,8 @@ const { HTTPVersionNotSupported } = require('http-errors');
 var path = require('path');
 const { log } = require('console');
 var fs = require('fs');
+const { ObjectId } = require('mongodb');
+
 
 const  verifyStudentIn= (req, res, next) => {
   if (req.session.loggedStudentIn) { next() }
@@ -274,41 +276,78 @@ router.get('/student_photos',verifyStudentIn,async(req,res)=>{
   res.render('student/student_photos',{student:true,photos})
 })
 
-router.get('/student_eventDetails/:id',verifyStudentIn,async(req,res)=>{
+router.get('/student_eventDetails/:id',async(req,res)=>{
   let event=await tutorHelpers.getThisEvent(req.params.id)
-  //console.log(announcement);
+  let studentId=''+req.session.student._id
+  let eventId=""+event.student
   let id=event._id
+  if(event.student){
+      if ((eventId.includes(studentId))) {
+        status= true;
+        console.log(status);
+      }else{
+        status=false;
+        console.log(status);
+      }
+    }
   let image='./public/events/images' + id + '.jpg'
   let pdf='./public/events/pdfs'+ id + '.pdf'
   let video='./public/events/videos'+ id + '.mp4'
+  let amount=event.Amount
   if(fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
-   res.render('student/student_eventDetails',{student:true,image,pdf,video,event})
+   res.render('student/student_eventDetails',{student:req.session.student,image,pdf,video,event,amount,status})
   // console.log("all present");
   }else if(!fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)){
-   res.render('student/student_eventDetails',{student:true,pdf,video,event})
+   res.render('student/student_eventDetails',{student:req.session.student,pdf,video,event,amount,status})
    // console.log("pdf and video ");
   }else if(fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
-   res.render('student/student_eventDetails',{student:true,image,video,event})
+   res.render('student/student_eventDetails',{student:req.session.student,image,video,event,amount,status})
   // console.log("image and video ");
  }else if(fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
-   res.render('student/student_eventDetails',{student:true,image,pdf,event})
+   res.render('student/student_eventDetails',{student:req.session.student,image,pdf,event,amount,status})
    //console.log("image and pdf ");
  }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && fs.existsSync(video)){
-   res.render('student/student_eventDetails',{student:true,video,event})
+   res.render('student/student_eventDetails',{student:req.session.student,video,event,amount,status})
   // console.log(" video ");
  }else if(!fs.existsSync(image) && fs.existsSync(pdf) && !fs.existsSync(video)){
-   res.render('student/student_eventDetails',{student:true,pdf,event})
+   res.render('student/student_eventDetails',{student:req.session.student,pdf,event,amount,status})
   // console.log("pdf");
  }else if(fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
-  res.render('student/student_eventDetails',{student:true,image,event})
+  res.render('student/student_eventDetails',{student:req.session.student,image,event,amount,status})
   // console.log("image");
  }else if(!fs.existsSync(image) && !fs.existsSync(pdf) && !fs.existsSync(video)){
-   res.render('student/student_eventDetails',{student:true,event})
+   res.render('student/student_eventDetails',{student:req.session.student,event,amount,status})
   // console.log("all absent");
  }
 })
 
-router.get('/student_home',verifyStudentIn,async(req,res)=>{
+router.post('/student_razorPay',(req,res)=>{
+  console.log(req.body);
+  let eventId=req.body.eventId
+  let amount=req.body.amount
+  studentHelpers.generateRazorpay(eventId,amount).then((response)=>{
+  res.json(response)
+  })
+})
+
+router.post('/verify-payment',(req,res)=>{
+  console.log(req.body);
+  studentHelpers.verifyPayment(req.body,req.session.student._id).then(()=>{
+    studentHelpers.paymentDone(req.body["order[receipt]"],req.session.student._id).then(()=>{
+     console.log("payment successful");
+      res.json({status:true})
+    })
+  }).catch((err)=>{
+    console.log(err);
+    res.json({status:false,errMsg:''})
+  })
+})
+
+router.get('/student_success',(req,res)=>{
+  res.render('student/student_success',{student:true})
+})
+
+router.get('/student_home',async(req,res)=>{
   let studentStatus= await  studentHelpers.checkTodayStatus(req.session.student._id)
   let announcements=await tutorHelpers.getAllAnnouncements()
   let events=await tutorHelpers.getAllEvents()
