@@ -36,6 +36,13 @@
                         <p class="description" style="font-weight: bold;">
                         * Amount for Participating : {{amount}}Rs
                          </p> 
+                               <center>
+                        <form action="/tutor_knowPaid" method="POST"  >
+                        <input type="text" name="eventId" hidden value="{{event._id}}">
+                        <input type="number" name="amount" hidden value="{{amount}}">
+                        <button class="btn btn-success"
+                        type="submit"><strong>Know paid Students</strong> </button>
+                                </center>
                         {{else}}
                         <p class="description" style="font-weight: bold;">
                         * Everyone should participate

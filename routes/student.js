@@ -8,8 +8,12 @@ const { HTTPVersionNotSupported } = require('http-errors');
 var path = require('path');
 const { log } = require('console');
 var fs = require('fs');
-const { ObjectId } = require('mongodb');
-
+const paypal = require('paypal-rest-sdk');
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AZfsx2Mruy-HUSjovhN0hhwd_JoyQXbZCCGwr0_wryt8oXCuGqnpMtLLphbUAEZOqcJcLH3O80j3u731',
+  'client_secret': 'EMDgLoK_HTVGqtkjZcEsS_6055PkhOWtIA2FaGdVCmPCHEqEGPDQ4GUAzr0jkQCLtNcz6ay2VQNFmOak'
+});
 
 const  verifyStudentIn= (req, res, next) => {
   if (req.session.loggedStudentIn) { next() }
@@ -343,8 +347,102 @@ router.post('/verify-payment',(req,res)=>{
   })
 })
 
+router.post('/student_paypal',verifyStudentIn,(req,res)=>{
+  console.log(req.body);
+  let paypalamount=req.body.amount
+  var create_payment_json = {
+    "intent": "sale",
+    "payer": {
+        "payment_method": "paypal"
+    },
+    "redirect_urls": {
+        "return_url": "http://localhost:3000/student_paypalsuccess",
+        "cancel_url": "http://localhost:3000/student_failed"
+    },
+    "transactions": [{
+        "item_list": {
+            "items": [{
+                "name": "",
+                "sku": "001",
+                "price": paypalamount,
+                "currency": "INR",
+                "quantity": 1
+            }]
+        },
+        "amount": {
+            "currency": "INR",
+            "total": paypalamount
+        },
+        "description": req.body.eventId
+    }]
+};
+
+paypal.payment.create(create_payment_json, function (error, payment) {
+  console.log(payment);
+  if (error) {
+    console.log(error);
+    res.redirect("/student_failed");
+  } else {
+    for (let i = 0; i < payment.links.length; i++) {
+      if (payment.links[i].rel === "approval_url") {
+        res.redirect(payment.links[i].href);
+      }
+    }
+  }
+})
+})
+
+router.get("/student_paypalsuccess", verifyStudentIn, (req, res) => {
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+
+  const execute_payment_json = {
+    payer_id: payerId,
+    transactions: [
+      {
+        amount: {
+          currency: "INR",
+          total:paypalamount,
+        },
+      },
+    ],
+  };
+  paypal.payment.execute(
+    paymentId,
+    execute_payment_json,
+    function (error, payment) {
+      if (error) {
+        console.log(error);
+        res.redirect("/student/student_failed");
+      } else {
+        console.log(payment);
+        studentHelpers
+          .paymentDone(
+            payment.transactions[0].description,
+            req.session.student._id  
+          )
+          .then((response) => {
+            studentHelpers
+              .paypalPayment(
+                req.session.student._id,
+                payment.transactions[0].description
+              )
+              .then((response) => {
+                res.redirect("/student/student_success");
+              });
+          });
+      }
+    }
+  );
+})
+
+
 router.get('/student_success',(req,res)=>{
   res.render('student/student_success',{student:true})
+})
+
+router.get('/student_failed',(req,res)=>{
+  res.render('student/student_failed',{student:true})
 })
 
 router.get('/student_home',async(req,res)=>{

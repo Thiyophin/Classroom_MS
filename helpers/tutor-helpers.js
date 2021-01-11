@@ -222,5 +222,33 @@ return new Promise(async(resolve,reject)=>{
             resolve()
         })
     })
-}
+},knowPaid:(eventId)=>{
+    return new Promise(async (resolve, reject) => {
+      let paid = await db
+        .get()
+        .collection(collection.PAYMENT_COLLECTION)
+        .aggregate([
+          {
+            $match: { event: ObjectId(eventId) },
+          },
+          {
+            $lookup: {
+              from: collection.STUDENT_COLLECTION,
+              localField: "student",
+              foreignField: "_id",
+              as: "students",
+            },
+          },
+          {
+            $project: {
+                _id:0,
+              students: "$students",
+            },
+          },
+        ])
+        .toArray();
+        console.log(paid.students);
+      resolve(paid);
+    });
+  }
 }

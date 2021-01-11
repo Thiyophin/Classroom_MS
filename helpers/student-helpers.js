@@ -458,5 +458,14 @@ module.exports = {
       }
       resolve();
     });
+  }, paypalPayment: (studId, eventId) => {
+    return new Promise((resolve, reject) => {
+      let paidObj = {
+        student: ObjectId(studId),
+        event: ObjectId(eventId),
+      };
+      db.get().collection(collection.PAYMENT_COLLECTION).insertOne(paidObj);
+      resolve();
+    });
   }
 }

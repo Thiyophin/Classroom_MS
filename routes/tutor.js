@@ -594,6 +594,13 @@ router.get('/delete_event/:id',verifyLogin,(req,res)=>{
  }) 
 })
 
+router.post('/tutor_knowPaid',verifyLogin,(req,res)=>{
+  //console.log(req.body);
+ tutorHelpers.knowPaid(req.body.eventId).then((response)=>{
+  res.render('tutor/tutor_knowPaid',{tutor:true,response})
+ })
+})
+
 router.get('/tutor_home', verifyLogin, async(req, res) => {
   let announcements=await tutorHelpers.getAllAnnouncements()
   let events=await tutorHelpers.getAllEvents()
