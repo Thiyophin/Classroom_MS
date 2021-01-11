@@ -41,10 +41,11 @@ resave: true,
 saveUninitialized: false}))
 app.use(fileUpload());
 app.use(nocache())
-db.connect((err)=>{
+db.connect( (err)=>{
   if(err)console.log("connection error"+err);
   else console.log("Database connected");
 })
+
 
 app.use('/', tutorRouter);
 app.use('/student', studentRouter);
