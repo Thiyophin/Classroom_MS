@@ -4,9 +4,9 @@ const state={
 }
 module.exports.connect=function(done){
     const url=process.env.MONGO_URL || 'mongodb://localhost:27017/dbCluster'
-    const dbname='classroom'
+    const dbname='dbCluster'
 
-    mongoClient.connect(url, {useUnifiedTopology: true},(err,data)=>{
+    mongoClient.connect(url ,(err,data)=>{
         if(err) return done(err)
         state.db=data.db(dbname)
         done()
