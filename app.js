@@ -18,7 +18,7 @@ const  swal  = require("sweetalert")
 //console.log(process.env);
 
 var store = new MongoDBStore({
-  uri: 'mongodb://localhost:27017/classroom',
+  uri: process.env.MONGO_URL,
   collection: 'mySessions'
 });
 store.on('error', function(error) {
