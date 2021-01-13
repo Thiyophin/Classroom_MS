@@ -134,9 +134,10 @@ module.exports={
     let todayDate=(new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear()
     let todayAttendance= await db.get().collection(collection.STUDENT_COLLECTION)
     .aggregate([
-        { $addFields: { lastPresent: { $last: "$attendance" } } },
-        {$project:{_id:0,Name:1,RollNo:1,lastPresent:1
-            ,status:{$eq:["$lastPresent",todayDate]}}}
+        {$addFields:{status:{
+            $cond:[{$in: [ todayDate, "$attendance" ] }, true, false ]
+            }}},
+        {$project:{_id:0,Name:1,RollNo:1,status:1}}
         ]).toArray()
     resolve(todayAttendance)
 })

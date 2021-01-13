@@ -285,15 +285,29 @@ router.get('/student_eventDetails/:id',async(req,res)=>{
   let studentId=''+req.session.student._id
   let eventId=""+event.student
   let id=event._id
+  console.log(event);
+  let status=false
   if(event.student){
       if ((eventId.includes(studentId))) {
         status= true;
-        console.log(status);
+        //console.log(status);
       }else{
         status=false;
-        console.log(status);
+        //console.log(status);
       }
     }
+    var todayDate=Number((new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear())
+    let eventDate=Number(event.Date)
+    console.log(todayDate);
+    console.log(eventDate);
+    console.log((todayDate)>=(eventDate));
+    // if((event.Date)>=((new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear())){
+    //   date=true
+    //   console.log(date);
+    // }else{
+    //   date=false
+    //   console.log(date);
+    // }
   let image='./public/events/images' + id + '.jpg'
   let pdf='./public/events/pdfs'+ id + '.pdf'
   let video='./public/events/videos'+ id + '.mp4'
