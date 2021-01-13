@@ -5,11 +5,11 @@
                 <div class="container mt-5 pl-5">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Add student</strong></h2>
                     <form action="/tutor_addstudent" id="add-studentform" method="POST" enctype="multipart/form-data">
-                         {{#if photoError}}
-                            <div class="bar pdferror">
-                               <i class="ico">&#9747;</i> {{photoError}}
-                               </div>
-                            {{/if}}  
+                        {{#if photoError}}
+                        <div class="bar pdferror">
+                            <i class="ico">&#9747;</i> {{photoError}}
+                        </div>
+                        {{/if}}
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Name:</strong></label>
                             <input type="text" class="form-control" name="Name" required>
@@ -38,13 +38,15 @@
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Address: </strong></label>
                             <input type="text" class="form-control" name="Address" required>
                         </div>
-                         <div class="form-group">
-                            <label  style=" color: rgba(23, 36, 211, 0.836); "><strong> Image </strong></label>
+                        <div class="form-group">
+                            <label style=" color: rgba(23, 36, 211, 0.836); "><strong> Image </strong></label>
                             <input type="file" class="form-control" name="Image" required>
-                         </div>
+                        </div>
                         <div class="buttons  mt-3 " style="padding-bottom: 20px;">
-                        <button type="submit" class="btn btn-success rounded-pill btn-xl" ><strong> Save </strong></button>
-                         <a href="/tutor_students" class="btn btn-danger rounded-pill btn-xl" style="float: right;" ><strong> Cancel</strong></a>
+                            <button type="submit" class="btn btn-success rounded-pill btn-xl"><strong> Save
+                                </strong></button>
+                            <a href="/tutor_students" class="btn btn-danger rounded-pill btn-xl"
+                                style="float: right;"><strong> Cancel</strong></a>
                         </div>
                     </form>
                 </div>
@@ -53,28 +55,28 @@
     </div>
 </section>
 <script>
-    const form =  document.querySelector('#add-studentform');
-    var delayTime=1000
-   form.addEventListener('submit',event=>{
-       event.preventDefault();
-       swal({
-           title:'Confirmation',
-           text:'Are you sure?',
-           buttons:{
-               cancel:true,
-               Confirm:'Submit'
-           }
-       }).then(val =>{
-           if(val){
-               swal({
-                   title:'Student added',
-                   icon:'success',
-                   buttons:{ok:false}
-               })
-               setTimeout(function(){
-             form.submit()
-               },delayTime)     
-           }
-       })
-   })
+    const form = document.querySelector('#add-studentform');
+    var delayTime = 1000
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        swal({
+            title: 'Confirmation',
+            text: 'Are you sure?',
+            buttons: {
+                cancel: true,
+                Confirm: 'Submit'
+            }
+        }).then(val => {
+            if (val) {
+                swal({
+                    title: 'Student added',
+                    icon: 'success',
+                    buttons: { ok: false }
+                })
+                setTimeout(function () {
+                    form.submit()
+                }, delayTime)
+            }
+        })
+    })
 </script>

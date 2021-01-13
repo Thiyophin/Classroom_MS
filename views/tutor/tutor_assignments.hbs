@@ -13,68 +13,73 @@
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> File: </strong></label>
                             {{#if pdfError}}
                             <div class="bar pdferror">
-                                <div class="close" onclick="this.parentElement.remove()">X</div> <i class="ico">&#9747;</i> {{pdfError}}
-                               </div>
-                            {{/if}}   
+                                <div class="close" onclick="this.parentElement.remove()">X</div> <i
+                                    class="ico">&#9747;</i> {{pdfError}}
+                            </div>
+                            {{/if}}
                             <input type="file" class="form-control" name="Assignment" required>
                         </div>
                         <div class="buttons mt-3">
-                                <button type="submit" class="btn btn-success " ><strong> Save </strong></button>
-                            </div>
-                            </div>
+                            <button type="submit" class="btn btn-success "><strong> Save </strong></button>
                         </div>
-                    </form >
-                      <div class="table-responsive">
-                    <div class="table" style="padding-top: 20px;padding-left: 10px;">
-                    <table class="table" style="border-top: 5px;">
-                    <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);text-align: center;">
-                        <tr>
-                            <th scope="col">Topic</th>
-                            <th scope="col">File</th>
-                            <th scope="col">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody style="background-color: rgb(131, 224, 131);text-align: center;">
-                      {{#each assignments}}
-                        <tr>
-                            <td >{{this.Topic}}</td>
-                       <td > <a href='/assignments/{{this._id}}.pdf' type='application/pdf'> {{this.Topic}}.pdf</a></td> 
-                            <td >
-                            <a href="/delete_assignment/{{this._id}}" onclick="confirmation(event)"  style="color: black;"><i class="fas fa-trash-alt" style="margin-left: 20px;"></i></a></td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table> 
-               </div>
                 </div>
+            </div>
+            </form>
+            <div class="table-responsive">
+                <div class="table" style="padding-top: 20px;padding-left: 10px;">
+                    <table class="table" style="border-top: 5px;">
+                        <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);text-align: center;">
+                            <tr>
+                                <th scope="col">Topic</th>
+                                <th scope="col">File</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background-color: rgb(131, 224, 131);text-align: center;">
+                            {{#each assignments}}
+                            <tr>
+                                <td>{{this.Topic}}</td>
+                                <td> <a href='/assignments/{{this._id}}.pdf' type='application/pdf'>
+                                        {{this.Topic}}.pdf</a></td>
+                                <td>
+                                    <a href="/delete_assignment/{{this._id}}" onclick="confirmation(event)"
+                                        style="color: black;"><i class="fas fa-trash-alt"
+                                            style="margin-left: 20px;"></i></a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
 </section>
 <script>
-     function confirmation(ev){
-    ev.preventDefault();
-     var delayInMilliseconds=1000
-    var link = ev.currentTarget.getAttribute('href')
-   // console.log(link)
-    swal({
-        title:'Confirmation',
-        text:'Are you sure?',
-        icon:'warning',
-        buttons:true,
-        dangerMode:true
-    }).then((val)=>{
-        if(val){
-           swal({
-               title:'Assignment deleted',
-               icon:'success',
-               buttons:{ok:false}
-           })
-           setTimeout(function(){
-           window.location.href= link
-           },delayInMilliseconds)     
-       }
-    })
-}
+    function confirmation(ev) {
+        ev.preventDefault();
+        var delayInMilliseconds = 1000
+        var link = ev.currentTarget.getAttribute('href')
+        // console.log(link)
+        swal({
+            title: 'Confirmation',
+            text: 'Are you sure?',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true
+        }).then((val) => {
+            if (val) {
+                swal({
+                    title: 'Assignment deleted',
+                    icon: 'success',
+                    buttons: { ok: false }
+                })
+                setTimeout(function () {
+                    window.location.href = link
+                }, delayInMilliseconds)
+            }
+        })
+    }
 </script>

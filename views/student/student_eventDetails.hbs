@@ -44,45 +44,47 @@
                             {{/if}}
                             {{#if amount}}
                             {{#if status}}
-                        <center>
-                         <p class="status" style="font-weight: bold;color:rgb(0, 17, 255)">
-                                Amount of {{amount}}Rs paid
-                            </p>
-                        </center>
-                            {{else}}
-                        <div class="form-group">
-                        <label style=" color: rgba(5, 12, 105, 0.836);"><strong>Payment Mode:</strong> </label>
-                        <div class="form-check form-check-inline ">    
-                        <input class="form-check-input" type="radio" name="Type" id="inlineRadio1"
-                        onclick="eventType()" value="Free" checked>
-                            <label class="form-check-label" for="inlineRadio1" style="color: rgb(46, 5, 228);font-weight: bold;">Razorpay</label>
-                        </div>
-                     <div class="form-check form-check-inline">
-                     <input class="form-check-input" type="radio" name="Type" id="inlineRadio2"
-                    onclick="eventType()" value="Paid">
-                    <label class="form-check-label" for="inlineRadio2" style="color: rgb(46, 5, 228);font-weight: bold;">Paypal</label>
-                    </div>
-                    </div>
-
-                        <div class="razorpay" style="display: none;" id="razorpay">
                             <center>
-                        <form action=""  id="eventRazorpay" >
-                        <input type="text" name="studentId" hidden value="{{student._id}}">
-                        <input type="text" name="eventId" hidden value="{{event._id}}">
-                        <input type="number" name="amount" hidden value="{{amount}}">
-                        <button class="btn btn-success"
-                        type="submit"><strong>Pay using Razorpay</strong> </button>
-                        </form>
+                                <p class="status" style="font-weight: bold;color:rgb(0, 17, 255)">
+                                    Amount of {{amount}}Rs paid
+                                </p>
                             </center>
-                            </div >
+                            {{else}}
+                            <div class="form-group">
+                                <label style=" color: rgba(5, 12, 105, 0.836);"><strong>Payment Mode:</strong> </label>
+                                <div class="form-check form-check-inline ">
+                                    <input class="form-check-input" type="radio" name="Type" id="inlineRadio1"
+                                        onclick="eventType()" value="Free" checked>
+                                    <label class="form-check-label" for="inlineRadio1"
+                                        style="color: rgb(46, 5, 228);font-weight: bold;">Razorpay</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="Type" id="inlineRadio2"
+                                        onclick="eventType()" value="Paid">
+                                    <label class="form-check-label" for="inlineRadio2"
+                                        style="color: rgb(46, 5, 228);font-weight: bold;">Paypal</label>
+                                </div>
+                            </div>
+
+                            <div class="razorpay" style="display: none;" id="razorpay">
+                                <center>
+                                    <form action="" id="eventRazorpay">
+                                        <input type="text" name="studentId" hidden value="{{student._id}}">
+                                        <input type="text" name="eventId" hidden value="{{event._id}}">
+                                        <input type="number" name="amount" hidden value="{{amount}}">
+                                        <button class="btn btn-success" type="submit"><strong>Pay using
+                                                Razorpay</strong> </button>
+                                    </form>
+                                </center>
+                            </div>
                             <div class="paypal" style="display: none;" id="paypal">
                                 <center>
-                        <form action="/student/student_paypal" method="POST"  id="Paypal" >
-                        <input type="text" name="studentId" hidden value="{{student._id}}">
-                        <input type="text" name="eventId" hidden value="{{event._id}}">
-                        <input type="number" name="amount" hidden value="{{amount}}">
-                        <button class="btn btn-success"
-                        type="submit"><strong>Pay using Paypal</strong> </button>
+                                    <form action="/student/student_paypal" method="POST" id="Paypal">
+                                        <input type="text" name="studentId" hidden value="{{student._id}}">
+                                        <input type="text" name="eventId" hidden value="{{event._id}}">
+                                        <input type="number" name="amount" hidden value="{{amount}}">
+                                        <button class="btn btn-success" type="submit"><strong>Pay using Paypal</strong>
+                                        </button>
                                 </center>
                             </div>
                             {{/if}}
@@ -95,65 +97,65 @@
     </div>
 </section>
 <script>
-  function eventType() {
-		if (document.getElementById('inlineRadio1').checked) {
-			document.getElementById('razorpay').style.display = 'block';
+    function eventType() {
+        if (document.getElementById('inlineRadio1').checked) {
+            document.getElementById('razorpay').style.display = 'block';
             document.getElementById('paypal').style.display = 'none';
-		} else if(document.getElementById('inlineRadio2').checked){
-			document.getElementById('paypal').style.display = 'block';
+        } else if (document.getElementById('inlineRadio2').checked) {
+            document.getElementById('paypal').style.display = 'block';
             document.getElementById('razorpay').style.display = 'none';
-		}
-	}
-
-
-$("#eventRazorpay").submit(function (event){
-  event.preventDefault();
-$.ajax({
-  url : '/student/student_razorPay',
-  type: 'post',
-  data :  $('#eventRazorpay').serialize(),
-  success:(response)=>{
-   razorpayPayment(response)
-  }
-});
-})
-
-function razorpayPayment(order){
-   var options = {
-    "key": "rzp_test_negFMbiG8cSAhC", // Enter the Key ID generated from the Dashboard
-    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-    "currency": "INR",
-    "name": "Classroom management",
-    "description":'Test Transaction' ,
-    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "handler": function (response){
-       verifyPayment(response,order)
-    },
-    "notes": {
-        "address": "Classroom management system"
-    },
-    "theme": {
-        "color": "#3399cc"
-    }
-    };
-      var rzp1 = new Razorpay(options); 
-        rzp1.open();  
-    }
-
-function verifyPayment(payment,order){
-    $.ajax({
-        url:'/student/verify-payment',
-        data:{
-            payment,
-            order
-        },method:'post',
-        success:(response)=>{
-            if(response.status){
-             location.href='/student/student_success'
-            }else{
-                   alert("Payment Failed")
-            }
         }
+    }
+
+
+    $("#eventRazorpay").submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: '/student/student_razorPay',
+            type: 'post',
+            data: $('#eventRazorpay').serialize(),
+            success: (response) => {
+                razorpayPayment(response)
+            }
+        });
     })
-}
+
+    function razorpayPayment(order) {
+        var options = {
+            "key": "rzp_test_negFMbiG8cSAhC", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Classroom management",
+            "description": 'Test Transaction',
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                verifyPayment(response, order)
+            },
+            "notes": {
+                "address": "Classroom management system"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/student/verify-payment',
+            data: {
+                payment,
+                order
+            }, method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    location.href = '/student/student_success'
+                } else {
+                    alert("Payment Failed")
+                }
+            }
+        })
+    }
 </script>

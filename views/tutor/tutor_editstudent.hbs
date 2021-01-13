@@ -4,12 +4,13 @@
             <div class="col-md-8 m-auto">
                 <div class="container mt-5 pl-5">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong>Edit student details</strong></h2>
-                    <form action="/tutor_editstudent/{{student._id}}" id="edit-studentform" method="POST" enctype="multipart/form-data">
-                         {{#if photoError}}
-                            <div class="bar pdferror">
-                               <i class="ico">&#9747;</i> {{photoError}}
-                               </div>
-                            {{/if}}  
+                    <form action="/tutor_editstudent/{{student._id}}" id="edit-studentform" method="POST"
+                        enctype="multipart/form-data">
+                        {{#if photoError}}
+                        <div class="bar pdferror">
+                            <i class="ico">&#9747;</i> {{photoError}}
+                        </div>
+                        {{/if}}
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Name:</strong></label>
                             <input type="text" class="form-control" name="Name" value="{{student.Name}}" required>
@@ -24,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Mob: </strong></label>
-                            <input type="number" class="form-control" name="Mob"value="{{student.Mob}}"  required>
+                            <input type="number" class="form-control" name="Mob" value="{{student.Mob}}" required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Email:</strong></label>
@@ -32,17 +33,20 @@
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Address: </strong></label>
-                            <input type="text" class="form-control" name="Address"value="{{student.Address}}"  required>
-                         <input type="hidden" name="id" value="{{student._id}}" >
+                            <input type="text" class="form-control" name="Address" value="{{student.Address}}" required>
+                            <input type="hidden" name="id" value="{{student._id}}">
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong>Change image: </strong> </label>
-                            <img src="/students-images/{{student._id}}.jpg" alt="" style="width: 70px;height:70px;" id="imgView">
-                            <input type="file" class="form-control" name="Image" onchange="viewImage(event)"  >
+                            <img src="/students-images/{{student._id}}.jpg" alt="" style="width: 70px;height:70px;"
+                                id="imgView">
+                            <input type="file" class="form-control" name="Image" onchange="viewImage(event)">
                         </div>
                         <div class="buttons  mt-3 " style="padding-bottom: 20px;">
-                        <button type="submit" class="btn btn-success rounded-pill btn-xl" ><strong> Save changes </strong></button>
-                         <a href="/tutor_students" class="btn btn-danger rounded-pill btn-xl" style="float: right;" ><strong> Cancel</strong></a>
+                            <button type="submit" class="btn btn-success rounded-pill btn-xl"><strong> Save changes
+                                </strong></button>
+                            <a href="/tutor_students" class="btn btn-danger rounded-pill btn-xl"
+                                style="float: right;"><strong> Cancel</strong></a>
                         </div>
                     </form>
                 </div>
@@ -51,32 +55,32 @@
     </div>
 </section>
 <script>
-     const form =  document.querySelector('#edit-studentform');
-   var delayInMilliseconds=1000
-  form.addEventListener('submit',event=>{
-      event.preventDefault();
-      swal({
-          title:'Confirmation',
-          text:'Are you sure?',
-          buttons:{
-              cancel:true,
-              Confirm:'Submit'
-          }
-      }).then(val =>{
-          if(val){
-              swal({
-                  title:'Student profile updated',
-                  icon:'success',
-                  buttons:{ok:false}
-              })
-              setTimeout(function(){
-            form.submit()
-            console.log(form)
-              },delayInMilliseconds)     
-          }
-      })
-  })
- function viewImage(event){
-       document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
-   }
+    const form = document.querySelector('#edit-studentform');
+    var delayInMilliseconds = 1000
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        swal({
+            title: 'Confirmation',
+            text: 'Are you sure?',
+            buttons: {
+                cancel: true,
+                Confirm: 'Submit'
+            }
+        }).then(val => {
+            if (val) {
+                swal({
+                    title: 'Student profile updated',
+                    icon: 'success',
+                    buttons: { ok: false }
+                })
+                setTimeout(function () {
+                    form.submit()
+                    console.log(form)
+                }, delayInMilliseconds)
+            }
+        })
+    })
+    function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    }
 </script>

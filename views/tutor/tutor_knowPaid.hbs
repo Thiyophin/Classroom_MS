@@ -4,28 +4,28 @@
             <div class="col-md-8 m-auto">
                 <div class="container  mt-3">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Students Paid </strong></h2>
-               <div class="table-responsive">
-                <table class="table" style="border-top: 5px;">
-                    <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);">
-                        <tr>
-                            <th scope="col">Roll No</th>
-                            <th scope="col">Name</th>
-                             <th scope="col">Mobile No</th>
-                        </tr>
-                    </thead>
-                    <tbody style="background-color: rgb(131, 224, 131);">
-                        {{#each response}}
-                        {{#each students}}
-                        <tr>
-                        <td >{{this.RollNo}}</td>
-                        <td >{{this.Name}} </td>  
-                        <td >{{this.Mob}} </td>  
-                        </tr>
-                         {{/each}}
-                        {{/each}}
-                    </tbody>
-                </table> 
-               </div>
+                    <div class="table-responsive">
+                        <table class="table" style="border-top: 5px;">
+                            <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);">
+                                <tr>
+                                    <th scope="col">Roll No</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Mobile No</th>
+                                </tr>
+                            </thead>
+                            <tbody style="background-color: rgb(131, 224, 131);">
+                                {{#each response}}
+                                {{#each students}}
+                                <tr>
+                                    <td>{{this.RollNo}}</td>
+                                    <td>{{this.Name}} </td>
+                                    <td>{{this.Mob}} </td>
+                                </tr>
+                                {{/each}}
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

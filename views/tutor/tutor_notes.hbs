@@ -4,38 +4,42 @@
             <div class="col-md-8 m-auto">
                 <div class="container mt-5 pl-5">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong>Notes</strong></h2>
-                    <form action="/tutor_notes" id="note_form" method="POST" enctype="multipart/form-data" style="margin-bottom: 10px;">
+                    <form action="/tutor_notes" id="note_form" method="POST" enctype="multipart/form-data"
+                        style="margin-bottom: 10px;">
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Topic:</strong></label>
                             <input type="text" class="form-control" name="Topic" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Document: </strong></label> 
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Document: </strong></label>
                             <input type="file" class="form-control" name="Document" accept="application/pdf" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Video File: </strong></label> 
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Video File: </strong></label>
                             <input type="file" class="form-control" name="Video" accept="video/*" required>
                         </div>
-                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Youtube link: </strong></label> 
+                        <div class="form-group">
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Youtube link: </strong></label>
                             <input type="text" class="form-control" name="Link" required>
                         </div>
-                     <div id="upload-progress" style="display: none;"><div class="progress-bar" aria-valuenow="0" aria-valuemax="100"></div></div> 
-                        <div class="buttons mt-3">
-                                <button type="submit"  onclick="showDiv();"  class="btn btn-success " value="Submit Form" ><strong> Save </strong></button>
-                            </div>
-                            </div>
+                        <div id="upload-progress" style="display: none;">
+                            <div class="progress-bar" aria-valuenow="0" aria-valuemax="100"></div>
                         </div>
-                    </form >
-                      <div class="table-responsive">
-                   <table class="table" width="100%" style="border-top: 5px;text-align: center;">
+                        <div class="buttons mt-3">
+                            <button type="submit" onclick="showDiv();" class="btn btn-success "
+                                value="Submit Form"><strong> Save </strong></button>
+                        </div>
+                </div>
+            </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table" width="100%" style="border-top: 5px;text-align: center;">
                     <col style="width:10%">
-	                <col style="width:20%">
-	                <col style="width:10%">
+                    <col style="width:20%">
+                    <col style="width:10%">
                     <col style="width:30%">
-                     <col style="width:20%">
-                     <col style="width:10%">
+                    <col style="width:20%">
+                    <col style="width:10%">
                     <thead style="color: rgb(67, 30, 201);background-color: rgb(230, 69, 77);">
                         <tr>
                             <th scope="col">Date</th>
@@ -48,66 +52,73 @@
                     </thead>
                     <tbody style="background-color: rgb(131, 187, 224);">
                         {{#each notes}}
-                     <tr>
-                         <td style="color: rgb(236, 6, 6);">{{this.date}}</td>
-                         <td style="color: rgb(236, 6, 6);">{{notes.Topic}}</td>
-                         <td><a href='/documents/{{this._id}}.pdf' type='application/pdf'  style="color: red;" ><i class="fa fa-file-pdf-o fa-lg"  aria-hidden="true"></i></a></td>
-                         <td><video  width="170" height="95" controls><source src="/videos/{{this._id}}.mp4"></video></td>
-                         <td><a href="{{notes.Link}}" style="color: rgb(236, 6, 6);">To learn more click here</a></td>
-                        <td><a href="/tutor_deleteNotes/{{this._id}}" onclick="confirmation(event)" style="color: rgb(20, 110, 32);"><i class="fas fa-trash-alt" style="margin-left: 20px;"></i></a></td>
-                     </tr>
-                     {{/each}}
+                        <tr>
+                            <td style="color: rgb(236, 6, 6);">{{this.date}}</td>
+                            <td style="color: rgb(236, 6, 6);">{{notes.Topic}}</td>
+                            <td><a href='/documents/{{this._id}}.pdf' type='application/pdf' style="color: red;"><i
+                                        class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i></a></td>
+                            <td><video width="170" height="95" controls>
+                                    <source src="/videos/{{this._id}}.mp4">
+                                </video></td>
+                            <td><a href="{{notes.Link}}" style="color: rgb(236, 6, 6);">To learn more click here</a>
+                            </td>
+                            <td><a href="/tutor_deleteNotes/{{this._id}}" onclick="confirmation(event)"
+                                    style="color: rgb(20, 110, 32);"><i class="fas fa-trash-alt"
+                                        style="margin-left: 20px;"></i></a></td>
+                        </tr>
+                        {{/each}}
                     </tbody>
-                </table> 
-                </div>
-                </div>
+                </table>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 </section>
 <style>
     /*Progress Bar*/
-#upload-progress{
-    height: 20px;
-    border: 1px solid #ddd;
-    width: 100%;
-}
-#upload-progress .progress-bar{
-	background: #bde1ff;
-    width: 0;
-    height: 20px;
-}
+    #upload-progress {
+        height: 20px;
+        border: 1px solid #ddd;
+        width: 100%;
+    }
+
+    #upload-progress .progress-bar {
+        background: #bde1ff;
+        width: 0;
+        height: 20px;
+    }
 </style>
 <script>
-     function confirmation(ev){
-    ev.preventDefault();
-     var delayInMilliseconds=1000
-    var link = ev.currentTarget.getAttribute('href')
-   // console.log(link)
-    swal({
-        title:'Confirmation',
-        text:'Are you sure?',
-        icon:'warning',
-        buttons:true,
-        dangerMode:true
-    }).then((val)=>{
-        if(val){
-           swal({
-               title:'Notes deleted',
-               icon:'success',
-               buttons:{ok:false}
-           })
-           setTimeout(function(){
-           window.location.href= link
-           },delayInMilliseconds)     
-       }
-    })
-}
+    function confirmation(ev) {
+        ev.preventDefault();
+        var delayInMilliseconds = 1000
+        var link = ev.currentTarget.getAttribute('href')
+        // console.log(link)
+        swal({
+            title: 'Confirmation',
+            text: 'Are you sure?',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true
+        }).then((val) => {
+            if (val) {
+                swal({
+                    title: 'Notes deleted',
+                    icon: 'success',
+                    buttons: { ok: false }
+                })
+                setTimeout(function () {
+                    window.location.href = link
+                }, delayInMilliseconds)
+            }
+        })
+    }
 
-function showDiv() {
-		document.getElementById('upload-progress').style.display = "block";
-	}
-	function _(el) {
-		return document.getElementById(el);
-	}
+    function showDiv() {
+        document.getElementById('upload-progress').style.display = "block";
+    }
+    function _(el) {
+        return document.getElementById(el);
+    }
 </script>

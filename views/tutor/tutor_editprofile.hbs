@@ -6,17 +6,17 @@
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Edit Profile</strong></h2>
                     <form action="/tutor_editprofile" id="edit-form" method="POST" enctype="multipart/form-data">
                         {{#if photoError}}
-                            <div class="bar pdferror">
-                               <i class="ico">&#9747;</i> {{photoError}}
-                               </div>
-                            {{/if}}  
+                        <div class="bar pdferror">
+                            <i class="ico">&#9747;</i> {{photoError}}
+                        </div>
+                        {{/if}}
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Name:</strong></label>
                             <input type="text" class="form-control" name="Name" value="{{profile.Name}}" required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Class: </strong></label>
-                            <input type="number" class="form-control" name="Class" value="{{profile.Class}}"required>
+                            <input type="number" class="form-control" name="Class" value="{{profile.Class}}" required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Subject: </strong></label>
@@ -28,24 +28,29 @@
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Pincode: </strong></label>
-                            <input type="number" class="form-control" name="Pincode" value="{{profile.Pincode}}" required>
+                            <input type="number" class="form-control" name="Pincode" value="{{profile.Pincode}}"
+                                required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Mobile No:</strong></label>
-                            <input type="number" class="form-control" name="MobileNo" value="{{profile.MobileNo}}" required>
+                            <input type="number" class="form-control" name="MobileNo" value="{{profile.MobileNo}}"
+                                required>
                         </div>
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Email address: </strong></label>
                             <input type="email" class="form-control" name="Email" value="{{profile.Email}}" required>
-                            <input type="hidden" name="id" value="{{profile._id}}" >
+                            <input type="hidden" name="id" value="{{profile._id}}">
                         </div>
                         <div class="form-group" style="padding-bottom: 20px;">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong>Change image: </strong> </label>
-                            <img src="/tutor-images/{{profile._id}}.jpg" alt="" style="width: 70px;height:70px;" id="imgView">
-                            <input type="file" class="form-control" name="Image" onchange="viewImage(event)" >
+                            <img src="/tutor-images/{{profile._id}}.jpg" alt="" style="width: 70px;height:70px;"
+                                id="imgView">
+                            <input type="file" class="form-control" name="Image" onchange="viewImage(event)">
                             <div class="buttons mt-3">
-                                <button type="submit" class="btn btn-success btn-xl" ><strong> Save changes</strong></button>
-                                 <a href="/tutor_profile"  class="btn btn-danger btn-xl" style="float: right;" ><strong> Cancel</strong></a>
+                                <button type="submit" class="btn btn-success btn-xl"><strong> Save
+                                        changes</strong></button>
+                                <a href="/tutor_profile" class="btn btn-danger btn-xl" style="float: right;"><strong>
+                                        Cancel</strong></a>
                             </div>
                         </div>
                     </form>
@@ -55,32 +60,32 @@
     </div>
 </section>
 <script>
-     const form =  document.querySelector('#edit-form');
-   var delayInMilliseconds=1000
-   //console.log(form)
-  form.addEventListener('submit',event=>{
-      event.preventDefault();
-      swal({
-          title:'Confirmation',
-          text:'Are you sure?',
-          buttons:{
-              cancel:true,
-              Confirm:'Submit'
-          }
-      }).then(val =>{
-          if(val){
-              swal({
-                  title:'Profile updated',
-                  icon:'success',
-                  buttons:{ok:false}
-              })
-              setTimeout(function(){
-            form.submit()
-              },delayInMilliseconds)     
-          }
-      })
-  })
-   function viewImage(event){
-       document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
-   }
+    const form = document.querySelector('#edit-form');
+    var delayInMilliseconds = 1000
+    //console.log(form)
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        swal({
+            title: 'Confirmation',
+            text: 'Are you sure?',
+            buttons: {
+                cancel: true,
+                Confirm: 'Submit'
+            }
+        }).then(val => {
+            if (val) {
+                swal({
+                    title: 'Profile updated',
+                    icon: 'success',
+                    buttons: { ok: false }
+                })
+                setTimeout(function () {
+                    form.submit()
+                }, delayInMilliseconds)
+            }
+        })
+    })
+    function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    }
 </script>

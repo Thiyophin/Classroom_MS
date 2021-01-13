@@ -7,12 +7,13 @@
                         <div class="main-cat">Photos</div>
                         {{#each photos}}
                         <center>
-                        <div class="img-thumbnail card mt-5" style="width: 25rem;">
-                            <img class="card-img-top" src="/photos/{{this._id}}.jpg" alt="Card image cap" draggable="false">
-                            <div class="card-body">
-                                <h3 class="card-text" style="color: midnightblue;">{{this.Name}} </h3>
+                            <div class="img-thumbnail card mt-5" style="width: 25rem;">
+                                <img class="card-img-top" src="/photos/{{this._id}}.jpg" alt="Card image cap"
+                                    draggable="false">
+                                <div class="card-body">
+                                    <h3 class="card-text" style="color: midnightblue;">{{this.Name}} </h3>
+                                </div>
                             </div>
-                        </div>
                         </center>
                         {{/each}}
                     </div>

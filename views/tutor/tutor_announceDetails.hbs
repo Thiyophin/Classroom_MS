@@ -5,8 +5,8 @@
                 <div class="notice-card card-information">
                     <div class="content">
                         <div class="main-cat">Announcement</div>
-      <a href="/delete_announcement/{{announcement._id}}" onclick="confirmation(event)" 
-     style="color: black;"><i class="fas fa-faw fa-trash-alt" style="float: right;"></i></a>                   
+                        <a href="/delete_announcement/{{announcement._id}}" onclick="confirmation(event)"
+                            style="color: black;"><i class="fas fa-faw fa-trash-alt" style="float: right;"></i></a>
                         <br>
                         {{#if announcement}}
                         <p class="description">
@@ -29,8 +29,8 @@
                         {{/if}}
                         {{#if pdf}}
                         <div class="embed-responsive embed-responsive-16by9 mt-4">
-                            <object class="embed-responsive-item"  data="/announcements/pdfs{{announcement._id}}.pdf"
-                             type='application/pdf'>
+                            <object class="embed-responsive-item" data="/announcements/pdfs{{announcement._id}}.pdf"
+                                type='application/pdf'>
                             </object>
                         </div>
                         {{/if}}
@@ -41,28 +41,28 @@
     </div>
 </section>
 <script>
-     function confirmation(ev){
-    ev.preventDefault();
-     var delayInMilliseconds=1000
-    var link = ev.currentTarget.getAttribute('href')
-   // console.log(link)
-    swal({
-        title:'Confirmation',
-        text:'Do you want to delete?',
-        icon:'warning',
-        buttons:true,
-        dangerMode:true
-    }).then((val)=>{
-        if(val){
-           swal({
-               title:'Announcement deleted',
-               icon:'success',
-               buttons:{ok:false}
-           })
-           setTimeout(function(){
-           window.location.href= link
-           },delayInMilliseconds)     
-       }
-    })
-}
+    function confirmation(ev) {
+        ev.preventDefault();
+        var delayInMilliseconds = 1000
+        var link = ev.currentTarget.getAttribute('href')
+        // console.log(link)
+        swal({
+            title: 'Confirmation',
+            text: 'Do you want to delete?',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true
+        }).then((val) => {
+            if (val) {
+                swal({
+                    title: 'Announcement deleted',
+                    icon: 'success',
+                    buttons: { ok: false }
+                })
+                setTimeout(function () {
+                    window.location.href = link
+                }, delayInMilliseconds)
+            }
+        })
+    }
 </script>
