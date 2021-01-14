@@ -9,6 +9,8 @@ var path = require("path");
 const { log } = require("console");
 var fs = require("fs");
 const paypal = require("paypal-rest-sdk");
+const { deflateSync } = require("zlib");
+const { deleteStudent } = require("../helpers/student-helpers");
 paypal.configure({
   mode: "sandbox", //sandbox or live
   client_id:
@@ -417,17 +419,19 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       //console.log(status);
     }
   }
-  var todayDate = Number(
+  var todayDate = (
     new Date().getDate() +
       "/" +
       (new Date().getMonth() + 1) +
       "/" +
       new Date().getFullYear()
-  );
-  let eventDate = Number(event.Date);
-  console.log(todayDate);
+  )
+  var eventDate = event.Date
   console.log(eventDate);
-  console.log(todayDate >= eventDate);
+  console.log(todayDate);
+  console.log(typeof(eventDate));
+  console.log(typeof(todayDate));
+  
   // if((event.Date)>=((new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear())){
   //   date=true
   //   console.log(date);
@@ -582,8 +586,8 @@ router.post("/student_paypal", verifyStudentIn, (req, res) => {
       payment_method: "paypal",
     },
     redirect_urls: {
-      return_url: "http://localhost:3000/student_paypalsuccess",
-      cancel_url: "http://localhost:3000/student_failed",
+      return_url: "http://localhost:3000/student/student_paypalsuccess",
+      cancel_url: "http://localhost:3000/student/student_failed",
     },
     transactions: [
       {
@@ -611,7 +615,7 @@ router.post("/student_paypal", verifyStudentIn, (req, res) => {
     console.log(payment);
     if (error) {
       console.log(error);
-      res.redirect("/student_failed");
+      res.redirect("/student_eventDetails");
     } else {
       for (let i = 0; i < payment.links.length; i++) {
         if (payment.links[i].rel === "approval_url") {
@@ -643,7 +647,7 @@ router.get("/student_paypalsuccess", verifyStudentIn, (req, res) => {
     function (error, payment) {
       if (error) {
         console.log(error);
-        res.redirect("/student/student_failed");
+        res.redirect("/student/evenDetails");
       } else {
         console.log(payment);
         studentHelpers
@@ -666,11 +670,13 @@ router.get("/student_paypalsuccess", verifyStudentIn, (req, res) => {
   );
 });
 
-router.get("/student_success", (req, res) => {
+router.get("/student_success",verifyStudentIn, (req, res) => {
   res.render("student/student_success", { student: true });
 });
 
-router.get("/student_failed", (req, res) => {
+router.get("/student_failed/:token",verifyStudentIn, (req, res) => {
+  let token=req.params.token
+  console.log(token);
   res.render("student/student_failed", { student: true });
 });
 
