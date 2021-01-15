@@ -32,11 +32,13 @@
                 <div class="table" style="padding-top: 20px;padding-left: 10px;">
                     <table class="table" style="border-top: 5px;">
                         <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);text-align: center;">
+                            {{#if assignments}}
                             <tr>
                                 <th scope="col">Topic</th>
                                 <th scope="col">File</th>
                                 <th scope="col">Delete</th>
                             </tr>
+                            {{/if}}
                         </thead>
                         <tbody style="background-color: rgb(131, 224, 131);text-align: center;">
                             {{#each assignments}}

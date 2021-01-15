@@ -41,6 +41,7 @@
                     <col style="width:20%">
                     <col style="width:10%">
                     <thead style="color: rgb(67, 30, 201);background-color: rgb(230, 69, 77);">
+                       {{#if notes}}
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Topic</th>
@@ -49,6 +50,7 @@
                             <th scope="col">Youtube links</th>
                             <th scope="col">Delete</th>
                         </tr>
+                        {{/if}}
                     </thead>
                     <tbody style="background-color: rgb(131, 187, 224);">
                         {{#each notes}}
