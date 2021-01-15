@@ -128,10 +128,6 @@ router.get("/delete_student/:id", verifyLogin, (req, res) => {
   let studentId = req.params.id;
   // console.log(studentId);
   studentHelpers.deleteStudent(studentId).then((response) => {
-    fs.unlink("./public/students-images/" + studentId + ".jpg", function (err) {
-      if (err) throw err;
-      console.log("File deleted!");
-    });
     res.redirect("/tutor_students");
   });
 });
@@ -197,10 +193,6 @@ router.get("/delete_assignment/:id", verifyLogin, (req, res) => {
   let assignmentId = req.params.id;
   //console.log(assignmentId);
   tutorHelpers.deleteAssignment(assignmentId).then((response) => {
-    fs.unlink("./public/assignments/" + assignmentId + ".pdf", function (err) {
-      if (err) throw err;
-      console.log("File deleted!");
-    });
     res.redirect("/tutor_assignments");
   });
 });
@@ -244,14 +236,6 @@ router.get("/tutor_deleteNotes/:id", verifyLogin, (req, res) => {
   let notesId = req.params.id;
   //console.log(notesId);
   tutorHelpers.deleteNotes(notesId).then((response) => {
-    fs.unlink("./public/documents/" + notesId + ".pdf", function (err) {
-      if (err) throw err;
-      // console.log('document deleted!');
-    });
-    fs.unlink("./public/videos/" + notesId + ".mp4", function (err) {
-      if (err) throw err;
-      // console.log('videos deleted!');
-    });
     res.redirect("/tutor_notes");
   });
 });
@@ -453,27 +437,12 @@ router.get("/delete_announcement/:id", verifyLogin, (req, res) => {
   tutorHelpers.deleteAnnouncement(id).then((response) => {
     if (fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/announcements/images" + id + ".jpg", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/announcements/pdfs" + id + ".pdf", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/announcements/videos" + id + ".mp4", function (err) {
-        if (err) throw err;
-      });
     } else if (
       !fs.existsSync(image) &&
       fs.existsSync(pdf) &&
       fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/announcements/pdfs" + id + ".pdf", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/announcements/videos" + id + ".mp4", function (err) {
-        if (err) throw err;
-      });
       // console.log("pdf and video ");
     } else if (
       fs.existsSync(image) &&
@@ -481,12 +450,6 @@ router.get("/delete_announcement/:id", verifyLogin, (req, res) => {
       fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/announcements/images" + id + ".jpg", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/announcements/videos" + id + ".mp4", function (err) {
-        if (err) throw err;
-      });
       //console.log("image and video ");
     } else if (
       fs.existsSync(image) &&
@@ -494,12 +457,6 @@ router.get("/delete_announcement/:id", verifyLogin, (req, res) => {
       !fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/announcements/images" + id + ".jpg", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/announcements/pdfs" + id + ".pdf", function (err) {
-        if (err) throw err;
-      });
       console.log("image and pdf ");
     } else if (
       !fs.existsSync(image) &&
@@ -507,9 +464,6 @@ router.get("/delete_announcement/:id", verifyLogin, (req, res) => {
       fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/announcements/videos" + id + ".mp4", function (err) {
-        if (err) throw err;
-      });
       // console.log(" video ");
     } else if (
       !fs.existsSync(image) &&
@@ -517,9 +471,6 @@ router.get("/delete_announcement/:id", verifyLogin, (req, res) => {
       !fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/announcements/pdfs" + id + ".pdf", function (err) {
-        if (err) throw err;
-      });
       //  console.log("pdf");
     } else if (
       fs.existsSync(image) &&
@@ -527,9 +478,6 @@ router.get("/delete_announcement/:id", verifyLogin, (req, res) => {
       !fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/announcements/images" + id + ".jpg", function (err) {
-        if (err) throw err;
-      });
       // console.log("image");
     } else if (
       !fs.existsSync(image) &&
@@ -560,9 +508,6 @@ router.get("/delete_photos/:id", verifyLogin, (req, res) => {
   let id = req.params.id;
   tutorHelpers.deletePhoto(id).then((response) => {
     res.redirect("/tutor_photos");
-    fs.unlink("./public/Photos/" + id + ".jpg", function (err) {
-      if (err) throw err;
-    });
   });
 });
 
@@ -637,6 +582,17 @@ router.get("/tutor_eventDetails/:id", verifyLogin, async (req, res) => {
   let image = "./public/events/images" + id + ".jpg";
   let pdf = "./public/events/pdfs" + id + ".pdf";
   let video = "./public/events/videos" + id + ".mp4";
+  var todayDateObject = new Date()
+  var eventDate =  event.Date 
+var dateParts = eventDate.split("/");
+var eventDateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+if(todayDateObject>eventDateObject){
+    date=true
+    console.log(date);
+  }else{
+    date=false
+    console.log(date);
+  }
   if (fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)) {
     res.render("tutor/tutor_eventDetails", {
       tutor: true,
@@ -645,6 +601,7 @@ router.get("/tutor_eventDetails/:id", verifyLogin, async (req, res) => {
       video,
       event,
       amount,
+      date
     });
     // console.log("all present");
   } else if (
@@ -658,6 +615,7 @@ router.get("/tutor_eventDetails/:id", verifyLogin, async (req, res) => {
       video,
       event,
       amount,
+      date
     });
     //  console.log("pdf and video ");
   } else if (
@@ -671,6 +629,7 @@ router.get("/tutor_eventDetails/:id", verifyLogin, async (req, res) => {
       video,
       event,
       amount,
+      date
     });
     // console.log("image and video ");
   } else if (
@@ -684,6 +643,7 @@ router.get("/tutor_eventDetails/:id", verifyLogin, async (req, res) => {
       pdf,
       event,
       amount,
+      date
     });
     //  console.log("image and pdf ");
   } else if (
@@ -696,6 +656,7 @@ router.get("/tutor_eventDetails/:id", verifyLogin, async (req, res) => {
       video,
       event,
       amount,
+      date
     });
     // console.log(" video ");
   } else if (
@@ -715,6 +676,7 @@ router.get("/tutor_eventDetails/:id", verifyLogin, async (req, res) => {
       image,
       event,
       amount,
+      date
     });
     // console.log("image");
   } else if (
@@ -735,27 +697,12 @@ router.get("/delete_event/:id", verifyLogin, (req, res) => {
   tutorHelpers.deleteEvent(id).then((response) => {
     if (fs.existsSync(image) && fs.existsSync(pdf) && fs.existsSync(video)) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/events/images" + id + ".jpg", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/events/pdfs" + id + ".pdf", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/events/videos" + id + ".mp4", function (err) {
-        if (err) throw err;
-      });
     } else if (
       !fs.existsSync(image) &&
       fs.existsSync(pdf) &&
       fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/events/pdfs" + id + ".pdf", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/events/videos" + id + ".mp4", function (err) {
-        if (err) throw err;
-      });
       // console.log("pdf and video ");
     } else if (
       fs.existsSync(image) &&
@@ -763,12 +710,6 @@ router.get("/delete_event/:id", verifyLogin, (req, res) => {
       fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/events/images" + id + ".jpg", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/events/videos" + id + ".mp4", function (err) {
-        if (err) throw err;
-      });
       //console.log("image and video ");
     } else if (
       fs.existsSync(image) &&
@@ -776,12 +717,6 @@ router.get("/delete_event/:id", verifyLogin, (req, res) => {
       !fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/events/images" + id + ".jpg", function (err) {
-        if (err) throw err;
-      });
-      fs.unlink("./public/events/pdfs" + id + ".pdf", function (err) {
-        if (err) throw err;
-      });
       console.log("image and pdf ");
     } else if (
       !fs.existsSync(image) &&
@@ -789,9 +724,6 @@ router.get("/delete_event/:id", verifyLogin, (req, res) => {
       fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/events/videos" + id + ".mp4", function (err) {
-        if (err) throw err;
-      });
       // console.log(" video ");
     } else if (
       !fs.existsSync(image) &&
@@ -799,9 +731,6 @@ router.get("/delete_event/:id", verifyLogin, (req, res) => {
       !fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/events/pdfs" + id + ".pdf", function (err) {
-        if (err) throw err;
-      });
       //  console.log("pdf");
     } else if (
       fs.existsSync(image) &&
@@ -809,9 +738,6 @@ router.get("/delete_event/:id", verifyLogin, (req, res) => {
       !fs.existsSync(video)
     ) {
       res.redirect("/tutor_home");
-      fs.unlink("./public/events/images" + id + ".jpg", function (err) {
-        if (err) throw err;
-      });
       // console.log("image");
     } else if (
       !fs.existsSync(image) &&

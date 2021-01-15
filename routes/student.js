@@ -419,26 +419,17 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       //console.log(status);
     }
   }
-  var todayDate = (
-    new Date().getDate() +
-      "/" +
-      (new Date().getMonth() + 1) +
-      "/" +
-      new Date().getFullYear()
-  )
-  var eventDate = event.Date
-  console.log(eventDate);
-  console.log(todayDate);
-  console.log(typeof(eventDate));
-  console.log(typeof(todayDate));
-  
-  // if((event.Date)>=((new Date().getDate())+"/"+(new Date().getMonth() + 1)+ "/" + new Date().getFullYear())){
-  //   date=true
-  //   console.log(date);
-  // }else{
-  //   date=false
-  //   console.log(date);
-  // }
+  var todayDateObject = new Date()
+  var eventDate =  event.Date 
+var dateParts = eventDate.split("/");
+var eventDateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+if(todayDateObject>eventDateObject){
+    date=true
+    console.log(date);
+  }else{
+    date=false
+    console.log(date);
+  }
   let image = "./public/events/images" + id + ".jpg";
   let pdf = "./public/events/pdfs" + id + ".pdf";
   let video = "./public/events/videos" + id + ".mp4";
@@ -452,6 +443,7 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       event,
       amount,
       status,
+      date
     });
     // console.log("all present");
   } else if (
@@ -466,6 +458,7 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       event,
       amount,
       status,
+      date
     });
     // console.log("pdf and video ");
   } else if (
@@ -480,6 +473,7 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       event,
       amount,
       status,
+      date
     });
     // console.log("image and video ");
   } else if (
@@ -494,6 +488,7 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       event,
       amount,
       status,
+      date
     });
     //console.log("image and pdf ");
   } else if (
@@ -507,6 +502,7 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       event,
       amount,
       status,
+      date
     });
     // console.log(" video ");
   } else if (
@@ -520,6 +516,7 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       event,
       amount,
       status,
+      date
     });
     // console.log("pdf");
   } else if (
@@ -533,6 +530,7 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       event,
       amount,
       status,
+      date
     });
     // console.log("image");
   } else if (
@@ -545,6 +543,7 @@ router.get("/student_eventDetails/:id", async (req, res) => {
       event,
       amount,
       status,
+      date
     });
     // console.log("all absent");
   }

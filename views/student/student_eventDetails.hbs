@@ -65,7 +65,6 @@
                                         style="color: rgb(46, 5, 228);font-weight: bold;">Paypal</label>
                                 </div>
                             </div>
-
                             <div class="razorpay" style="display: none;" id="razorpay">
                                 <center>
                                     <form action="" id="eventRazorpay">
@@ -89,6 +88,13 @@
                             </div>
                             {{/if}}
                             {{/if}}
+                                {{#if date}}
+                            <div>
+                             <p class="status" style="font-weight: bold;color:rgb(255, 17, 0)">
+                            Event  Ended
+                            </p>
+                            </div>
+                               {{/if}}
                         </div>
                     </div>
                 </div>
