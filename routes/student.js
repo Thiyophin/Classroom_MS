@@ -673,9 +673,7 @@ router.get("/student_success",verifyStudentIn, (req, res) => {
   res.render("student/student_success", { student: true });
 });
 
-router.get("/student_failed/:token",verifyStudentIn, (req, res) => {
-  let token=req.params.token
-  console.log(token);
+router.get("/student_failed",verifyStudentIn, (req, res) => {
   res.render("student/student_failed", { student: true });
 });
 
