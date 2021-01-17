@@ -251,5 +251,11 @@ return new Promise(async(resolve,reject)=>{
         console.log(paid.students);
       resolve(paid);
     });
-  }
+  },getAllEvents:()=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.EVENT_COLLECTION).find().toArray().then((response)=>{
+            resolve(response.reverse())
+        })
+    })
+}
 }

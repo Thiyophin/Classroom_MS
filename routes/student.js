@@ -295,6 +295,11 @@ router.get("/student_announcement", verifyStudentIn, async (req, res) => {
   res.render("student/student_announcement", { student: true, announcements });
 });
 
+router.get("/student_event", verifyStudentIn, async (req, res) => {
+  let events = await tutorHelpers.getAllEvents();
+  res.render("student/student_event", { student: true, events });
+});
+
 router.get(
   "/student_announceDetails/:id",
   verifyStudentIn,
