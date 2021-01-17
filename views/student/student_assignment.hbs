@@ -24,6 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody style="background-color: rgb(131, 224, 131);">
+                                {{#if assignments}}
                                 {{#each assignments}}
                                 <tr>
                                     <td>{{this.Topic}}</td>
@@ -46,6 +47,13 @@
                                     </td>
                                 </tr>
                                 {{/each}}
+                                {{else}}
+                                <tr>
+                                    <td colspan="3">
+                                        No assignments found
+                                    </td>
+                                </tr>
+                                {{/if}}
                             </tbody>
                         </table>
                     </div>

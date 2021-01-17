@@ -10,14 +10,13 @@
                             <col style="width:30%">
                             <col style="width:70%">
                             <thead style="color: rgb(67, 30, 201);background-color: rgb(230, 69, 77);">
-                                {{#if announcements}}
                                 <tr>
                                     <th scope="col">Date</th>
                                     <th scope="col">Subject</th>
                                 </tr>
-                                {{/if}}
                             </thead>
                             <tbody style="background-color: rgb(131, 187, 224);">
+                              {{#if announcements}}
                                 {{#each announcements}}
                                 <tr>
                                     <td style="color: rgb(236, 6, 6);">{{this.Date}}</td>
@@ -27,6 +26,13 @@
                                     </td>
                                 </tr>
                                 {{/each}}
+                                {{else}}
+                                <tr>
+                                    <td colspan="2">
+                                        No announcements found
+                                    </td>
+                                </tr>
+                                {{/if}}
                             </tbody>
                         </table>
                     </div>

@@ -16,6 +16,7 @@
                             </tr>
                         </thead>
                         <tbody style="background-color: rgb(131, 224, 131);">
+                            {{#if assignment}}
                             {{#each assignment}}
                             <tr>
                                 <td>{{this.Topic}}</td>
@@ -23,8 +24,16 @@
                                         {{this.Topic}}.pdf</a></td>
                             </tr>
                             {{/each}}
+                            {{else}}
+                            <tr>
+                                <td colspan="2">
+                                    No assignments found
+                                </td>
+                            </tr>
+                            {{/if}}
                         </tbody>
                     </table>
+                    {{#if note}}
                     {{#each note}}
                     <h2 class="text-center" style="color: rgb(14, 66, 238);padding-top: 20px;"> Note</h2>
                     <video style="padding-bottom: 20px;" width="658px" height="220px" controls
@@ -32,6 +41,11 @@
                         <source src="/videos/{{this._id}}.mp4">
                     </video>
                     {{/each}}
+                    {{else}}
+                      <div class="bar pdferror">
+                        <i class="ico">&#9747;</i> No notes found
+                    </div>
+                    {{/if}}
                 </div>
             </div>
         </div>

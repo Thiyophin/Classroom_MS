@@ -22,6 +22,7 @@
                                 </tr>
                             </thead>
                             <tbody style="background-color: rgb(131, 187, 224);">
+                                {{#if notes}}
                                 {{#each notes}}
                                 <tr>
                                     <td style="color: rgb(236, 6, 6);">{{this.date}}</td>
@@ -37,6 +38,13 @@
                                             here</a></td>
                                 </tr>
                                 {{/each}}
+                                {{else}}
+                                <tr>
+                                    <td colspan="5">
+                                        No notes found
+                                    </td>
+                                </tr>
+                                {{/if}}
                             </tbody>
                         </table>
                     </div>
