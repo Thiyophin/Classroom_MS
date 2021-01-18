@@ -51,7 +51,7 @@ router.post("/tutor_login", (req, res) => {
     });
   }
 });
-router.get("/logout", (req, res) => {
+router.get("/logout",verifyLogin, (req, res) => {
   req.session.tutor = null;
   req.session.loggedTutorIn = false;
   res.redirect("/");

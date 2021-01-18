@@ -682,7 +682,7 @@ router.get("/student_failed",verifyStudentIn, (req, res) => {
   res.render("student/student_failed", { student: true });
 });
 
-router.get("/student_home", async (req, res) => {
+router.get("/student_home",verifyStudentIn, async (req, res) => {
   let studentStatus = await studentHelpers.checkTodayStatus(
     req.session.student._id
   );
@@ -697,7 +697,7 @@ router.get("/student_home", async (req, res) => {
   });
 });
 
-router.get("/student_logout", (req, res) => {
+router.get("/student_logout",verifyStudentIn, (req, res) => {
   req.session.student = null;
   req.session.loggedStudentIn = false;
   res.redirect("/");
