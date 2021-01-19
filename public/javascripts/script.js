@@ -237,8 +237,3 @@ return xhr;
 })
 
 
-$("#sendNotification").click(function(){
-        console.log("button clicked");
-})
-
-

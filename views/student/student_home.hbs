@@ -48,3 +48,22 @@
     </div>
   </div>
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+        integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"
+        integrity="sha512-uE2UhqPZkcKyOjeXjPCmYsW9Sudy5Vbv0XwAVnKBamQeasAVAmH6HR9j5Qpy6Itk1cxk+ypFRPeAZwNnEwNuzQ=="
+        crossorigin="anonymous"></script>
+
+  <script>
+    var socket = io("http://192.168.43.19");
+    socket.on("notification", function(topic){
+        console.log('topic : ',topic);
+      //  $.notify("New Assingnment added\nTopic : "+topic,{
+      //      style: "bootstrap",
+      //      autoHide: false,
+      //      className: "success"
+      //  });
+    });
+</script>

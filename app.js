@@ -15,7 +15,13 @@ var MongoDBStore = require('connect-mongodb-session')(session);
 const nocache = require('nocache')
 require('dotenv').config();
 const  swal  = require("sweetalert")
-const io = require('socket.io')
+var socket_io    = require( "socket.io" );
+const io = socket_io();
+io.on("connection", function (socket) {
+  socket.on("notification", function (topic) {
+    socket.broadcast.emit("notification", topic)
+  });
+});
 //console.log(process.env);
 
 

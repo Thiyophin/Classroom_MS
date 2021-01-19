@@ -262,13 +262,17 @@ module.exports = {
     });
   },
   getLastNote: () => {
+    let todayDate =
+    new Date().getDate() +
+    "/" +
+    (new Date().getMonth() + 1) +
+    "/" +
+    new Date().getFullYear();
     return new Promise(async (resolve, reject) => {
       let note = await db
         .get()
         .collection(collection.NOTES_COLLECTION)
-        .find()
-        .sort({ $natural: -1 })
-        .limit(1)
+        .find({date:todayDate})
         .toArray();
       //console.log(note);
       resolve(note);
