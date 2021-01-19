@@ -4,7 +4,7 @@
             <div class="col-md-8 m-auto">
                 <div class="container mt-5 pl-5">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong>Notes</strong></h2>
-                    <form action="/tutor_notes" id="note_form" method="POST" enctype="multipart/form-data"
+                    <form action="/tutor_notes" onsubmit="return showDiv()" id="note_form" method="POST" enctype="multipart/form-data"
                         style="margin-bottom: 10px;">
                         <div class="form-group">
                             <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Topic:</strong></label>
@@ -26,7 +26,7 @@
                             <div class="progress-bar" aria-valuenow="0" aria-valuemax="100"></div>
                         </div>
                         <div class="buttons mt-3">
-                            <button type="submit" onclick="showDiv();" class="btn btn-success "
+                            <button type="submit"  class="btn btn-success "
                                 value="Submit Form"><strong> Save </strong></button>
                         </div>
                 </div>

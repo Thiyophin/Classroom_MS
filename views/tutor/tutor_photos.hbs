@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-10 col-sm-10 col-xs-10 content-card" style="margin-bottom: 250px;">
                 <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Photos</strong></h2>
-                <form action="/tutor_photos" id="image_form" enctype="multipart/form-data" method="POST">
+                <form action="/tutor_photos" onsubmit="return showDiv()" id="image_form" enctype="multipart/form-data" method="POST">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -23,7 +23,7 @@
                             <div id="upload-progress" style="display: none;">
                                 <div class="progress-bar" aria-valuenow="0" aria-valuemax="100"></div>
                             </div>
-                            <button class="btn btn-success" type="submit" onclick="showDiv()">Save Image</button>
+                            <button class="btn btn-success" type="submit">Save Image</button>
                         </div>
                     </div>
                 </form>

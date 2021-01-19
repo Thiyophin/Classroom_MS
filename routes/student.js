@@ -12,7 +12,7 @@ const paypal = require("paypal-rest-sdk");
 const { deflateSync } = require("zlib");
 const { deleteStudent } = require("../helpers/student-helpers");
 paypal.configure({
-  mode: "sandbox", //sandbox or live
+  mode: "sandbox",
   client_id:
     "AZfsx2Mruy-HUSjovhN0hhwd_JoyQXbZCCGwr0_wryt8oXCuGqnpMtLLphbUAEZOqcJcLH3O80j3u731",
   client_secret:
