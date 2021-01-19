@@ -236,7 +236,7 @@ return xhr;
 });
 })
 
-var socket = io("http://localhost:3000");
+var socket = io("https://classroom-management-system.herokuapp.com");
 socket.on("notification", function(notification){
     console.log('topic : ',notification);
    $.notify("New Assingnment added\nTopic : "+notification.topic,{
@@ -246,7 +246,7 @@ socket.on("notification", function(notification){
    });
 });
 
-var socket = io("http://localhost:3000");
+var socket = io("https://classroom-management-system.herokuapp.com");
 $("#sendNotification").click(function(){
   socket.emit("notification",{
     "topic":document.getElementById("topic").value
