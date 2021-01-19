@@ -10,13 +10,14 @@ var expressValidator = require('express-validator')
 var fileUpload=require('express-fileupload')
 var tutorRouter = require('./routes/tutor');
 var studentRouter = require('./routes/student');
-var app = express();
 var MongoDBStore = require('connect-mongodb-session')(session);
 const nocache = require('nocache')
 require('dotenv').config();
 const  swal  = require("sweetalert")
 var socket_io    = require( "socket.io" );
 const io = socket_io();
+var app = express();
+app.io = io
 io.on("connection", function (socket) {
   socket.on("notification", function (topic) {
     socket.broadcast.emit("notification", topic)

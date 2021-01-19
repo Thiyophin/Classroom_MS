@@ -236,4 +236,20 @@ return xhr;
 });
 })
 
+var socket = io("http://localhost:3000");
+socket.on("notification", function(notification){
+    console.log('topic : ',notification);
+   $.notify("New Assingnment added\nTopic : "+notification.topic,{
+       style: "bootstrap",
+       autoHide: false,
+       className: "success"
+   });
+});
 
+var socket = io("http://localhost:3000");
+$("#sendNotification").click(function(){
+  socket.emit("notification",{
+    "topic":document.getElementById("topic").value
+  })
+        console.log("button clicked");
+})
