@@ -253,3 +253,9 @@ $("#sendNotification").click(function(){
   })
         console.log("button clicked");
 })
+
+$(document).ready( function () {
+  $('#studentTable').DataTable({
+    "pagingType":"simple"
+  });
+} );
