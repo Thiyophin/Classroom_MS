@@ -1,5 +1,3 @@
-<section>
-    <div class="main">
         <div class="row">
             <div class="col-md-8 m-auto">
                 <div class="container mt-5 pl-5">
@@ -11,38 +9,38 @@
                         </div>
                         {{/if}}
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Name:</strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Name:</strong></h4></label>
                             <input type="text" class="form-control" name="Name" value="{{profile.Name}}" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Class: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Class: </strong></h4></label>
                             <input type="number" class="form-control" name="Class" value="{{profile.Class}}" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Subject: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Subject: </strong></h4></label>
                             <input type="text" class="form-control" name="Subject" value="{{profile.Subject}}" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Address: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Address: </strong></h4></label>
                             <input type="text" class="form-control" name="Address" value="{{profile.Address}}" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Pincode: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Pincode: </strong></h4></label>
                             <input type="number" class="form-control" name="Pincode" value="{{profile.Pincode}}"
                                 required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Mobile No:</strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Mobile No:</strong></h4></label>
                             <input type="number" class="form-control" name="MobileNo" value="{{profile.MobileNo}}"
                                 required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Email address: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Email address: </strong></h4></label>
                             <input type="email" class="form-control" name="Email" value="{{profile.Email}}" required>
                             <input type="hidden" name="id" value="{{profile._id}}">
                         </div>
                         <div class="form-group" style="padding-bottom: 20px;">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong>Change image: </strong> </label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong>Change image: </strong> </h4></label>
                             <img src="/tutor-images/{{profile._id}}.jpg" alt="" style="width: 70px;height:70px;"
                                 id="imgView">
                             <input type="file" class="form-control" name="Image" onchange="viewImage(event)">
@@ -57,8 +55,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
 <script>
     const form = document.querySelector('#edit-form');
     var delayInMilliseconds = 1000

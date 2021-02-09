@@ -1,16 +1,14 @@
-<section>
-    <div class="main">
         <div class="row">
             <div class="col-md-8 m-auto">
                 <div class="container mt-5 pl-5">
                     <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Assignments</strong></h2>
                     <form action="/tutor_assignments" id="assignment_form" method="POST" enctype="multipart/form-data" onsubmit="return showDiv()">
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Topic:</strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Topic:</strong></h4></label>
                             <input type="text" id="topic" class="form-control" name="Topic" minlength="3" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> File: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> File: </strong></h4></label>
                             {{#if pdfError}}
                             <div class="bar pdferror">
                                 <div class="close" onclick="this.parentElement.remove()">X</div> <i
@@ -33,21 +31,21 @@
                     <table class="table" style="border-top: 5px;">
                         <thead style="color: rgb(11, 2, 134);background-color: rgb(69, 182, 182);text-align: center;">
                             <tr>
-                                <th scope="col">Topic</th>
-                                <th scope="col">File</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col"><h4>Topic</h4></th>
+                                <th scope="col"><h4>File</h4></th>
+                                <th scope="col"><h4>Delete</h4></th>
                             </tr>
                         </thead>
                         <tbody style="background-color: rgb(131, 224, 131);text-align: center;">
                          {{#if assignments}}
                             {{#each assignments}}
                             <tr>
-                                <td>{{this.Topic}}</td>
-                                <td> <a href='/assignments/{{this._id}}.pdf' type='application/pdf'>
-                                        {{this.Topic}}.pdf</a></td>
+                                <td><h4>{{this.Topic}}</h4></td>
+                                <td><h4> <a href='/assignments/{{this._id}}.pdf' type='application/pdf'>
+                                        {{this.Topic}}.pdf</a></h4></td>
                                 <td>
                                     <a href="/delete_assignment/{{this._id}}" onclick="confirmation(event)"
-                                        style="color: black;"><i class="fas fa-trash-alt"
+                                        style="color: black;"><i class="fas fa-trash-alt fa-2x"
                                             style="margin-left: 20px;"></i></a>
                                 </td>
                             </tr>
@@ -55,7 +53,7 @@
                             {{else}}
                             <tr>
                                 <td colspan="3">
-                                    No assignments found
+                                 <h4> No assignments found </h4>  
                                 </td>
                             </tr>
                             {{/if}}
@@ -66,8 +64,6 @@
         </div>
     </div>
     </div>
-    </div>
-</section>
 <style>
     /*Progress Bar*/
     #upload-progress {

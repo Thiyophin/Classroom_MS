@@ -1,20 +1,18 @@
-<section>
-    <div class="main">
-        <div class="row">
+       <div class="row">
             <div class="container mt-4 pl-4">
                 <h2 class="text-center" style="color: rgb(18, 14, 238);"><strong> Announcement</strong></h2>
                 <form class="form" action="/tutor_announcement" method="POST" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group" style="padding-top: 15px;">
-                                <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Message</strong></label>
+                                <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Message</strong></h4></label>
                                 <input type="text" class="form-control" name="Message" id="topic" required
                                     placeholder="Message">
                                 <input type="text" name="Date" value="{{date}}" hidden id="">
                             </div>
                             <div class="form-group">
                                 <label style="color:rgba(23, 36, 211, 0.836);">
-                                    <strong> Description</strong> </label>
+                                   <h4> <strong> Description</strong></h4> </label>
                                 <textarea class="form-control" name="Description" placeholder="Description"
                                     rows="4"></textarea>
                             </div>
@@ -55,11 +53,10 @@
                         <div class="submit" style="text-align: center;margin:auto;display: grid;padding-bottom: 20px;">
                             <button class="btn btn-success " type="submit"><strong>Submit</strong> </button>
                         </div>
+                    </div>  
                 </form>
             </div>
         </div>
-    </div>
-</section>
 <script>
     function viewImage(event) {
         document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])

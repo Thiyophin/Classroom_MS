@@ -1,12 +1,10 @@
-<section>
-    <div class="main">
         <div class="row">
             <div class="col-md-10 col-sm-10 col-xs-10 content-card" style="margin-bottom: 250px;">
                 <div class="notice-card card-information">
                     <div class="content">
                         <div class="main-cat">Event</div>
                         <a href="/delete_event/{{event._id}}" onclick="confirmation(event)" style="color: black;"><i
-                                class="fas fa-faw fa-trash-alt" style="float: right;"></i></a>
+                                class="fas fa-faw fa-trash-alt fa-2x" style="float: right;"></i></a>
                         <br>
                         {{#if event}}
                         <p class="description">
@@ -60,8 +58,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
 <script>
     function confirmation(ev) {
         ev.preventDefault();

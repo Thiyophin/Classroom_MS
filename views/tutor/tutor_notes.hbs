@@ -1,5 +1,3 @@
-<section>
-    <div class="main">
         <div class="row">
             <div class="col-md-8 m-auto">
                 <div class="container mt-5 pl-5">
@@ -7,19 +5,19 @@
                     <form action="/tutor_notes" onsubmit="return showDiv()" id="note_form" method="POST" enctype="multipart/form-data"
                         style="margin-bottom: 10px;">
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Topic:</strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Topic:</strong></h4></label>
                             <input type="text" class="form-control" name="Topic" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Document: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Document: </strong></h4></label>
                             <input type="file" class="form-control" name="Document" accept="application/pdf" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Video File: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Video File: </strong></h4></label>
                             <input type="file" class="form-control" name="Video" accept="video/*" required>
                         </div>
                         <div class="form-group">
-                            <label style=" color: rgba(23, 36, 211, 0.836);"><strong> Youtube link: </strong></label>
+                            <label style=" color: rgba(23, 36, 211, 0.836);"><h4><strong> Youtube link: </strong></h4></label>
                             <input type="text" class="form-control" name="Link" required>
                         </div>
                         <div id="upload-progress" style="display: none;">
@@ -42,29 +40,29 @@
                     <col style="width:10%">
                     <thead style="color: rgb(67, 30, 201);background-color: rgb(230, 69, 77);">
                         <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Topic</th>
-                            <th scope="col">Document</th>
-                            <th scope="col">Video</th>
-                            <th scope="col">Youtube links</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col"><h4>Date</h4></th>
+                            <th scope="col"><h4>>Topic</h4</th>
+                            <th scope="col"><h4>Document</h4></th>
+                            <th scope="col"><h4>Video</h4></th>
+                            <th scope="col"><h4>Youtube links</h4></th>
+                            <th scope="col"><h4>Delete</h4></th>
                         </tr>
                     </thead>
                     <tbody style="background-color: rgb(131, 187, 224);">
                         {{#if notes}}
                         {{#each notes}}
                         <tr>
-                            <td style="color: rgb(236, 6, 6);">{{this.date}}</td>
-                            <td style="color: rgb(236, 6, 6);">{{notes.Topic}}</td>
+                            <td style="color: rgb(236, 6, 6);"><h4>{{this.date}}</h4></td>
+                            <td style="color: rgb(236, 6, 6);"><h4>{{notes.Topic}}</h4></td>
                             <td><a href='/documents/{{this._id}}.pdf' type='application/pdf' style="color: red;"><i
-                                        class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i></a></td>
+                                        class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a></td>
                             <td><video width="170" height="95" controls>
                                     <source src="/videos/{{this._id}}.mp4">
                                 </video></td>
-                            <td><a href="{{notes.Link}}" style="color: rgb(236, 6, 6);">To learn more click here</a>
+                            <td><a href="{{notes.Link}}" style="color: rgb(236, 6, 6);"><h4>To learn more click here</h4></a>
                             </td>
                             <td><a href="/tutor_deleteNotes/{{this._id}}" onclick="confirmation(event)"
-                                    style="color: rgb(20, 110, 32);"><i class="fas fa-trash-alt"
+                                    style="color: rgb(20, 110, 32);"><i class="fas fa-trash-alt fa-2x"
                                         style="margin-left: 20px;"></i></a></td>
                         </tr>
                         {{/each}}
@@ -81,8 +79,6 @@
         </div>
     </div>
     </div>
-    </div>
-</section>
 <style>
     /*Progress Bar*/
     #upload-progress {

@@ -1,5 +1,3 @@
-<section>
-    <div class="main">
         <div class="row">
             <div class="col-md-8 m-auto ">
                 <h2 class="text-center" style="color: rgb(18, 14, 238);padding-top: 15px;">
@@ -18,7 +16,7 @@
                 </div>
                 <div class="card bg-info mt-3">
                     <div class="card-body text-center">
-                        <p class="card-text" style="color: white;font-weight: bold;"> Date : {{todayDate}}</p>
+                        <p class="card-text" style="color: white;font-weight: bolder;font-size: x-large;"> Date : {{todayDate}}</p>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -28,20 +26,20 @@
                         <col style="width:25%">
                         <thead style="color: rgb(252, 252, 253);background-color: rgb(44, 97, 241);">
                             <tr>
-                                <th scope="col">Roll No</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Attendance</th>
+                                <th scope="col"><h4>Roll No</h4></th>
+                                <th scope="col"><h4>Name</h4></th>
+                                <th scope="col"><h4>Attendance</h4></th>
                             </tr>
                         </thead>
                         <tbody style="background-color: rgb(131, 187, 224);">
                             {{#each details}}
                             <tr>
-                                <td style="color: rgb(2, 11, 88);">{{this.RollNo}}</td>
-                                <td style="color: rgb(2, 11, 88) ;">{{this.Name}}</td>
+                                <td style="color: rgb(2, 11, 88);"><h4>{{this.RollNo}}</h4></td>
+                                <td style="color: rgb(2, 11, 88) ;"><h4>{{this.Name}}</h4></td>
                                 {{#if this.status}}
-                                <td style="color:  rgb(24, 100, 21);">P</td>
+                                <td style="color:  rgb(24, 100, 21);"><h4>P</h4></td>
                                 {{else}}
-                                <td style="color:  rgb(190, 27, 16);">A</td>
+                                <td style="color:  rgb(190, 27, 16);"><h4>A</h4></td>
                                 {{/if}}
                             </tr>
                             {{/each}}
@@ -50,5 +48,3 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>

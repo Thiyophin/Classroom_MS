@@ -25,6 +25,11 @@
   <header>
     <div class="row" style="width: auto;height:auto">
       <div class="col-md-12  col-sm-12">
+         {{#if tutor}}
+         <div class="toggle" onclick="toggle()"> </div>
+         {{else student}}
+          <div class="toggle" onclick="toggle()"> </div>
+         {{/if}}
         <div class="head" style="padding-bottom: 5px;">
           <h2 id="heading">Classroom Management System </h2>
         </div>
