@@ -3,8 +3,8 @@ const state = {
   db: null,
 };
 module.exports.connect = function (done) {
-  const url = process.env.MONGO_URL || "mongodb://localhost:27017/dbCluster";
-  const dbname = "dbCluster";
+  const url = "mongodb://localhost:27017";
+  const dbname = "classroom";
 
   mongoClient.connect(url, (err, data) => {
     if (err) return done(err);
